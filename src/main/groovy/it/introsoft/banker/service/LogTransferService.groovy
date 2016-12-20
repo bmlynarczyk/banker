@@ -7,8 +7,9 @@ import it.introsoft.banker.model.transfer.Transfer
 class LogTransferService implements TransferService {
 
     @Override
-    void save(Transfer transfer) {
+    Result save(Transfer transfer) {
         log.info(transfer.toString())
+        return Result.SAVED
     }
 
     @Override

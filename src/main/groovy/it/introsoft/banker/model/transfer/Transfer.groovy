@@ -5,8 +5,6 @@ import org.springframework.data.annotation.Id
 
 @ToString
 class Transfer {
-    @Id
-    String id
     Date date
     String description
     Long amount

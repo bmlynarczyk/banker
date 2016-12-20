@@ -4,7 +4,7 @@ import it.introsoft.banker.model.transfer.Transfer
 
 interface TransferService {
 
-    void save(Transfer transfer)
+    Result save(Transfer transfer)
 
     void deleteAll()
 

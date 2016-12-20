@@ -1,6 +1,9 @@
 package it.introsoft.banker
 
+import com.google.common.base.Stopwatch
+import groovy.util.logging.Slf4j
 import it.introsoft.banker.model.transfer.Transfer
+import it.introsoft.banker.service.Result
 import it.introsoft.banker.service.TransferService
 import groovy.transform.CompileStatic
 import org.springframework.beans.factory.annotation.Autowired
@@ -11,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 
 import java.util.function.Supplier
 
+@Slf4j
 @CompileStatic
 @SpringBootApplication
 class BankerApplication implements CommandLineRunner {
@@ -29,10 +33,9 @@ class BankerApplication implements CommandLineRunner {
 	}
 
 	void run(String... args){
-		def transfers = transfersSupplier.get()
 		switch (operation) {
 			case 'save':
-				save(transfers)
+				save(transfersSupplier.get())
 				break
 			case 'delete':
 				transferService.deleteAll()
@@ -43,12 +46,14 @@ class BankerApplication implements CommandLineRunner {
 	}
 
 	void save(List<Transfer> transfers) {
+		def stopwatch = Stopwatch.createStarted()
+		List<Result> results = []
 		for (Transfer transfer : transfers) {
-			transferService.save(transfer)
+			results << transferService.save(transfer)
 		}
+		log.info('{} transfers saved', results.findAll { (it == Result.SAVED) }.size())
+		log.info('{} transfers existing', results.findAll { (it == Result.EXISTING) }.size())
+		log.info('operation executed for {} transfers in: {}', transfers.size(), stopwatch)
 	}
 
 }
-
-
-

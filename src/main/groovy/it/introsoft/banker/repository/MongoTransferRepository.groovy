@@ -1,7 +1,9 @@
 package it.introsoft.banker.repository
 
-import it.introsoft.banker.model.transfer.Transfer
-import org.springframework.data.repository.PagingAndSortingRepository
+import groovy.transform.CompileStatic
+import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.data.querydsl.QueryDslPredicateExecutor
 
-interface MongoTransferRepository extends PagingAndSortingRepository<Transfer, String>{
+@CompileStatic
+interface MongoTransferRepository extends MongoRepository<MongoTransfer, String>, QueryDslPredicateExecutor<MongoTransfer> {
 }
