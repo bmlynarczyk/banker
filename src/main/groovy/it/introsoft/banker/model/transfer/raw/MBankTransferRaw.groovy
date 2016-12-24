@@ -4,6 +4,7 @@ import it.introsoft.banker.model.Bank
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter
 import it.introsoft.banker.model.transfer.type.TransferType
+import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
 class MBankTransferRaw implements TransferRaw {
 
@@ -16,6 +17,8 @@ class MBankTransferRaw implements TransferRaw {
     String amount
     String symbol
 
+    private static final TransferTypeRecognizer transferTypeRecognizer = Bank.M_BANK.typeRecognizer()
+
     @Override
     Transfer asTransfer() {
         boolean isZus = sender != null && sender.contains('ZUS')
@@ -23,7 +26,7 @@ class MBankTransferRaw implements TransferRaw {
         def description = getDescription(isZus, isTax)
         def bank = Bank.M_BANK
         amount = amount.replaceAll('Kwota przelewu: ', '')
-        TransferType transferType = bank.typeRecognizer().recognize(getDescriber(isZus, isTax), amount)
+        TransferType transferType = transferTypeRecognizer.recognize(getDescriber(isZus, isTax), amount)
         if(transferType in [TransferType.TAX_CHARGES, TransferType.INSURANCE_CHARGES, TransferType.BANK_CHARGES, TransferType.INTEREST_TAX_CHARGES, TransferType.CHARGES])
             amount = "-$amount"
         return new Transfer(
@@ -34,8 +37,7 @@ class MBankTransferRaw implements TransferRaw {
                 description: description,
                 type: transferType,
                 currency: 'PLN',
-                bank: bank.name,
-                category: bank.categoryRecognizer().recognize(description, amount)
+                bank: bank.name
         )
     }
 
