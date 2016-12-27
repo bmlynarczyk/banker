@@ -14,9 +14,11 @@ import static it.introsoft.banker.repository.QMongoTransfer.mongoTransfer
 class MongoTransferService implements TransferService {
 
     private final MongoTransferRepository mongoTransferRepository
+    private final MongoBalanceCalculator balanceCalculator
 
     MongoTransferService(MongoTransferRepository mongoTransferRepository) {
         this.mongoTransferRepository = mongoTransferRepository
+        this.balanceCalculator = new MongoBalanceCalculator(mongoTransferRepository)
     }
 
     @Override
@@ -40,9 +42,11 @@ class MongoTransferService implements TransferService {
             mongoTransfer.date.eq(transfer.date)
             & mongoTransfer.account.eq(transfer.account)
             & mongoTransfer.amount.eq(transfer.amount)
-            & mongoTransfer.balance.eq(transfer.balance)
             & mongoTransfer.description.eq(transfer.description)
         )
+
+        if(transfer.balance)
+            predicate & mongoTransfer.balance.eq(transfer.balance)
 
         def mongoTransfer = mongoTransferRepository.findOne(predicate)
         log.debug('check existence of transfer in: {}', stopwatch)
@@ -55,7 +59,7 @@ class MongoTransferService implements TransferService {
                 dateTransferNumber: getDateTransferNumber(transfer.date),
                 description: transfer.description,
                 amount: transfer.amount,
-                balance: transfer.balance,
+                balance: balanceCalculator.calculate(transfer),
                 currency: transfer.currency,
                 type: transfer.type,
                 account: transfer.account,
