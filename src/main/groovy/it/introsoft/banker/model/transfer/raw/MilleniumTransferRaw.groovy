@@ -12,6 +12,7 @@ class MilleniumTransferRaw implements TransferRaw {
     String title
     String type
     String date
+    String accountedAmount
     String amount
     String beneficiaryAccount
 
@@ -20,7 +21,11 @@ class MilleniumTransferRaw implements TransferRaw {
     @Override
     Transfer asTransfer() {
         def bank = Bank.MILLENIUM
-        amount = amount.replaceAll('Kwota zaksięgowana ', '')
+        String amount
+        if (accountedAmount)
+            amount = accountedAmount.replaceAll('Kwota zaksięgowana ', '')
+        else
+            amount = this.amount.replaceAll('Kwota ', '')
         title = title.replaceAll('Tytuł ', '')
         type = type.replaceAll('Typ operacji ', '')
         TransferType transferType = transferTypeRecognizer.recognize(type, amount)
