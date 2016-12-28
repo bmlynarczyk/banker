@@ -21,15 +21,15 @@ class TransferSupplierConfiguration {
 
     @Bean('transfersSupplier')
     @ConditionalOnProperty(value = 'bank', havingValue = 'default', matchIfMissing = true)
-    Supplier<List<Transfer>> dummyTransfersSupplier() {
-        return new Supplier<List<Transfer>>() {
+    Supplier<Collection<Transfer>> dummyTransfersSupplier() {
+        return new Supplier<Collection<Transfer>>() {
             List<Transfer> get() { return [] }
         }
     }
 
     @Bean('transfersSupplier')
     @ConditionalOnProperty(value = 'bank', havingValue = 'bgzoptima')
-    Supplier<List<Transfer>> bgzOptimaTransfersSupplier(
+    Supplier<Collection<Transfer>> bgzOptimaTransfersSupplier(
             @Value('${pathname.bgzoptima}') String pathname, @Value('${account.bgzoptima}') String account) {
         return new MultiTransferOnPdfPageSupplier(
                 new File(pathname),
@@ -40,14 +40,14 @@ class TransferSupplierConfiguration {
 
     @Bean('transfersSupplier')
     @ConditionalOnProperty(value = 'bank', havingValue = 'pkobp')
-    Supplier<List<Transfer>> pkobpTransfersSupplier(
+    Supplier<Collection<Transfer>> pkobpTransfersSupplier(
             @Value('${pathname.pkobp}') String pathname, @Value('${account.pkobp}') String account) {
         return new TransferInHtmlTableSupplier(new File(pathname), new PkoBpTransferRawConverter(account))
     }
 
     @Bean('transfersSupplier')
     @ConditionalOnProperty(value = 'bank', havingValue = 'mbank')
-    Supplier<List<Transfer>> mbankTransfersSupplier(
+    Supplier<Collection<Transfer>> mbankTransfersSupplier(
             @Value('${pathname.mbank}') String pathname, @Value('${account.mbank}') String account) {
         return new SingleTransferOnPdfPageSupplier(
                 new File(pathname),
@@ -58,7 +58,7 @@ class TransferSupplierConfiguration {
 
     @Bean('transfersSupplier')
     @ConditionalOnProperty(value = 'bank', havingValue = 'millenium')
-    Supplier<List<Transfer>> milleniumTransfersSupplier(
+    Supplier<Collection<Transfer>> milleniumTransfersSupplier(
             @Value('${pathname.millenium}') String pathname, @Value('${account.millenium}') String account) {
         return new SingleTransferOnPdfPageSupplier(
                 new File(pathname),

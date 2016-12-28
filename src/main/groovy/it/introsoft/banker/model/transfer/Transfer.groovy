@@ -1,9 +1,10 @@
 package it.introsoft.banker.model.transfer
 
+import groovy.transform.EqualsAndHashCode
 import groovy.transform.ToString
-import org.springframework.data.annotation.Id
 
 @ToString
+@EqualsAndHashCode
 class Transfer {
     Date date
     String description

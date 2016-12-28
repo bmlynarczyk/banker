@@ -1,18 +1,21 @@
 package it.introsoft.banker.model.transfer.supplier
 
+import com.google.common.collect.TreeMultiset
+import groovy.transform.CompileStatic
 import it.introsoft.banker.model.transfer.Transfer
+import it.introsoft.banker.model.transfer.TransferComparator
 import it.introsoft.banker.model.transfer.raw.TransferRaw
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import org.springframework.core.convert.converter.Converter
 
 import java.util.function.Supplier
 
-class TransferInHtmlTableSupplier implements Supplier<List<Transfer>> {
+@CompileStatic
+class TransferInHtmlTableSupplier implements Supplier<Collection<Transfer>> {
 
     private File file
-    private Converter<Elements, List<TransferRaw>> converter
+    private Converter<Document, List<TransferRaw>> converter
 
     TransferInHtmlTableSupplier(File file, Converter<Document, List<TransferRaw>> converter) {
         this.file = file
@@ -20,9 +23,11 @@ class TransferInHtmlTableSupplier implements Supplier<List<Transfer>> {
     }
 
     @Override
-    List<Transfer> get() {
+    Collection<Transfer> get() {
         Document document = Jsoup.parse(file, 'utf-8')
-        return converter.convert(document).collect { it.asTransfer() }
+        TreeMultiset<Transfer> transfers = TreeMultiset.create(new TransferComparator())
+        converter.convert(document).collect(transfers, { it.asTransfer() })
+        return transfers
     }
 
 }

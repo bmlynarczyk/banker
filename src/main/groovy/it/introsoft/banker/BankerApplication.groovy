@@ -26,7 +26,7 @@ class BankerApplication implements CommandLineRunner {
 	TransferService transferService
 
 	@Autowired
-	Supplier<List<Transfer>> transfersSupplier
+	Supplier<Collection<Transfer>> transfersSupplier
 
 	static void main(String[] args) {
 		SpringApplication.run BankerApplication, args
@@ -45,7 +45,7 @@ class BankerApplication implements CommandLineRunner {
 		}
 	}
 
-	void save(List<Transfer> transfers) {
+	void save(Collection<Transfer> transfers) {
 		def stopwatch = Stopwatch.createStarted()
 		List<Result> results = []
 		for (Transfer transfer : transfers) {

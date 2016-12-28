@@ -1,6 +1,9 @@
 package it.introsoft.banker.model.transfer.supplier
 
+import com.google.common.collect.TreeMultiset
+import groovy.transform.CompileStatic
 import it.introsoft.banker.model.transfer.Transfer
+import it.introsoft.banker.model.transfer.TransferComparator
 import it.introsoft.banker.model.transfer.raw.TransferRaw
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.PDPage
@@ -11,7 +14,8 @@ import java.awt.*
 import java.util.List
 import java.util.function.Supplier
 
-class SingleTransferOnPdfPageSupplier implements Supplier<List<Transfer>> {
+@CompileStatic
+class SingleTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> {
 
     private File file
     private Rectangle rectangle
@@ -24,7 +28,7 @@ class SingleTransferOnPdfPageSupplier implements Supplier<List<Transfer>> {
     }
 
     @Override
-    List<Transfer> get() {
+    Collection<Transfer> get() {
         PDDocument document = null
         try {
             document = PDDocument.load(file)
@@ -39,12 +43,14 @@ class SingleTransferOnPdfPageSupplier implements Supplier<List<Transfer>> {
         }
     }
 
-    private List<Transfer> getTransfers(PDDocument document, PDFTextStripperByArea stripper) {
-        return document.getPages().collect { PDPage page ->
+    private Collection<Transfer> getTransfers(PDDocument document, PDFTextStripperByArea stripper) {
+        TreeMultiset<Transfer> transfers = TreeMultiset.create(new TransferComparator())
+        document.getPages().collect(transfers, { PDPage page ->
             stripper.extractRegions(page)
             def transferStrings = getTransferDataAsLines(stripper)
             return converter.convert(transferStrings).asTransfer()
-        }
+        })
+        return transfers
     }
 
     private static List<String> getTransferDataAsLines(PDFTextStripperByArea stripper) {
