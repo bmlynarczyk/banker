@@ -1,7 +1,6 @@
 package it.introsoft.banker.model.transfer.raw.converter
 
 import it.introsoft.banker.model.transfer.raw.MBankTransferRaw
-import it.introsoft.banker.model.transfer.supplier.MoneyConverter
 import org.springframework.core.convert.converter.Converter
 
 class MBankTransferRawConverter implements Converter<List<String>, MBankTransferRaw> {
@@ -20,7 +19,7 @@ class MBankTransferRawConverter implements Converter<List<String>, MBankTransfer
                 title: strings.find { it.startsWith('Tytuł operacji: ') },
                 sender: strings.find { it.startsWith('Nadawca: ') },
                 symbol: strings.find { it.startsWith('Symbol: ') },
-                type: strings.find { it.startsWith('Rodzaj operacji: ') },
+                transferType: strings.find { it.startsWith('Rodzaj operacji: ') },
                 date: strings.find { it.startsWith('Data księgowania: ') },
                 amount: getAmount(strings)
         )

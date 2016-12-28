@@ -17,7 +17,7 @@ class BgzOptimaTransferRawConverterTest extends Specification {
         !raws.isEmpty()
         def transferRaw = raws.first() as BgzOptimaTransferRaw
         transferRaw.date == '30.04.2013'
-        transferRaw.type == 'ODSETKI OTRZYMANE'
+        transferRaw.transferType == 'ODSETKI OTRZYMANE'
         transferRaw.amount == '15,20 PLN'
         transferRaw.account == 'abc'
         transferRaw.balance == '5 016,98 PLN'

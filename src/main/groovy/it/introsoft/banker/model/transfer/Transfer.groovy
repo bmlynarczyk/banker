@@ -10,7 +10,7 @@ class Transfer {
     Long amount
     Long balance
     String currency
-    String type
+    String transferType
     String account
     String beneficiaryAccount
     String bank

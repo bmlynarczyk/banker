@@ -10,7 +10,7 @@ class BgzOptimaTransferRaw implements TransferRaw{
 
     String account
     String title
-    String type
+    String transferType
     String date
     String amount
     String balance
@@ -23,7 +23,7 @@ class BgzOptimaTransferRaw implements TransferRaw{
 
         return new Transfer(
                 account: account,
-                type: transferTypeRecognizer.recognize(type, amount),
+                transferType: transferTypeRecognizer.recognize(transferType, amount),
                 date: new Date().parse('dd.MM.yyyy', date),
                 amount: bgzOptimaStringToMoneyValue(amount),
                 balance: bgzOptimaStringToMoneyValue(balance),

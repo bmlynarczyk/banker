@@ -30,7 +30,7 @@ class BgzOptimaTransferRawConverter implements Converter<List<String>, List<Tran
                 result.add(new BgzOptimaTransferRaw(
                         account: account,
                         date: matcher.group(2),
-                        type: transferType,
+                        transferType: transferType,
                         amount: matcher.group(4),
                         balance: matcher.group(5),
                         title: getTitle(strings, transferType, position)

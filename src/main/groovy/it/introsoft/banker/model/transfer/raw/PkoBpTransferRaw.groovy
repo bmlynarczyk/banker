@@ -10,7 +10,7 @@ class PkoBpTransferRaw implements TransferRaw{
 
     String account
     String description
-    String type
+    String transferType
     String date
     String amount
     String currency
@@ -24,7 +24,7 @@ class PkoBpTransferRaw implements TransferRaw{
                 account: account,
                 bank: Bank.PKO_BP.name,
                 currency: currency,
-                type: transferTypeRecognizer.recognize(type, amount),
+                transferType: transferTypeRecognizer.recognize(transferType, amount),
                 date: new Date().parse('yyyy-MM-dd', date),
                 amount: toMoneyValue(getMoneyString(amount)),
                 balance: toMoneyValue(getMoneyString(balance)),

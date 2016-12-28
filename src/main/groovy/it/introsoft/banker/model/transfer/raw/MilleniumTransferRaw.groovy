@@ -10,7 +10,7 @@ class MilleniumTransferRaw implements TransferRaw {
 
     String account
     String title
-    String type
+    String transferType
     String date
     String accountedAmount
     String amount
@@ -27,15 +27,15 @@ class MilleniumTransferRaw implements TransferRaw {
         else
             amount = this.amount.replaceAll('Kwota ', '')
         title = title.replaceAll('Tytuł ', '')
-        type = type.replaceAll('Typ operacji ', '')
-        TransferType transferType = transferTypeRecognizer.recognize(type, amount)
+        transferType = transferType.replaceAll('Typ operacji ', '')
+        TransferType transferType = transferTypeRecognizer.recognize(transferType, amount)
         return new Transfer(
                 account: account,
                 beneficiaryAccount: beneficiaryAccount?.replaceAll('Na rachunek ', ''),
                 date: new Date().parse('yyyy-MM-dd', date.replaceAll('Data księgowania ', '')),
                 amount: MoneyConverter.milleniumStringToMoneyValue(amount),
                 description: title,
-                type: transferType,
+                transferType: transferType,
                 currency: 'PLN',
                 bank: bank.name
         )

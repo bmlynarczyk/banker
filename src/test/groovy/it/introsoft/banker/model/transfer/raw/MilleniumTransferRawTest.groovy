@@ -19,7 +19,7 @@ class MilleniumTransferRawTest extends Specification {
         transfer.account == '1234'
         transfer.beneficiaryAccount == null
         transfer.description == 'Stolowka Lublin 16/12/07'
-        transfer.type == TransferType.CHARGES.name()
+        transfer.transferType == TransferType.CHARGES.name()
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-09')
         transfer.bank == Bank.MILLENIUM.name
         transfer.amount == new Long('-15100')

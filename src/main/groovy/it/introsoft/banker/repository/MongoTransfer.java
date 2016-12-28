@@ -23,7 +23,7 @@ public class MongoTransfer {
     private Long amount;
     private Long balance;
     private String currency;
-    private String type;
+    private String transferType;
     private String account;
     private String beneficiaryAccount;
     private String bank;

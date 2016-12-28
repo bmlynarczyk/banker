@@ -2,10 +2,8 @@ package it.introsoft.banker.model.transfer.raw.converter
 
 import it.introsoft.banker.model.TestData
 import it.introsoft.banker.model.transfer.raw.PkoBpTransferRaw
-import it.introsoft.banker.model.transfer.raw.TransferRaw
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import org.jsoup.select.Elements
 import spock.lang.Specification
 
 class PkoBpTransferRawConverterTest extends Specification {
@@ -20,7 +18,7 @@ class PkoBpTransferRawConverterTest extends Specification {
         PkoBpTransferRaw transferRaw = transferRaws.first()
         transferRaw.account == 'abc'
         transferRaw.date == '2016-12-16'
-        transferRaw.type == 'Przelew na rachunek'
+        transferRaw.transferType == 'Przelew na rachunek'
         transferRaw.description == 'Rachunek nadawcy : 57 1140 2004 0000 0000 0000 0000 Nazwa nadawcy : JAN NOWAK Adres nadawcy : XXX XXX Tytuł : XXX'
         transferRaw.amount == '+2500.00'
         transferRaw.balance == '+3082.01'

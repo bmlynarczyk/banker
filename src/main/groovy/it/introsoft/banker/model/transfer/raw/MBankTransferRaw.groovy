@@ -12,7 +12,7 @@ class MBankTransferRaw implements TransferRaw {
     String accounts
     String title
     String sender
-    String type
+    String transferType
     String date
     String amount
     String symbol
@@ -35,7 +35,7 @@ class MBankTransferRaw implements TransferRaw {
                 date: new Date().parse('yyyy-MM-dd', date.replaceAll('Data księgowania: ', '')),
                 amount: MoneyConverter.mBankStringToMoneyValue(amount),
                 description: description,
-                type: transferType,
+                transferType: transferType,
                 currency: 'PLN',
                 bank: bank.name
         )
@@ -54,6 +54,6 @@ class MBankTransferRaw implements TransferRaw {
             return 'zus'
         if (isTax)
             return 'us'
-        return type.replaceAll('Rodzaj operacji: ', '')
+        return transferType.replaceAll('Rodzaj operacji: ', '')
     }
 }

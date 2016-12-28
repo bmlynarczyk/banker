@@ -16,7 +16,7 @@ class MBankTransferRawConverterTest extends Specification {
         transferRaw.account == '1234'
         transferRaw.accounts == 'Nr Rachunku: 11 1020 3176 0000 0000 0000 0000 Nr Rachunku: 57 1140 2004 0000 0000 0000 0000'
         transferRaw.sender == 'Nadawca: JAN KOWALSKI Odbiorca: JAN KOWALSKI'
-        transferRaw.type == 'Rodzaj operacji: PRZELEW ZEWNĘTRZNY PRZYCHODZĄCY'
+        transferRaw.transferType == 'Rodzaj operacji: PRZELEW ZEWNĘTRZNY PRZYCHODZĄCY'
         transferRaw.date == 'Data księgowania: 2016-07-28'
         transferRaw.amount == 'Kwota przelewu: 2 100,00 PLN'
         transferRaw.title == 'Tytuł operacji: FAKTURA TELEFON'

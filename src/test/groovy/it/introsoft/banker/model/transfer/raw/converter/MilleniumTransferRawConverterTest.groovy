@@ -16,7 +16,7 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.account == '1234'
         transferRaw.beneficiaryAccount == null
         transferRaw.title == 'Tytuł Stolowka Lublin 16/12/07'
-        transferRaw.type == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
+        transferRaw.transferType == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
         transferRaw.date == 'Data księgowania 2016-12-09'
         transferRaw.accountedAmount == 'Kwota zaksięgowana -15,10 PLN'
     }
@@ -28,7 +28,7 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.account == '1234'
         transferRaw.beneficiaryAccount == null
         transferRaw.title == 'Tytuł Stolowka Lublin 16/12/07'
-        transferRaw.type == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
+        transferRaw.transferType == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
         transferRaw.date == 'Data księgowania 2016-12-09'
         transferRaw.accountedAmount == 'Kwota zaksięgowana -15,10 PLN'
     }

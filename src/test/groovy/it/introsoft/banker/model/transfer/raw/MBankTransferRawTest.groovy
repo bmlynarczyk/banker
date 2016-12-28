@@ -19,7 +19,7 @@ class MBankTransferRawTest extends Specification {
         transfer.account == '1234'
         transfer.beneficiaryAccount == '57 1140 2004 0000 0000 0000 0000'
         transfer.bank == Bank.M_BANK.name
-        transfer.type == TransferType.DEPOSIT.name()
+        transfer.transferType == TransferType.DEPOSIT.name()
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-07-28')
         transfer.amount ==  2100000L
         transfer.description == 'FAKTURA TELEFON'

@@ -22,7 +22,7 @@ class MilleniumTransferRawConverter implements Converter<List<String>, Millenium
                 account: account,
                 beneficiaryAccount: strings.find { it.startsWith('Na rachunek ') },
                 title: strings.find { it.startsWith('Tytuł ') },
-                type: strings.find { it.startsWith('Typ operacji ') },
+                transferType: strings.find { it.startsWith('Typ operacji ') },
                 date: strings.find { it.startsWith('Data księgowania ') },
                 amount: strings.find { it.startsWith('Kwota ') },
                 accountedAmount: strings.find { it.startsWith('Kwota zaksięgowana ') }

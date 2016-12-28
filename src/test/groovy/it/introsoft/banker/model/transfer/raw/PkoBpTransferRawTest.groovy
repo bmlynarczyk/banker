@@ -23,7 +23,7 @@ class PkoBpTransferRawTest extends Specification {
         transfer.account == '1234'
         transfer.beneficiaryAccount == null
         transfer.description == 'Rachunek nadawcy : 57 1140 2004 0000 0000 0000 0000 Nazwa nadawcy : JAN NOWAK Adres nadawcy : XXX XXX Tytuł : XXX'
-        transfer.type == TransferType.DEPOSIT.name()
+        transfer.transferType == TransferType.DEPOSIT.name()
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-16')
         transfer.bank == Bank.PKO_BP.name
         transfer.amount == 2500000L
