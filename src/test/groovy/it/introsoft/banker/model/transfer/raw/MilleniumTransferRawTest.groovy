@@ -24,6 +24,7 @@ class MilleniumTransferRawTest extends Specification {
         transfer.bank == Bank.MILLENIUM.name
         transfer.amount == new Long('-15100')
         transfer.currency == 'PLN'
+        transfer.dateTransferNumber == 3L
     }
 
 }

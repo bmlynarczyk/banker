@@ -19,6 +19,7 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.transferType == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
         transferRaw.date == 'Data księgowania 2016-12-09'
         transferRaw.accountedAmount == 'Kwota zaksięgowana -15,10 PLN'
+        transferRaw.dateTransferNumber == 'Dzienny numer transakcji 3'
     }
 
     def "should set required fields with amount"() {
@@ -31,6 +32,7 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.transferType == 'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ'
         transferRaw.date == 'Data księgowania 2016-12-09'
         transferRaw.accountedAmount == 'Kwota zaksięgowana -15,10 PLN'
+        transferRaw.dateTransferNumber == 'Dzienny numer transakcji 3'
     }
 
 }

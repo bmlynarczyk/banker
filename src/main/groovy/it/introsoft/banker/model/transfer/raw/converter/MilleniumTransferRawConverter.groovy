@@ -25,7 +25,8 @@ class MilleniumTransferRawConverter implements Converter<List<String>, Millenium
                 transferType: strings.find { it.startsWith('Typ operacji ') },
                 date: strings.find { it.startsWith('Data księgowania ') },
                 amount: strings.find { it.startsWith('Kwota ') },
-                accountedAmount: strings.find { it.startsWith('Kwota zaksięgowana ') }
+                accountedAmount: strings.find { it.startsWith('Kwota zaksięgowana ') },
+                dateTransferNumber: strings.find { it.startsWith('Dzienny numer transakcji ') }
         )
     }
 

@@ -15,6 +15,7 @@ class MilleniumTransferRaw implements TransferRaw {
     String accountedAmount
     String amount
     String beneficiaryAccount
+    String dateTransferNumber
 
     private static final TransferTypeRecognizer transferTypeRecognizer = Bank.MILLENIUM.typeRecognizer()
 
@@ -37,7 +38,8 @@ class MilleniumTransferRaw implements TransferRaw {
                 description: title,
                 transferType: transferType,
                 currency: 'PLN',
-                bank: bank.name
+                bank: bank.name,
+                dateTransferNumber: Long.parseLong(dateTransferNumber.replaceAll('Dzienny numer transakcji ', ''))
         )
     }
 

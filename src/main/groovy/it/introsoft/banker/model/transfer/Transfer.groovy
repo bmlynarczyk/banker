@@ -9,6 +9,7 @@ class Transfer {
     String description
     Long amount
     Long balance
+    Long dateTransferNumber
     String currency
     String transferType
     String account
