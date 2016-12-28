@@ -25,7 +25,7 @@ class MongoTransferService implements TransferService {
     Result save(Transfer transfer) {
         def stopwatch = Stopwatch.createStarted()
         def mongoTransfer = getTransferFromMongo(transfer)
-        if (mongoTransfer){
+        if (mongoTransfer) {
             log.info('transfer already exists with id: {}', mongoTransfer.id)
             return Result.EXISTING
         } else {
@@ -39,15 +39,19 @@ class MongoTransferService implements TransferService {
         def stopwatch = Stopwatch.createStarted()
 
         def predicate = (
-            mongoTransfer.date.eq(transfer.date)
-            & mongoTransfer.account.eq(transfer.account)
-            & mongoTransfer.amount.eq(transfer.amount)
-            & mongoTransfer.description.eq(transfer.description)
+                mongoTransfer.date.eq(transfer.date)
+                        & mongoTransfer.account.eq(transfer.account)
+                        & mongoTransfer.amount.eq(transfer.amount)
+                        & mongoTransfer.description.eq(transfer.description)
         )
 
-        if(transfer.balance)
-            predicate & mongoTransfer.balance.eq(transfer.balance)
+        if (transfer.balance)
+            predicate = predicate & mongoTransfer.balance.eq(transfer.balance)
 
+        if (transfer.dateTransferNumber)
+            predicate = predicate & mongoTransfer.dateTransferNumber.eq(transfer.dateTransferNumber)
+
+        log.trace(predicate.toString())
         def mongoTransfer = mongoTransferRepository.findOne(predicate)
         log.debug('check existence of transfer in: {}', stopwatch)
         return mongoTransfer
@@ -56,7 +60,7 @@ class MongoTransferService implements TransferService {
     private void saveInRepo(Transfer transfer) {
         mongoTransferRepository.save(new MongoTransfer(
                 date: transfer.date,
-                dateTransferNumber: getDateTransferNumber(transfer.date),
+                dateTransferNumber: transfer.dateTransferNumber ?: getDateTransferNumber(transfer.date),
                 description: transfer.description,
                 amount: transfer.amount,
                 balance: balanceCalculator.calculate(transfer),
