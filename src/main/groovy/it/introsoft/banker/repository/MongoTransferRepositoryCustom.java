@@ -1,7 +1,9 @@
 package it.introsoft.banker.repository;
 
-import java.util.Date;
+import it.introsoft.banker.model.transfer.Transfer;
 
 public interface MongoTransferRepositoryCustom {
-    void updateBalanceInLaterTransfers(String account, long amount, Date date);
+    void updateBalanceInLaterThanTodayTransfers(Transfer transfer);
+
+    void updateBalanceInTodayTransfers(Transfer transfer);
 }

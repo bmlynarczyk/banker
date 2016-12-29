@@ -24,58 +24,43 @@ class MongoBalanceCalculatorTest extends Specification {
 
     def "should return balance equals transfer amount when any transfer for this account doesn't exist"() {
         given:
-        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000)
+        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date(), dateTransferNumber: 1)
         when:
         def balance = balanceCalculator.calculate(transfer)
         then:
-        transferRepository.exists(_) >> false
+        transferRepository.findAll(_, _) >> []
         balance == 1000L
     }
 
-    def "transfer is from date before last transfer with balance and exists at least one transfer for transfer date"() {
+    def "balance is sum of previous today transfer balance and today amount when exists previous today transfer"() {
         given:
-        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date())
+        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date(), dateTransferNumber: 1)
         when:
         def balance = balanceCalculator.calculate(transfer)
         then:
-        transferRepository.exists(_) >>> [true, false]
-        transferRepository.findAll(_, _) >> [new MongoTransfer(balance: 1000)]
+        1 * transferRepository.findAll(_, _) >> [new MongoTransfer(balance: 1000)]
         balance == 2000L
     }
 
-    def "balance is sum of next transfer balance and today amount when doesn't exist any transfer for today"() {
+    def "balance is sum of previous balance and today amount when exists previous transfer"() {
         given:
-        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date())
+        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date(), dateTransferNumber: 1)
         when:
         def balance = balanceCalculator.calculate(transfer)
         then:
-        transferRepository.exists(_) >>> [true, false]
-        1 * transferRepository.findAll(_, mongoTransfer.dateTransferNumber.desc()) >> []
-        1 * transferRepository.findAll(_, mongoTransfer.dateTransferNumber.asc()) >> [new MongoTransfer(balance: 1000)]
+        2 * transferRepository.findAll(_, _) >>> [[], [new MongoTransfer(balance: 1000)]]
         balance == 2000L
     }
 
-    def "balance is sum of previous balance and today amount when doesn't exist today and next transfer"() {
+    def "should update balance in later transfers"() {
         given:
-        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date())
-        when:
-        def balance = balanceCalculator.calculate(transfer)
-        then:
-        transferRepository.exists(_) >>> [true, false]
-        2 * transferRepository.findAll(_, mongoTransfer.dateTransferNumber.desc()) >>> [[], [new MongoTransfer(balance: 1000)]]
-        1 * transferRepository.findAll(_, mongoTransfer.dateTransferNumber.asc()) >> []
-        balance == 2000L
-    }
-
-    def "should return correct balance when transfer date is after or in date of last transfer with balance"() {
-        given:
-        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date())
+        Transfer transfer = new Transfer(account: '123', balance: null, amount: 1000, date: new Date(), dateTransferNumber: 1)
         when:
         balanceCalculator.calculate(transfer)
         then:
-        transferRepository.exists(_) >>> [true, true]
-        transferRepository.findAll(_, _) >> [new MongoTransfer(balance: 1000)]
-        1 * transferRepository.updateBalanceInLaterTransfers(_, _, _)
+        transferRepository.findAll(_, _) >> []
+        1 * transferRepository.updateBalanceInTodayTransfers(_)
+        1 * transferRepository.updateBalanceInLaterThanTodayTransfers(_)
     }
 
 }
