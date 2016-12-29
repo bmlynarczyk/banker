@@ -5,8 +5,6 @@ import it.introsoft.banker.repository.MongoTransfer
 import it.introsoft.banker.repository.MongoTransferRepository
 import spock.lang.Specification
 
-import static it.introsoft.banker.repository.QMongoTransfer.mongoTransfer
-
 class MongoBalanceCalculatorTest extends Specification {
 
     MongoTransferRepository transferRepository = Mock(MongoTransferRepository)

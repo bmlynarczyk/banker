@@ -6,7 +6,7 @@ import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
 import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.bgzOptimaStringToMoneyValue
 
-class BgzOptimaTransferRaw implements TransferRaw{
+class BgzOptimaTransferRaw implements TransferRaw {
 
     String account
     String title

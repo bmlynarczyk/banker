@@ -1,16 +1,8 @@
 package it.introsoft.banker.model
 
-import it.introsoft.banker.model.transfer.category.BgzOptimaTransferCategoryRecognizer
-import it.introsoft.banker.model.transfer.category.MBankTransferCategoryRecognizer
-import it.introsoft.banker.model.transfer.category.MilleniumTransferCategoryRecognizer
-import it.introsoft.banker.model.transfer.category.PkoBpTransferCategoryRecognizer
-import it.introsoft.banker.model.transfer.category.TransferCategoryRecognizer
-import it.introsoft.banker.model.transfer.type.BgzOptimaTransferTypeRecognizer
-import it.introsoft.banker.model.transfer.type.MBankTransferTypeRecognizer
-import it.introsoft.banker.model.transfer.type.MilleniumTransferTypeRecognizer
-import it.introsoft.banker.model.transfer.type.PkoBpTransferTypeRecognizer
-import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 import groovy.transform.CompileStatic
+import it.introsoft.banker.model.transfer.category.*
+import it.introsoft.banker.model.transfer.type.*
 
 @CompileStatic
 enum Bank {
@@ -73,6 +65,7 @@ enum Bank {
     }
 
     abstract TransferTypeRecognizer typeRecognizer()
+
     abstract TransferCategoryRecognizer categoryRecognizer()
 
 }

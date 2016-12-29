@@ -8,7 +8,7 @@ import spock.lang.Specification
 
 class PkoBpTransferRawConverterTest extends Specification {
 
-    def 'convert pko html table to transfer raws'(){
+    def 'convert pko html table to transfer raws'() {
         given:
         Document document = Jsoup.parse(TestData.PKO_BP_TRANSFER_TABLE)
         when:

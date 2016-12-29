@@ -41,14 +41,14 @@ class BgzOptimaTransferRawConverter implements Converter<List<String>, List<Tran
         return result
     }
 
-    private static String getTitle(List<String> transfers, String currentTransferType, int currentTransferPosition){
-        if(currentTransferType in ['ODSETKI ZAPŁACONE', 'PODATEK POBRANY', 'ODSETKI OTRZYMANE'])
+    private static String getTitle(List<String> transfers, String currentTransferType, int currentTransferPosition) {
+        if (currentTransferType in ['ODSETKI ZAPŁACONE', 'PODATEK POBRANY', 'ODSETKI OTRZYMANE'])
             return null
-        if(currentTransferType in ['PRZELEW'])
+        if (currentTransferType in ['PRZELEW'])
             return transfers.get(currentTransferPosition + 3)
-        if(currentTransferType in ['PRZELEW PLANET'])
+        if (currentTransferType in ['PRZELEW PLANET'])
             return transfers.get(currentTransferPosition + 3)
-        if(currentTransferType in ['PRZELEW OTRZYMANY ELIXIR', 'PRZELEW OTRZYMANY'])
+        if (currentTransferType in ['PRZELEW OTRZYMANY ELIXIR', 'PRZELEW OTRZYMANY'])
             return transfers.get(currentTransferPosition + 5)
         throw new IllegalStateException(currentTransferType)
     }

@@ -6,7 +6,7 @@ import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
 import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.toMoneyValue
 
-class PkoBpTransferRaw implements TransferRaw{
+class PkoBpTransferRaw implements TransferRaw {
 
     String account
     String description
@@ -33,7 +33,7 @@ class PkoBpTransferRaw implements TransferRaw{
     }
 
     private static String getMoneyString(String value) {
-        return value.replaceAll('\\+', '').replaceAll('\\.',',')
+        return value.replaceAll('\\+', '').replaceAll('\\.', ',')
     }
 
 

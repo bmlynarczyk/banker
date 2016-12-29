@@ -120,7 +120,7 @@ class TransferComparatorTest extends Specification {
             )
     ]
 
-    def 'should sort by date and transfer number'(){
+    def 'should sort by date and transfer number'() {
         def copy = transfersWithDateTransferNumber.collect()
         when:
         Collections.sort(copy, new TransferComparator())
@@ -128,7 +128,7 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithDateTransferNumber.reverse()
     }
 
-    def 'should always sort by date and transfer number'(){
+    def 'should always sort by date and transfer number'() {
         def copy = transfersWithDateTransferNumber.collect()
         Collections.shuffle(copy, new Random(System.nanoTime()))
         when:
@@ -137,7 +137,7 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithDateTransferNumber.reverse()
     }
 
-    def 'should sort by date and balance'(){
+    def 'should sort by date and balance'() {
         def copy = transfersWithBalance.collect()
         when:
         Collections.sort(copy, new TransferComparator())
@@ -145,7 +145,7 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithBalance.reverse()
     }
 
-    def 'should always sort by date and balance'(){
+    def 'should always sort by date and balance'() {
         def copy = transfersWithBalance.collect()
         Collections.shuffle(copy, new Random(System.nanoTime()))
         when:
@@ -154,7 +154,7 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithBalance.reverse()
     }
 
-    def 'should sort by date in favor of transfer number when present is also balance'(){
+    def 'should sort by date in favor of transfer number when present is also balance'() {
         def copy = transfersWithDateTransferNumberAndBalance.collect()
         Collections.shuffle(copy)
         when:
@@ -163,7 +163,7 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithDateTransferNumberAndBalance.reverse()
     }
 
-    def 'should thrown exception when sort is impossible'(){
+    def 'should thrown exception when sort is impossible'() {
         when:
         Collections.sort(transfersWithoutDateTransferNumberAndBalance, new TransferComparator())
         then:

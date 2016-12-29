@@ -19,13 +19,13 @@ class PkoBpTransferRawConverter implements Converter<Document, List<PkoBpTransfe
         return rows.collect {
             def columns = it.select('td')
             return new PkoBpTransferRaw(
-                account: account,
-                date: columns.get(0).text(),
-                transferType: columns.get(2).text(),
-                description: columns.get(3).text(),
-                amount: columns.get(4).text(),
-                currency: columns.get(5).text(),
-                balance: columns.get(6).text()
+                    account: account,
+                    date: columns.get(0).text(),
+                    transferType: columns.get(2).text(),
+                    description: columns.get(3).text(),
+                    amount: columns.get(4).text(),
+                    currency: columns.get(5).text(),
+                    balance: columns.get(6).text()
             )
         }
     }

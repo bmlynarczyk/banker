@@ -2,9 +2,9 @@ package it.introsoft.banker.model.transfer.supplier
 
 import groovy.util.logging.Slf4j
 import it.introsoft.banker.model.transfer.Transfer
+import it.introsoft.banker.model.transfer.raw.converter.BgzOptimaTransferRawConverter
 import it.introsoft.banker.model.transfer.raw.converter.MBankTransferRawConverter
 import it.introsoft.banker.model.transfer.raw.converter.MilleniumTransferRawConverter
-import it.introsoft.banker.model.transfer.raw.converter.BgzOptimaTransferRawConverter
 import it.introsoft.banker.model.transfer.raw.converter.PkoBpTransferRawConverter
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty

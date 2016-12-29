@@ -21,7 +21,7 @@ class MBankTransferRawTest extends Specification {
         transfer.bank == Bank.M_BANK.name
         transfer.transferType == TransferType.DEPOSIT.name()
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-07-28')
-        transfer.amount ==  2100000L
+        transfer.amount == 2100000L
         transfer.description == 'FAKTURA TELEFON'
     }
 

@@ -27,7 +27,7 @@ class MBankTransferRaw implements TransferRaw {
         def bank = Bank.M_BANK
         amount = amount.replaceAll('Kwota przelewu: ', '')
         TransferType transferType = transferTypeRecognizer.recognize(getDescriber(isZus, isTax), amount)
-        if(transferType in [TransferType.TAX_CHARGES, TransferType.INSURANCE_CHARGES, TransferType.BANK_CHARGES, TransferType.INTEREST_TAX_CHARGES, TransferType.CHARGES])
+        if (transferType in [TransferType.TAX_CHARGES, TransferType.INSURANCE_CHARGES, TransferType.BANK_CHARGES, TransferType.INTEREST_TAX_CHARGES, TransferType.CHARGES])
             amount = "-$amount"
         return new Transfer(
                 account: account,
