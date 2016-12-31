@@ -21,6 +21,9 @@ class MBankTransferRawConverter implements Converter<List<String>, MBankTransfer
                 symbol: strings.find { it.startsWith('Symbol: ') },
                 transferType: strings.find { it.startsWith('Rodzaj operacji: ') },
                 date: strings.find { it.startsWith('Data księgowania: ') },
+                referenceNumber: strings.find {
+                    it.startsWith('Nr referencyjny operacji: ') || it.startsWith('Nr referencyjny: ')
+                },
                 amount: getAmount(strings)
         )
     }
@@ -29,7 +32,7 @@ class MBankTransferRawConverter implements Converter<List<String>, MBankTransfer
         def foundedAmount = transferStrings.find { it.startsWith('Kwota przelewu: ') }
         if (!foundedAmount)
             return transferStrings.find { it.startsWith('Kwota w PLN: ') }
-        return transferStrings.find { it.startsWith('Kwota przelewu: ') }
+        return foundedAmount
     }
 
 

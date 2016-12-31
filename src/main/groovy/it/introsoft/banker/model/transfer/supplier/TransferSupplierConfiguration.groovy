@@ -51,7 +51,7 @@ class TransferSupplierConfiguration {
             @Value('${pathname.mbank}') String pathname, @Value('${account.mbank}') String account) {
         return new SingleTransferOnPdfPageSupplier(
                 new File(pathname),
-                new Rectangle(10, 250, 550, 300),
+                new Rectangle(10, 10, 550, 790),
                 new MBankTransferRawConverter(account)
         )
     }
