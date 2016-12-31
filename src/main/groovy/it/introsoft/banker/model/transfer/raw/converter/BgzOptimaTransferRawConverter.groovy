@@ -33,7 +33,7 @@ class BgzOptimaTransferRawConverter implements Converter<List<String>, List<Tran
                         transferType: transferType,
                         amount: matcher.group(4),
                         balance: matcher.group(5),
-                        title: getTitle(strings, transferType, position)
+                        title: transferType
                 ))
             }
             position++
@@ -45,11 +45,11 @@ class BgzOptimaTransferRawConverter implements Converter<List<String>, List<Tran
         if (currentTransferType in ['ODSETKI ZAPŁACONE', 'PODATEK POBRANY', 'ODSETKI OTRZYMANE'])
             return null
         if (currentTransferType in ['PRZELEW'])
-            return transfers.get(currentTransferPosition + 3)
+            return transfers[currentTransferPosition + 3]
         if (currentTransferType in ['PRZELEW PLANET'])
-            return transfers.get(currentTransferPosition + 3)
+            return transfers[currentTransferPosition + 3]
         if (currentTransferType in ['PRZELEW OTRZYMANY ELIXIR', 'PRZELEW OTRZYMANY'])
-            return transfers.get(currentTransferPosition + 5)
+            return transfers[currentTransferPosition + 5]
         throw new IllegalStateException(currentTransferType)
     }
 

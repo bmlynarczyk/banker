@@ -1,11 +1,13 @@
 package it.introsoft.banker.model.transfer.raw
 
+import groovy.transform.EqualsAndHashCode
 import it.introsoft.banker.model.Bank
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
 import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.bgzOptimaStringToMoneyValue
 
+@EqualsAndHashCode
 class BgzOptimaTransferRaw implements TransferRaw {
 
     String account
@@ -27,7 +29,8 @@ class BgzOptimaTransferRaw implements TransferRaw {
                 date: new Date().parse('dd.MM.yyyy', date),
                 amount: bgzOptimaStringToMoneyValue(amount),
                 balance: bgzOptimaStringToMoneyValue(balance),
-                bank: Bank.BGZ_OPTIMA.name
+                bank: Bank.BGZ_OPTIMA.name,
+                description: title
         )
     }
 }
