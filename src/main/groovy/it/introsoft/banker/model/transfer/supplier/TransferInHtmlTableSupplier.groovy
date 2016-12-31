@@ -1,6 +1,5 @@
 package it.introsoft.banker.model.transfer.supplier
 
-import com.google.common.collect.TreeMultiset
 import groovy.transform.CompileStatic
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.TransferComparator
@@ -25,8 +24,8 @@ class TransferInHtmlTableSupplier implements Supplier<Collection<Transfer>> {
     @Override
     Collection<Transfer> get() {
         Document document = Jsoup.parse(file, 'utf-8')
-        TreeMultiset<Transfer> transfers = TreeMultiset.create(new TransferComparator())
-        converter.convert(document).collect(transfers, { it.asTransfer() })
+        def transfers = converter.convert(document).collect({ it.asTransfer() })
+        Collections.sort(transfers, new TransferComparator())
         return transfers
     }
 

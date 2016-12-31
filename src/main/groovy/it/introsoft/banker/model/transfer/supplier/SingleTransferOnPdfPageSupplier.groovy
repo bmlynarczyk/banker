@@ -1,6 +1,5 @@
 package it.introsoft.banker.model.transfer.supplier
 
-import com.google.common.collect.TreeMultiset
 import groovy.transform.CompileStatic
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.TransferComparator
@@ -44,12 +43,12 @@ class SingleTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> 
     }
 
     private Collection<Transfer> getTransfers(PDDocument document, PDFTextStripperByArea stripper) {
-        TreeMultiset<Transfer> transfers = TreeMultiset.create(new TransferComparator())
-        document.getPages().collect(transfers, { PDPage page ->
+        def transfers = document.getPages().collect({ PDPage page ->
             stripper.extractRegions(page)
             def transferStrings = getTransferDataAsLines(stripper)
             return converter.convert(transferStrings).asTransfer()
         })
+        Collections.sort(transfers, new TransferComparator())
         return transfers
     }
 
