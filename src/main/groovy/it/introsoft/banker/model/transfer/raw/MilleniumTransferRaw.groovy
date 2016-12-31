@@ -1,11 +1,13 @@
 package it.introsoft.banker.model.transfer.raw
 
+import groovy.transform.EqualsAndHashCode
 import it.introsoft.banker.model.Bank
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter
 import it.introsoft.banker.model.transfer.type.TransferType
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
+@EqualsAndHashCode
 class MilleniumTransferRaw implements TransferRaw {
 
     String account
