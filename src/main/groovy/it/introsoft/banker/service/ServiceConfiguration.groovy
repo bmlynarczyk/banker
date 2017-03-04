@@ -1,6 +1,6 @@
 package it.introsoft.banker.service
 
-import it.introsoft.banker.repository.MongoTransferRepository
+import it.introsoft.banker.repository.mongo.MongoTransferRepository
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Profile

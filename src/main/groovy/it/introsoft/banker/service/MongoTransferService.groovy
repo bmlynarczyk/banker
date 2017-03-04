@@ -4,8 +4,8 @@ import com.google.common.base.Stopwatch
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import it.introsoft.banker.model.transfer.Transfer
-import it.introsoft.banker.repository.MongoTransfer
-import it.introsoft.banker.repository.MongoTransferRepository
+import it.introsoft.banker.repository.mongo.MongoTransfer
+import it.introsoft.banker.repository.mongo.MongoTransferRepository
 
 import static it.introsoft.banker.repository.QMongoTransfer.mongoTransfer
 

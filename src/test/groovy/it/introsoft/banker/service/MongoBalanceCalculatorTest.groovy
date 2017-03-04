@@ -1,8 +1,8 @@
 package it.introsoft.banker.service
 
 import it.introsoft.banker.model.transfer.Transfer
-import it.introsoft.banker.repository.MongoTransfer
-import it.introsoft.banker.repository.MongoTransferRepository
+import it.introsoft.banker.repository.mongo.MongoTransfer
+import it.introsoft.banker.repository.mongo.MongoTransferRepository
 import spock.lang.Specification
 
 class MongoBalanceCalculatorTest extends Specification {

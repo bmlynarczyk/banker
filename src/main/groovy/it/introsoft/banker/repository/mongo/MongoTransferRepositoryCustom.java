@@ -1,4 +1,4 @@
-package it.introsoft.banker.repository;
+package it.introsoft.banker.repository.mongo;
 
 import it.introsoft.banker.model.transfer.Transfer;
 
