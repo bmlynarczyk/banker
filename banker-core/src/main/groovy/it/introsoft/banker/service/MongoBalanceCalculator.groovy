@@ -6,7 +6,7 @@ import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.repository.mongo.MongoTransfer
 import it.introsoft.banker.repository.mongo.MongoTransferRepository
 
-import static it.introsoft.banker.repository.QMongoTransfer.mongoTransfer
+import static it.introsoft.banker.repository.mongo.QMongoTransfer.mongoTransfer
 
 @Slf4j
 @CompileStatic

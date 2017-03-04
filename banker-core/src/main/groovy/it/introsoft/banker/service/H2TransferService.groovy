@@ -4,21 +4,21 @@ import com.google.common.base.Stopwatch
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import it.introsoft.banker.model.transfer.Transfer
-import it.introsoft.banker.repository.mongo.MongoTransfer
-import it.introsoft.banker.repository.mongo.MongoTransferRepository
+import it.introsoft.banker.repository.h2.H2Transfer
+import it.introsoft.banker.repository.h2.H2TransferRepository
 
-import static it.introsoft.banker.repository.QMongoTransfer.mongoTransfer
+import static it.introsoft.banker.repository.h2.QH2Transfer.h2Transfer
 
 @Slf4j
 @CompileStatic
-class MongoTransferService implements TransferService {
+class H2TransferService implements TransferService {
 
-    private final MongoTransferRepository mongoTransferRepository
-    private final MongoBalanceCalculator balanceCalculator
+    private final H2TransferRepository transferRepository
+    private final H2BalanceCalculator balanceCalculator
 
-    MongoTransferService(MongoTransferRepository mongoTransferRepository) {
-        this.mongoTransferRepository = mongoTransferRepository
-        this.balanceCalculator = new MongoBalanceCalculator(mongoTransferRepository)
+    H2TransferService(H2TransferRepository transferRepository) {
+        this.transferRepository = transferRepository
+        this.balanceCalculator = new H2BalanceCalculator(transferRepository)
     }
 
     @Override
@@ -35,30 +35,30 @@ class MongoTransferService implements TransferService {
         }
     }
 
-    private MongoTransfer getTransferFromMongo(Transfer transfer) {
+    private H2Transfer getTransferFromMongo(Transfer transfer) {
         def stopwatch = Stopwatch.createStarted()
 
         def predicate = (
-                mongoTransfer.date.eq(transfer.date)
-                        & mongoTransfer.account.eq(transfer.account)
-                        & mongoTransfer.amount.eq(transfer.amount)
-                        & mongoTransfer.description.eq(transfer.description)
+                h2Transfer.date.eq(transfer.date)
+                        & h2Transfer.account.eq(transfer.account)
+                        & h2Transfer.amount.eq(transfer.amount)
+                        & h2Transfer.description.eq(transfer.description)
         )
 
         if (transfer.balance)
-            predicate = predicate & mongoTransfer.balance.eq(transfer.balance)
+            predicate = predicate & h2Transfer.balance.eq(transfer.balance)
 
         if (transfer.dateTransferNumber)
-            predicate = predicate & mongoTransfer.dateTransferNumber.eq(transfer.dateTransferNumber)
+            predicate = predicate & h2Transfer.dateTransferNumber.eq(transfer.dateTransferNumber)
 
         log.trace(predicate.toString())
-        def mongoTransfer = mongoTransferRepository.findOne(predicate)
+        def mongoTransfer = transferRepository.findOne(predicate)
         log.debug('check existence of transfer in: {}', stopwatch)
         return mongoTransfer
     }
 
     private void saveInRepo(Transfer transfer) {
-        mongoTransferRepository.save(new MongoTransfer(
+        transferRepository.save(new H2Transfer(
                 date: transfer.date,
                 dateTransferNumber: transfer.dateTransferNumber ?: getDateTransferNumber(transfer.date),
                 description: transfer.description,
@@ -70,21 +70,20 @@ class MongoTransferService implements TransferService {
                 beneficiaryAccount: transfer.beneficiaryAccount,
                 bank: transfer.bank,
                 category: transfer.category,
-                tags: transfer.tags
         ))
     }
 
     private long getDateTransferNumber(Date date) {
-        MongoTransfer transfer = mongoTransferRepository.findAll(
-                mongoTransfer.date.eq(date),
-                mongoTransfer.dateTransferNumber.desc()
+        H2Transfer transfer = transferRepository.findAll(
+                h2Transfer.date.eq(date),
+                h2Transfer.dateTransferNumber.desc()
         )[0]
         return (transfer ? transfer.getDateTransferNumber() : 0L) + 1
     }
 
     @Override
     void deleteAll() {
-        mongoTransferRepository.deleteAll()
+        transferRepository.deleteAll()
     }
 
 }
