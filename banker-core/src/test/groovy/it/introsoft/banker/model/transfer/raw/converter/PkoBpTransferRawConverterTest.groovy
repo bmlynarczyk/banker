@@ -19,7 +19,7 @@ class PkoBpTransferRawConverterTest extends Specification {
         transferRaw.account == 'abc'
         transferRaw.date == '2016-12-16'
         transferRaw.transferType == 'Przelew na rachunek'
-        transferRaw.description == 'Rachunek nadawcy : 57 1140 2004 0000 0000 0000 0000 Nazwa nadawcy : JAN NOWAK Adres nadawcy : XXX XXX Tytuł : XXX'
+        transferRaw.description == 'Rachunek odbiorcy : 57 1140 2004 0000 0000 0000 0000 Nazwa odbiorcy : JAN NOWAK Adres odbiorcy : XXX XXX Tytuł : XXX'
         transferRaw.amount == '+2500.00'
         transferRaw.balance == '+3082.01'
     }

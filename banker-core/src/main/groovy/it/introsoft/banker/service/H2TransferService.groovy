@@ -67,9 +67,15 @@ class H2TransferService implements TransferService {
                 currency: transfer.currency,
                 transferType: transfer.transferType,
                 account: transfer.account,
+                beneficiaryName: transfer.beneficiaryName,
                 beneficiaryAccount: transfer.beneficiaryAccount,
+                beneficiaryAddress: transfer.beneficiaryAddress,
+                payeeName: transfer.payeeName,
+                payeeAccount: transfer.payeeAccount,
+                payeeAddress: transfer.payeeAddress,
                 bank: transfer.bank,
                 category: transfer.category,
+                cardNumber: transfer.cardNumber
         ))
     }
 

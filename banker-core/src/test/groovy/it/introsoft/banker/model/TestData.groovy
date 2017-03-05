@@ -117,14 +117,14 @@ class TestData {
     <td>Przelew na rachunek</td>
 	<td>
 	
-		Rachunek nadawcy
+		Rachunek odbiorcy
 		: 
 		
 			57 1140 2004 0000 0000 0000 0000
 		
 		<br>
 	
-		Nazwa nadawcy
+		Nazwa odbiorcy
 		: 
 		
 			
@@ -133,7 +133,7 @@ class TestData {
 		
 		<br>
 	
-		Adres nadawcy
+		Adres odbiorcy
 		: 
 		
 			
@@ -171,14 +171,14 @@ class TestData {
     <td>Przelew na rachunek</td>
 	<td>
 	
-		Rachunek nadawcy
+		Rachunek odbiorcy
 		: 
 		
 			52 2490 1057 0000 0000 0000 0000
 		
 		<br>
 	
-		Nazwa nadawcy
+		Nazwa odbiorcy
 		: 
 		
 			
@@ -187,7 +187,7 @@ class TestData {
 		
 		<br>
 	
-		Adres nadawcy
+		Adres odbiorcy
 		: 
 		
 			
@@ -223,14 +223,14 @@ class TestData {
 	<td>Przelew na rachunek</td>
     <td>
 
-    Rachunek nadawcy
+    Rachunek odbiorcy
     :
 
     10 2490 1057 0000 0000 0000 0000
 
     <br>
 
-    Nazwa nadawcy
+    Nazwa odbiorcy
     :
 
 
@@ -239,7 +239,7 @@ class TestData {
 
     <br>
 
-    Adres nadawcy
+    Adres odbiorcy
     :
 
 

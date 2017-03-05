@@ -67,7 +67,9 @@ class MongoTransferService implements TransferService {
                 currency: transfer.currency,
                 transferType: transfer.transferType,
                 account: transfer.account,
+                beneficiaryName: transfer.beneficiaryName,
                 beneficiaryAccount: transfer.beneficiaryAccount,
+                beneficiaryAddress: transfer.beneficiaryAddress,
                 bank: transfer.bank,
                 category: transfer.category,
                 tags: transfer.tags

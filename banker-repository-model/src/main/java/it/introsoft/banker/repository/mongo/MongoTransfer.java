@@ -25,7 +25,9 @@ public class MongoTransfer {
     private String currency;
     private String transferType;
     private String account;
+    private String beneficiaryName;
     private String beneficiaryAccount;
+    private String beneficiaryAddress;
     private String bank;
     private String category;
     private List<String> tags;

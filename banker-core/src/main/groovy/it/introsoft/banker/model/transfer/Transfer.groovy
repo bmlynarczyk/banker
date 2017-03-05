@@ -14,8 +14,14 @@ class Transfer {
     String currency
     String transferType
     String account
+    String beneficiaryName
     String beneficiaryAccount
+    String beneficiaryAddress
+    String payeeName
+    String payeeAccount
+    String payeeAddress
     String bank
     String category
+    String cardNumber
     List<String> tags
 }
