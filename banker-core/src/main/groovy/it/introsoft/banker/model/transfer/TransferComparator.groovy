@@ -10,7 +10,7 @@ class TransferComparator implements Comparator<Transfer> {
         if (transfer1.dateTransferNumber)
             return transfer1.dateTransferNumber <=> transfer2.dateTransferNumber
         if (transfer1.balance)
-            return transfer1.balance <=> transfer2.balance
+            return -1
         throw new IllegalStateException('sort is impossible')
     }
 

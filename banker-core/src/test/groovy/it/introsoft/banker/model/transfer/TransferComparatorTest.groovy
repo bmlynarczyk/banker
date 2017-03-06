@@ -145,15 +145,6 @@ class TransferComparatorTest extends Specification {
         copy == transfersWithBalance.reverse()
     }
 
-    def 'should always sort by date and balance'() {
-        def copy = transfersWithBalance.collect()
-        Collections.shuffle(copy, new Random(System.nanoTime()))
-        when:
-        Collections.sort(copy, new TransferComparator())
-        then:
-        copy == transfersWithBalance.reverse()
-    }
-
     def 'should sort by date in favor of transfer number when present is also balance'() {
         def copy = transfersWithDateTransferNumberAndBalance.collect()
         Collections.shuffle(copy)
