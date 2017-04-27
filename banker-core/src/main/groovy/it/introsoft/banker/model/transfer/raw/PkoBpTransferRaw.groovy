@@ -6,7 +6,6 @@ import it.introsoft.banker.model.Bank
 import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer
 
-import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.toMoneyValue
@@ -65,6 +64,15 @@ class PkoBpTransferRaw implements TransferRaw {
     }
 
     private class TransferDetails {
+
+        final String beneficiaryName
+        final String beneficiaryAddress
+        final String beneficiaryAccount
+        final String title
+        final String cardNumber
+        final String payeeName
+        final String payeeAccount
+        final String payeeAddress
 
         TransferDetails(String description) {
             def outgoingPaymentMatcher = outgoingPayment.matcher(description)
@@ -146,15 +154,6 @@ class PkoBpTransferRaw implements TransferRaw {
             }
 
         }
-
-        final String beneficiaryName
-        final String beneficiaryAddress
-        final String beneficiaryAccount
-        final String title
-        final String cardNumber
-        final String payeeName
-        final String payeeAccount
-        final String payeeAddress
 
     }
 
