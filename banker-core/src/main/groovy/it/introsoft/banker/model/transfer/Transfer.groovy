@@ -17,11 +17,15 @@ class Transfer {
     String beneficiaryName
     String beneficiaryAccount
     String beneficiaryAddress
+    String beneficiaryBank
     String payeeName
     String payeeAccount
     String payeeAddress
+    String payeeBank;
     String bank
     String category
     String cardNumber
+    String cardName
+    String cardOwner
     List<String> tags
 }

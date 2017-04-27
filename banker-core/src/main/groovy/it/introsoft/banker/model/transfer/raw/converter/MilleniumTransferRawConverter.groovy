@@ -19,14 +19,24 @@ class MilleniumTransferRawConverter implements Converter<List<String>, Millenium
     MilleniumTransferRaw convert(List<String> strings) {
         log.debug(strings.toString())
         return new MilleniumTransferRaw(
-                account: account,
-                beneficiaryAccount: strings.find { it.startsWith('Na rachunek ') },
-                title: strings.find { it.startsWith('Tytuł ') },
                 transferType: strings.find { it.startsWith('Typ operacji ') },
+                dateTransferNumber: strings.find { it.startsWith('Dzienny numer transakcji ') },
                 date: strings.find { it.startsWith('Data księgowania ') },
-                amount: strings.find { it.startsWith('Kwota ') },
+                accountingDate: strings.find { it.startsWith('Data waluty ') },
+                transferDate: strings.find { it.startsWith('Data transakcji ') },
+                payeeAccount: strings.find { it.startsWith('Z rachunku ') },
+                payeeBank: strings.find { it.startsWith('Bank zleceniodawcy ') },
+                payeeName: strings.find { it.startsWith('Zleceniodawca ') },
+                cardName: strings.find { it.startsWith('Karta ') },
+                cardNumber: strings.find { it.startsWith('Numer karty ') },
+                cardOwner: strings.find { it.startsWith('Posiadacz karty ') },
+                beneficiaryAccount: strings.find { it.startsWith('Na rachunek ') },
+                beneficiaryBank: strings.find { it.startsWith('Bank odbiorcy ') },
+                beneficiaryName: strings.find { it.startsWith('Odbiorca ') },
+                title: strings.find { it.startsWith('Tytuł ') },
                 accountedAmount: strings.find { it.startsWith('Kwota zaksięgowana ') },
-                dateTransferNumber: strings.find { it.startsWith('Dzienny numer transakcji ') }
+                account: account
+
         )
     }
 

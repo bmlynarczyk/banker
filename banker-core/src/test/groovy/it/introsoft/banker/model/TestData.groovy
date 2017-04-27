@@ -2,7 +2,7 @@ package it.introsoft.banker.model
 
 class TestData {
 
-    static final List<String> MILLENIUM_CARD_PAYMENTS_TRANSFER_LINES = [
+    static final List<String> MILLENIUM_CARD_PAYMENTS = [
             'Typ operacji TRANSAKCJA KARTĄ PŁATNICZĄ',
             'Dzienny numer transakcji 3',
             'Data księgowania 2016-12-09',
@@ -15,6 +15,38 @@ class TestData {
             'Kwota rozliczenia 15,10 PLN',
             'Kwota zaksięgowana -15,10 PLN',
             'Tytuł Stolowka Lublin 16/12/07'
+    ]
+
+    static final List<String> MILLENIUM_TRANSFER_TO_ANOTHER_BANK = [
+            'Typ operacji PRZELEW DO INNEGO BANKU',
+            'Dzienny numer transakcji 1',
+            'Data księgowania 2016-09-21',
+            'Data transakcji 2016-09-20',
+            'Z rachunku 98116022020000000000000000',
+            'Zleceniodawca JAN NOWAK LUBLIN 348 22-035',
+            'TRAWNIKI',
+            'Na rachunek 59102031500000000000000000',
+            'Bank odbiorcy PKOBP Oddział 4 w Lublinie',
+            'Odbiorca John Doe',
+            'Kwota transakcji 1 000,00 PLN',
+            'Kwota zaksięgowana -1 000,00 PLN',
+            'Tytuł Przelew - John Doe'
+    ]
+
+    static final List<String> MILLENIUM_TRANSFER_FROM_ANOTHER_BANK = [
+            'Typ operacji PRZELEW PRZYCHODZĄCY',
+            'Dzienny numer transakcji 4',
+            'Data księgowania 2016-09-19',
+            'Data waluty 2016-09-19',
+            'Z rachunku 57114020000000000000000000',
+            'Bank zleceniodawcy mBank Oddział Bankowości Detalicznej',
+            'Zleceniodawca JAN NOWAK LUBLIN 348 22-035',
+            'TRAWNIKI',
+            'Na rachunek 98116022020000000000000000',
+            'Odbiorca BART',
+            'Kwota transakcji 18 000,00 PLN',
+            'Kwota zaksięgowana 18 000,00 PLN',
+            'Tytuł PRZELEW ŚRODKÓW'
     ]
 
     static final List<String> M_BANK_DEPOSIT = [

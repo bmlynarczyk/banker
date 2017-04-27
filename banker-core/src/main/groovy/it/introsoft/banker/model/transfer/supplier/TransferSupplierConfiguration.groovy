@@ -62,7 +62,7 @@ class TransferSupplierConfiguration {
             @Value('${pathname.millenium}') String pathname, @Value('${account.millenium}') String account) {
         return new SingleTransferOnPdfPageSupplier(
                 new File(pathname),
-                new Rectangle(10, 50, 550, 500),
+                new Rectangle(10, 50, 550, 800),
                 new MilleniumTransferRawConverter(account)
         )
     }
