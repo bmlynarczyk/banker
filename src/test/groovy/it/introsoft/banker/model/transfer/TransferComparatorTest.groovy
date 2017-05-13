@@ -11,7 +11,7 @@ class TransferComparatorTest extends Specification {
     def transfersWithDateTransferNumber = [
             Transfer.builder().date(sdf.parse("21/12/2012")).
                     balance(null)
-                    .dateTransferNumber(3).build(), ,
+                    .dateTransferNumber(3).build(),
             Transfer.builder().date(sdf.parse("21/12/2012")).
                     balance(null)
                     .dateTransferNumber(2).build(),
