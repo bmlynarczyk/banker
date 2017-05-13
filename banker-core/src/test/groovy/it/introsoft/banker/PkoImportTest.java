@@ -1,7 +1,7 @@
 package it.introsoft.banker;
 
-import it.introsoft.banker.repository.h2.H2Transfer;
-import it.introsoft.banker.repository.h2.H2TransferRepository;
+import it.introsoft.banker.repository.H2Transfer;
+import it.introsoft.banker.repository.TransferRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Iterator;
 
-import static it.introsoft.banker.repository.h2.QH2Transfer.h2Transfer;
+import static it.introsoft.banker.repository.QH2Transfer.h2Transfer;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PkoImportTest {
 
     @Autowired
-    H2TransferRepository transferRepository;
+    TransferRepository transferRepository;
 
     @Test
     public void doesStart() throws Exception {

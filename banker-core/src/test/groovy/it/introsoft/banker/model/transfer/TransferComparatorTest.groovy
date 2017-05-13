@@ -9,115 +9,75 @@ class TransferComparatorTest extends Specification {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy")
 
     def transfersWithDateTransferNumber = [
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 3
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 2
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 1
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 2
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 1
-            ),
-            new Transfer(
-                    date: sdf.parse("19/12/2012"),
-                    balance: null,
-                    dateTransferNumber: 1
-            )
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(3).build(), ,
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(2).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(1).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(2).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(1).build(),
+            Transfer.builder().date(sdf.parse("19/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(1).build()
     ]
 
     def transfersWithBalance = [
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 70,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 60,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 50,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: 40,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: 30,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("19/12/2012"),
-                    balance: 20,
-                    dateTransferNumber: null
-            )
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(70)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(60)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(50)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(40)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(30)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("19/12/2012")).
+                    balance(20)
+                    .dateTransferNumber(null).build()
     ]
 
     def transfersWithDateTransferNumberAndBalance = [
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 70,
-                    dateTransferNumber: 3
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 90,
-                    dateTransferNumber: 2
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: 100,
-                    dateTransferNumber: 1
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: 40,
-                    dateTransferNumber: 2
-            ),
-            new Transfer(
-                    date: sdf.parse("20/12/2012"),
-                    balance: 30,
-                    dateTransferNumber: 1
-            ),
-            new Transfer(
-                    date: sdf.parse("19/12/2012"),
-                    balance: 20,
-                    dateTransferNumber: 1
-            )
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(70)
+                    .dateTransferNumber(3).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(90)
+                    .dateTransferNumber(2).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(100)
+                    .dateTransferNumber(1).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(40)
+                    .dateTransferNumber(2).build(),
+            Transfer.builder().date(sdf.parse("20/12/2012")).
+                    balance(30)
+                    .dateTransferNumber(1).build(),
+            Transfer.builder().date(sdf.parse("19/12/2012")).
+                    balance(20)
+                    .dateTransferNumber(1).build()
     ]
 
     def transfersWithoutDateTransferNumberAndBalance = [
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: null,
-                    dateTransferNumber: null
-            ),
-            new Transfer(
-                    date: sdf.parse("21/12/2012"),
-                    balance: null,
-                    dateTransferNumber: null
-            )
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(null).build(),
+            Transfer.builder().date(sdf.parse("21/12/2012")).
+                    balance(null)
+                    .dateTransferNumber(null).build()
     ]
 
     def 'should sort by date and transfer number'() {
