@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 import static com.google.common.base.Splitter.on;
 import static org.springframework.data.util.StreamUtils.createStreamFromIterator;
 
-class SingleTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> {
+public class SingleTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> {
 
     private File file;
     private Rectangle rectangle;

@@ -20,13 +20,13 @@ import static com.google.common.base.Splitter.on;
 import static java.util.stream.Collectors.toList;
 import static org.springframework.data.util.StreamUtils.createStreamFromIterator;
 
-class MultiTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> {
+public class MultiTransferOnPdfPageSupplier implements Supplier<Collection<Transfer>> {
 
     private File file;
     private Rectangle rectangle;
     private Converter<List<String>, List<TransferRaw>> converter;
 
-    MultiTransferOnPdfPageSupplier(File file, Rectangle rectangle, Converter<List<String>, List<TransferRaw>> converter) {
+    public MultiTransferOnPdfPageSupplier(File file, Rectangle rectangle, Converter<List<String>, List<TransferRaw>> converter) {
         this.file = file;
         this.rectangle = rectangle;
         this.converter = converter;

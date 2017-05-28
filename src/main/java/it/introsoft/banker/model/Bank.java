@@ -61,6 +61,14 @@ public enum Bank {
         this.name = name;
     }
 
+    public static Bank of(String name) {
+        for (Bank value : values()) {
+            if (value.getName().equals(name))
+                return value;
+        }
+        throw new IllegalArgumentException("Unknown bank");
+    }
+
     public abstract TransferTypeRecognizer typeRecognizer();
 
     public abstract TransferCategoryRecognizer categoryRecognizer();
