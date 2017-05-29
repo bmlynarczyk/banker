@@ -27,3 +27,6 @@ nbdist/
 
 src/main/resources/application.properties
 */src/main/generated
+
+node
+node_modules
