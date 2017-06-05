@@ -5,9 +5,28 @@
     .controller('TransferPageCtrl', TransferPageCtrl);
 
   /** @ngInject */
-  function TransferPageCtrl($scope, fileReader, $filter, $uibModal) {
+  function TransferPageCtrl($scope, $http) {
 
-//    $scope.switches = [true, true, false, true, true, false];
+    $scope.smartTableData = [];
+
+    $scope.callServer = function callServer(tableState) {
+
+        $scope.isLoading = true;
+
+        var start = tableState.pagination.start || 0;
+        var number = 15;
+        var page = 0;
+
+        if(start != 0)
+            page = start / number
+
+        $http.get('http://localhost:8080/transfers?page=' + page + '&size=' + number + '&sort=date,desc').then(function(response) {
+            $scope.smartTableData = response.data._embedded.transfers;
+            tableState.pagination.numberOfPages = response.data.page.totalPages;
+            tableState.pagination.totalItemCount = response.data.page.totalElements;
+            $scope.isLoading = false;
+        });
+      };
   }
 
 })();

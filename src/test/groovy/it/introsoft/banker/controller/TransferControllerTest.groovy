@@ -43,6 +43,7 @@ class TransferControllerTest extends Specification {
         response.statusCode() == HttpStatus.SC_OK
         !response.asString().isEmpty()
         response.then().body('_embedded.transfers.size()', equalTo(2));
+        response.then().body('page.totalPages', equalTo(1));
         cleanup:
         transferRepository.deleteAll()
     }

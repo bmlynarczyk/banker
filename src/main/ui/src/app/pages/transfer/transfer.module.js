@@ -9,7 +9,7 @@
     $stateProvider
         .state('transfer', {
           url: '/transfer',
-          title: 'Transfer',
+          title: 'Transfers',
           templateUrl: 'app/pages/transfer/transfer.html',
           controller: 'TransferPageCtrl',
           sidebarMeta: {
