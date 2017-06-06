@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import java.util.Optional;
 
 @CrossOrigin
-@RepositoryRestResource(path = "transfers", collectionResourceRel = "transfers")
-public interface TransferRepository extends JpaRepository<H2Transfer, Long>, QueryDslPredicateExecutor<H2Transfer>, TransferRepositoryCustom {
-    Optional<H2Transfer> findFirstByAccountOrderByDateDescDateTransferNumberDesc(String account);
+@RepositoryRestResource(path = "accounts", collectionResourceRel = "accounts")
+public interface AccountRepository extends JpaRepository<Account, String>, QueryDslPredicateExecutor<Account> {
+
+    Optional<Account> findByNumber(String number);
+
 }

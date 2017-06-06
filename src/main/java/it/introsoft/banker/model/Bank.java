@@ -3,6 +3,8 @@ package it.introsoft.banker.model;
 import it.introsoft.banker.model.transfer.category.*;
 import it.introsoft.banker.model.transfer.type.*;
 
+import javax.validation.ValidationException;
+
 public enum Bank {
 
     BGZ_OPTIMA("bgzoptima") {
@@ -66,7 +68,7 @@ public enum Bank {
             if (value.getName().equals(name))
                 return value;
         }
-        throw new IllegalArgumentException("Unknown bank");
+        throw new ValidationException("Unknown bank");
     }
 
     public abstract TransferTypeRecognizer typeRecognizer();

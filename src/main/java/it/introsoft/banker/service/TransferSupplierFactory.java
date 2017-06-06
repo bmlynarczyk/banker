@@ -19,45 +19,45 @@ import java.util.function.Supplier;
 @Component
 public class TransferSupplierFactory {
 
-    public Supplier<Collection<Transfer>> getTransferSupplier(Bank bank, String filePath, String account) {
+    public Supplier<Collection<Transfer>> getTransferSupplier(Bank bank, File file, String account) {
         switch (bank) {
             case BGZ_OPTIMA:
-                return bgzOptimaTransfersSupplier(filePath, account);
+                return bgzOptimaTransfersSupplier(file, account);
             case PKO_BP:
-                return pkobpTransfersSupplier(filePath, account);
+                return pkobpTransfersSupplier(file, account);
             case M_BANK:
-                return mbankTransfersSupplier(filePath, account);
+                return mbankTransfersSupplier(file, account);
             case MILLENIUM:
-                return milleniumTransfersSupplier(filePath, account);
+                return milleniumTransfersSupplier(file, account);
             default:
                 throw new IllegalArgumentException("Unknown bank");
         }
     }
 
-    private Supplier<Collection<Transfer>> bgzOptimaTransfersSupplier(String pathname, String account) {
+    private Supplier<Collection<Transfer>> bgzOptimaTransfersSupplier(File file, String account) {
         return new MultiTransferOnPdfPageSupplier(
-                new File(pathname),
+                file,
                 new Rectangle(10, 10, 590, 790),
                 new BgzOptimaTransferRawConverter(account)
         );
     }
 
-    private Supplier<Collection<Transfer>> pkobpTransfersSupplier(String pathname, String account) {
-        return new TransferInHtmlTableSupplier(new File(pathname), new PkoBpTransferRawConverter(account));
+    private Supplier<Collection<Transfer>> pkobpTransfersSupplier(File file, String account) {
+        return new TransferInHtmlTableSupplier(file, new PkoBpTransferRawConverter(account));
     }
 
 
-    private Supplier<Collection<Transfer>> mbankTransfersSupplier(String pathname, String account) {
+    private Supplier<Collection<Transfer>> mbankTransfersSupplier(File file, String account) {
         return new SingleTransferOnPdfPageSupplier(
-                new File(pathname),
+                file,
                 new Rectangle(10, 10, 550, 790),
                 new MBankTransferRawConverter(account)
         );
     }
 
-    private Supplier<Collection<Transfer>> milleniumTransfersSupplier(String pathname, String account) {
+    private Supplier<Collection<Transfer>> milleniumTransfersSupplier(File file, String account) {
         return new SingleTransferOnPdfPageSupplier(
-                new File(pathname),
+                file,
                 new Rectangle(10, 50, 550, 800),
                 new MilleniumTransferRawConverter(account)
         );

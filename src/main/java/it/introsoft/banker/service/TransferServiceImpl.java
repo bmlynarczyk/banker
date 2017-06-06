@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Iterator;
+import java.util.Optional;
 
 import static it.introsoft.banker.repository.QH2Transfer.h2Transfer;
 
@@ -30,9 +31,9 @@ public class TransferServiceImpl implements TransferService {
     @Override
     public Result save(Transfer transfer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        H2Transfer fromDb = getTransferFromMongo(transfer);
-        if (fromDb != null) {
-            log.info("transfer already exists with id: {}", fromDb.getId());
+        Optional<H2Transfer> fromDb = findTransfer(transfer);
+        if (fromDb.isPresent()) {
+            log.info("transfer already exists with id: {}", fromDb.get().getId());
             return Result.EXISTING;
         } else {
             saveInRepo(transfer);
@@ -42,7 +43,7 @@ public class TransferServiceImpl implements TransferService {
 
     }
 
-    private H2Transfer getTransferFromMongo(Transfer transfer) {
+    private Optional<H2Transfer> findTransfer(Transfer transfer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
 
         BooleanExpression predicate = (h2Transfer.date.eq(transfer.getDate()).and(h2Transfer.account.eq(transfer.getAccount())).and(h2Transfer.amount.eq(transfer.getAmount())).and(h2Transfer.description.eq(transfer.getDescription())));
@@ -54,9 +55,9 @@ public class TransferServiceImpl implements TransferService {
             predicate = predicate.and(h2Transfer.dateTransferNumber.eq(transfer.getDateTransferNumber()));
 
         log.trace(predicate.toString());
-        H2Transfer mongoTransfer = transferRepository.findOne(predicate);
+        H2Transfer existingTransfer = transferRepository.findOne(predicate);
         log.debug("check existence of transfer in: {}", stopwatch);
-        return ((H2Transfer) (mongoTransfer));
+        return Optional.ofNullable(existingTransfer);
     }
 
     private void saveInRepo(Transfer transfer) {
