@@ -1,0 +1,18 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="$dismiss()" aria-label="Close">
+            <em class="ion-ios-close-empty sn-link-close"></em>
+        </button>
+        <h4 class="modal-title" id="myModalLabel">Add Account</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="accountNumber">Number</label>
+                <input type="text" class="form-control" ng-model="accountNumber" id="accountNumber"
+                       placeholder="Number">
+            </div>
+            <button type="submit" class="btn btn-danger" ng-click="addAccount()">Add</button>
+        </form>
+    </div>
+</div>

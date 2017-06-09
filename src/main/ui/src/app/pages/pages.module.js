@@ -8,7 +8,9 @@
   angular.module('BlurAdmin.pages', [
     'ui.router',
 
-    'BlurAdmin.pages.transfer'
+    'BlurAdmin.pages.transfer',
+    'BlurAdmin.pages.import',
+    'BlurAdmin.pages.account'
   ])
       .config(routeConfig);
 

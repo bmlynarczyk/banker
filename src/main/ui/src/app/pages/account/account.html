@@ -1,0 +1,19 @@
+<div class="widgets">
+    <div class="row">
+        <div class="col-md-12" ba-panel>
+            <div class="modal-buttons clearfix">
+                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="open()">
+                    Add account
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 col-lg-4"
+             ba-panel
+             ba-panel-title="{{ ::account.number }}"
+             ng-repeat="account in accounts">
+            <div class="panel-body">{{ ::account.currentBalance }}</div>
+        </div>
+    </div>
+</div>
