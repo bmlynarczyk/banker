@@ -20,7 +20,7 @@
         if(start != 0)
             page = start / number
 
-        $http.get('http://localhost:8080/transfers?page=' + page + '&size=' + number + '&sort=date,desc').then(function(response) {
+        $http.get('http://localhost:8080/transfers?page=' + page + '&size=' + number + '&sort=date,desc,dateTransferNumber,desc').then(function(response) {
             $scope.smartTableData = response.data._embedded.transfers;
             tableState.pagination.numberOfPages = response.data.page.totalPages;
             tableState.pagination.totalItemCount = response.data.page.totalElements;

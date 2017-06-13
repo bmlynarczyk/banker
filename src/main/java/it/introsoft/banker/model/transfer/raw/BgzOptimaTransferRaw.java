@@ -2,6 +2,7 @@ package it.introsoft.banker.model.transfer.raw;
 
 import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.Transfer;
+import it.introsoft.banker.model.transfer.type.BgzOptimaTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
 import lombok.*;
 
@@ -15,7 +16,7 @@ import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.bgzOpti
 @EqualsAndHashCode
 public class BgzOptimaTransferRaw implements TransferRaw {
 
-    private static final TransferTypeRecognizer transferTypeRecognizer = Bank.BGZ_OPTIMA.typeRecognizer();
+    private static final TransferTypeRecognizer transferTypeRecognizer = new BgzOptimaTransferTypeRecognizer();
 
     private String account;
     private String title;

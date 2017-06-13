@@ -1,2 +1,22 @@
-<div class="horizontal-scroll">
-</div>
+<!--<div ba-panel>-->
+<form>
+    <div class="form-group">
+        <label for="importFilePath">Import File Path</label>
+        <input type="text" class="form-control" ng-model="importFilePath" id="importFilePath"
+               placeholder="/importFilePath">
+    </div>
+    <div class="form-group">
+        <ui-select ng-model="selectedAccount.selected"
+                   class="btn-group bootstrap-select form-control"
+                   search-enabled="false">
+            <ui-select-match placeholder="Account">
+                <span> {{$select.selected}}</span>
+            </ui-select-match>
+            <ui-select-choices repeat="account in accounts">
+                <span ng-bind-html="account"></span>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <button type="submit" class="btn btn-danger" ng-click="import()">Import</button>
+</form>
+<!--</div>-->

@@ -3,6 +3,7 @@ package it.introsoft.banker.model.transfer.raw;
 import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter;
+import it.introsoft.banker.model.transfer.type.MilleniumTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
 import lombok.AllArgsConstructor;
@@ -18,7 +19,7 @@ import java.text.SimpleDateFormat;
 @EqualsAndHashCode
 public class MilleniumTransferRaw implements TransferRaw {
 
-    private static final TransferTypeRecognizer transferTypeRecognizer = Bank.MILLENIUM.typeRecognizer();
+    private static final TransferTypeRecognizer transferTypeRecognizer = new MilleniumTransferTypeRecognizer();
 
     private String account;
     private String accountedAmount;

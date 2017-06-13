@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.import', [])
+  angular.module('BlurAdmin.pages.import', ['ui.select', 'ngSanitize'])
       .config(routeConfig);
 
   /** @ngInject */

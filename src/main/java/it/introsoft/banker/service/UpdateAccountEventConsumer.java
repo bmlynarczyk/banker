@@ -28,8 +28,7 @@ public class UpdateAccountEventConsumer implements Consumer<UpdateAccountEvent> 
     @Subscribe
     @Override
     public void accept(UpdateAccountEvent updateAccountEvent) {
-        Account account = accountRepository.findByNumber(updateAccountEvent.getAccount())
-                .orElseThrow(IllegalArgumentException::new);
+        Account account = updateAccountEvent.getAccount();
         H2Transfer transfer = transferRepository.findFirstByAccountOrderByDateDescDateTransferNumberDesc(account.getNumber())
                 .orElseThrow(IllegalArgumentException::new);
 

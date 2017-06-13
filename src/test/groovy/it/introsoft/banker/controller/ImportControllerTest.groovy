@@ -46,23 +46,8 @@ class ImportControllerTest extends Specification {
     def "shouldn't import transfers when unknown account"() {
         given:
         RequestSpecification request = given()
-                .queryParam('bankName', 'pkobp')
                 .queryParam('filePath', 'src/test/resources/history.html')
                 .queryParam('account', '11 1020 3176 0000 0000 0000')
-
-        when:
-        Response response = request.when().post('/import')
-
-        then:
-        response.statusCode() == HttpStatus.SC_BAD_REQUEST
-    }
-
-    def "shouldn't import transfers when unknown bank"() {
-        given:
-        RequestSpecification request = given()
-                .queryParam('bankName', 'pko')
-                .queryParam('filePath', 'src/test/resources/history.html')
-                .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
 
         when:
         Response response = request.when().post('/import')
@@ -74,7 +59,6 @@ class ImportControllerTest extends Specification {
     def "shouldn't import transfers when file doesn't exists"() {
         given:
         RequestSpecification request = given()
-                .queryParam('bankName', 'pkobp')
                 .queryParam('filePath', 'src/test/resources/tory.html')
                 .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
 
@@ -88,7 +72,6 @@ class ImportControllerTest extends Specification {
     def "should import pkobp transfers"() {
         given:
         RequestSpecification request = given()
-                .queryParam('bankName', 'pkobp')
                 .queryParam('filePath', 'src/test/resources/history.html')
                 .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
 

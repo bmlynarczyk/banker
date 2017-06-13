@@ -12,6 +12,18 @@
                 <input type="text" class="form-control" ng-model="accountNumber" id="accountNumber"
                        placeholder="Number">
             </div>
+            <div class="form-group">
+                <ui-select ng-model="selectedBank.selected"
+                           class="btn-group bootstrap-select form-control"
+                           search-enabled="false">
+                    <ui-select-match placeholder="Bank">
+                        <span> {{$select.selected}}</span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="bank in banks">
+                        <span ng-bind-html="bank"></span>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
             <button type="submit" class="btn btn-danger" ng-click="addAccount()">Add</button>
         </form>
     </div>

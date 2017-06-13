@@ -1,61 +1,17 @@
 package it.introsoft.banker.model;
 
-import it.introsoft.banker.model.transfer.category.*;
-import it.introsoft.banker.model.transfer.type.*;
-
 import javax.validation.ValidationException;
+import java.util.Set;
+
+import static com.google.common.collect.Sets.newHashSet;
+import static java.util.stream.Collectors.toSet;
 
 public enum Bank {
 
-    BGZ_OPTIMA("bgzoptima") {
-        @Override
-        public TransferTypeRecognizer typeRecognizer() {
-            return new BgzOptimaTransferTypeRecognizer();
-        }
-
-        @Override
-        public TransferCategoryRecognizer categoryRecognizer() {
-            return new BgzOptimaTransferCategoryRecognizer();
-        }
-
-
-    }, PKO_BP("pkobp") {
-        @Override
-        public TransferTypeRecognizer typeRecognizer() {
-            return new PkoBpTransferTypeRecognizer();
-        }
-
-        @Override
-        public TransferCategoryRecognizer categoryRecognizer() {
-            return new PkoBpTransferCategoryRecognizer();
-        }
-
-
-    }, M_BANK("mbank") {
-        @Override
-        public TransferTypeRecognizer typeRecognizer() {
-            return new MBankTransferTypeRecognizer();
-        }
-
-        @Override
-        public TransferCategoryRecognizer categoryRecognizer() {
-            return new MBankTransferCategoryRecognizer();
-        }
-
-
-    }, MILLENIUM("millenium") {
-        @Override
-        public TransferTypeRecognizer typeRecognizer() {
-            return new MilleniumTransferTypeRecognizer();
-        }
-
-        @Override
-        public TransferCategoryRecognizer categoryRecognizer() {
-            return new MilleniumTransferCategoryRecognizer();
-        }
-
-
-    };
+    BGZ_OPTIMA("bgzoptima"),
+    PKO_BP("pkobp"),
+    M_BANK("mbank"),
+    MILLENIUM("millenium");
 
     private final String name;
 
@@ -71,9 +27,9 @@ public enum Bank {
         throw new ValidationException("Unknown bank");
     }
 
-    public abstract TransferTypeRecognizer typeRecognizer();
-
-    public abstract TransferCategoryRecognizer categoryRecognizer();
+    public static Set<String> getNames() {
+        return newHashSet(Bank.values()).stream().map(Bank::getName).collect(toSet());
+    }
 
     public String getName() {
         return name;

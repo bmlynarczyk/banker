@@ -9,6 +9,7 @@ import it.introsoft.banker.model.transfer.raw.converter.PkoBpTransferRawConverte
 import it.introsoft.banker.model.transfer.supplier.MultiTransferOnPdfPageSupplier;
 import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageSupplier;
 import it.introsoft.banker.model.transfer.supplier.TransferInHtmlTableSupplier;
+import it.introsoft.banker.repository.Account;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -19,16 +20,16 @@ import java.util.function.Supplier;
 @Component
 public class TransferSupplierFactory {
 
-    public Supplier<Collection<Transfer>> getTransferSupplier(Bank bank, File file, String account) {
-        switch (bank) {
+    public Supplier<Collection<Transfer>> getTransferSupplier(File file, Account account) {
+        switch (Bank.of(account.getBank())) {
             case BGZ_OPTIMA:
-                return bgzOptimaTransfersSupplier(file, account);
+                return bgzOptimaTransfersSupplier(file, account.getNumber());
             case PKO_BP:
-                return pkobpTransfersSupplier(file, account);
+                return pkobpTransfersSupplier(file, account.getNumber());
             case M_BANK:
-                return mbankTransfersSupplier(file, account);
+                return mbankTransfersSupplier(file, account.getNumber());
             case MILLENIUM:
-                return milleniumTransfersSupplier(file, account);
+                return milleniumTransfersSupplier(file, account.getNumber());
             default:
                 throw new IllegalArgumentException("Unknown bank");
         }

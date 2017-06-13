@@ -37,10 +37,22 @@
   function AddAccountPageCtrl($scope, $http) {
     $scope.accountNumber;
 
+    $scope.selectedBank = {};
+
+    $scope.banks = [];
+
+    $http.get('http://localhost:8080/banks').then(function(response) {
+        $scope.banks = response.data;
+    });
+
     $scope.addAccount = function(){
-        var data = {number: $scope.accountNumber, currentBalance: 0};
-        $http.post("http://localhost:8080/accounts", data).then(function() {
+        var data = {number: $scope.accountNumber, currentBalance: 0, bank: $scope.selectedBank.selected};
+        $http.post("http://localhost:8080/accounts", data).
+        success(function(data, status, headers, config) {
             $scope.modalInstance.close();
+        }).
+        error(function(data, status, headers, config) {
+            console.log(data)
         });
     }
 

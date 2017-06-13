@@ -2,8 +2,8 @@ package it.introsoft.banker.controller;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.eventbus.EventBus;
-import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.Transfer;
+import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.service.Result;
 import it.introsoft.banker.service.TransferService;
@@ -11,10 +11,7 @@ import it.introsoft.banker.service.TransferSupplierFactory;
 import it.introsoft.banker.service.UpdateAccountEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ValidationException;
 import java.io.File;
@@ -27,6 +24,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 @RestController
 @RequestMapping("/import")
+@CrossOrigin
 public class ImportController {
 
     @Autowired
@@ -42,15 +40,14 @@ public class ImportController {
     private AccountRepository accountRepository;
 
     @PostMapping
-    public void importTransfers(@RequestParam String bankName, @RequestParam String filePath, @RequestParam String account) {
-        Bank bank = Bank.of(bankName);
-        accountRepository.findByNumber(account).orElseThrow(ValidationException::new);
+    public void importTransfers(@RequestParam String filePath, @RequestParam String account) {
+        Account accountFromDb = accountRepository.findByNumber(account).orElseThrow(ValidationException::new);
         File file = new File(filePath);
         if (!file.exists())
             throw new ValidationException("file does't exist");
-        Supplier<Collection<Transfer>> transferSupplier = transferSupplierFactory.getTransferSupplier(bank, file, account);
+        Supplier<Collection<Transfer>> transferSupplier = transferSupplierFactory.getTransferSupplier(file, accountFromDb);
         save(transferSupplier.get());
-        eventBus.post(UpdateAccountEvent.builder().account(account).build());
+        eventBus.post(UpdateAccountEvent.builder().account(accountFromDb).build());
     }
 
     private void save(Collection<Transfer> transfers) {

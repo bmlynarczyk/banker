@@ -3,6 +3,7 @@ package it.introsoft.banker.model.transfer.raw;
 import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter;
+import it.introsoft.banker.model.transfer.type.PkoBpTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,7 +32,7 @@ public class PkoBpTransferRaw implements TransferRaw {
     private static final Pattern incomingPaymentWithoutAddress = Pattern.compile("(Rachunek nadawcy : (.*))(Nazwa nadawcy : (.*))(Tytuł : (.*))");
     private static final Pattern foreignPayment = Pattern.compile("(Rachunek nadawcy : (.*))(Nazwa nadawcy : (.*))(Tytuł : (.*))(Kwota w walucie oryginalnej : (.*))(Kurs przewalutowania : (.*))(Instrukcja kosztowa : (.*))(Referencje polecenia wypłaty : (.*))");
     private static final Pattern onlyTitle = Pattern.compile("(Tytuł : (.*))");
-    private static final TransferTypeRecognizer transferTypeRecognizer = Bank.PKO_BP.typeRecognizer();
+    private static final TransferTypeRecognizer transferTypeRecognizer = new PkoBpTransferTypeRecognizer();
     private String account;
     private String description;
     private String transferType;

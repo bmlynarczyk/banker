@@ -2,6 +2,7 @@ package it.introsoft.banker.model.transfer.raw;
 
 import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.Transfer;
+import it.introsoft.banker.model.transfer.type.MBankTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
 import lombok.AllArgsConstructor;
@@ -22,7 +23,7 @@ import static it.introsoft.banker.model.transfer.supplier.MoneyConverter.mBankSt
 @EqualsAndHashCode
 public class MBankTransferRaw implements TransferRaw {
 
-    private static final TransferTypeRecognizer transferTypeRecognizer = Bank.M_BANK.typeRecognizer();
+    private static final TransferTypeRecognizer transferTypeRecognizer = new MBankTransferTypeRecognizer();
     private static final List<TransferType> TRANSFER_TYPES_WITH_MINUS_AMOUNT = newArrayList(
             TransferType.TAX_CHARGES,
             TransferType.INSURANCE_CHARGES,
