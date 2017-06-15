@@ -112,4 +112,22 @@ class ImportControllerTest extends Specification {
 
     }
 
+    def "should generate report about account"() {
+        given:
+        RequestSpecification request = given()
+                .queryParam('periodStart', '2017-03-01')
+                .queryParam('periodStop', '2017-03-03')
+
+        when:
+        Response response = request.when().get('/accounts/reports/{0}', '11 1020 3176 0000 0000 0000 0000')
+
+        then:
+        response.then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("transfers.size()", CoreMatchers.is(2))
+                .body("amountSumByTransferType.CHARGES", CoreMatchers.is(-221390))
+                .body("accountNumber", CoreMatchers.equalTo("11 1020 3176 0000 0000 0000 0000"))
+
+    }
+
 }
