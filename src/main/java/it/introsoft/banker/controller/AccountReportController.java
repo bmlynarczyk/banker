@@ -28,8 +28,6 @@ public class AccountReportController {
     public AccountReport getAccountReport(@PathVariable String accountNumber,
                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStart,
                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStop) {
-        if (periodStart.after(periodStop))
-            throw new IllegalArgumentException("period start is after stop");
         return new AccountReport(accountNumber, periodStart, periodStop, accountRepository, transferRepository);
     }
 

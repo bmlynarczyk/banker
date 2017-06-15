@@ -18,4 +18,8 @@ public interface TransferRepository extends JpaRepository<H2Transfer, Long>, Que
 
     Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByDateDescDateTransferNumberDesc(String account, Date start, Date stop);
 
+    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByBalanceAsc(String account, Date start, Date stop);
+
+    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByBalanceDesc(String account, Date start, Date stop);
+
 }

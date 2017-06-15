@@ -2,8 +2,8 @@ package it.introsoft.banker.repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import it.introsoft.banker.view.AccountReportTransfer;
 import it.introsoft.banker.model.transfer.Transfer;
+import it.introsoft.banker.view.AccountReportTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaContext;
 
@@ -38,22 +38,22 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
 
     @Override
     public void updateBalanceInLaterThanTodayTransfers(Transfer transfer) {
-        queryFactory.update(QH2Transfer.h2Transfer)
-                .where(QH2Transfer.h2Transfer.account.eq(transfer.getAccount()).and(QH2Transfer.h2Transfer.date.gt(transfer.getDate())))
-                .set(QH2Transfer.h2Transfer.balance, QH2Transfer.h2Transfer.balance.add(transfer.getAmount()));
+        queryFactory.update(h2Transfer)
+                .where(h2Transfer.account.eq(transfer.getAccount()).and(h2Transfer.date.gt(transfer.getDate())))
+                .set(h2Transfer.balance, h2Transfer.balance.add(transfer.getAmount()));
     }
 
     @Override
     public void updateBalanceInTodayTransfers(Transfer transfer) {
-        queryFactory.update(QH2Transfer.h2Transfer).
-                where(QH2Transfer.h2Transfer.account.eq(transfer.getAccount())
-                        .and(QH2Transfer.h2Transfer.date.eq(transfer.getDate()))
-                        .and(QH2Transfer.h2Transfer.dateTransferNumber.gt(transfer.getDateTransferNumber()))).
-                set(QH2Transfer.h2Transfer.balance, QH2Transfer.h2Transfer.balance.add(transfer.getAmount()));
+        queryFactory.update(h2Transfer).
+                where(h2Transfer.account.eq(transfer.getAccount())
+                        .and(h2Transfer.date.eq(transfer.getDate()))
+                        .and(h2Transfer.dateTransferNumber.gt(transfer.getDateTransferNumber()))).
+                set(h2Transfer.balance, h2Transfer.balance.add(transfer.getAmount()));
     }
 
     @Override
-    public List<AccountReportTransfer> getByPeriod(Date start, Date stop) {
+    public List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop) {
         return queryFactory
                 .select(
                         h2Transfer.transferType,
@@ -63,7 +63,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
                         h2Transfer.dateTransferNumber
                 )
                 .from(h2Transfer)
-                .where(h2Transfer.date.between(start, stop))
+                .where(h2Transfer.account.eq(account).and(h2Transfer.date.between(start, stop)))
                 .orderBy(h2Transfer.date.asc(), h2Transfer.dateTransferNumber.asc())
                 .fetch()
                 .stream()
@@ -72,11 +72,14 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public Map<String, Long> getAmountSumByTransferType(Date start, Date stop) {
+    public Map<String, Long> getAmountSumByTransferType(String account, Date start, Date stop) {
         return queryFactory
-                .select(h2Transfer.transferType, h2Transfer.amount.sum())
+                .select(
+                        h2Transfer.transferType,
+                        h2Transfer.amount.sum()
+                )
                 .from(h2Transfer)
-                .where(h2Transfer.date.between(start, stop))
+                .where(h2Transfer.account.eq(account).and(h2Transfer.date.between(start, stop)))
                 .groupBy(h2Transfer.transferType)
                 .fetch()
                 .stream()
