@@ -1,0 +1,33 @@
+<div class="widgets">
+    <p ba-panel>
+        Report for account
+        <span>
+        {{
+            report.accountNumber.substr(0, 2)
+            + " " +
+            report.accountNumber.substr(2, 4)
+            + " " +
+            report.accountNumber.substr(6, 4)
+            + " " +
+            report.accountNumber.substr(10, 4)
+            + " " +
+            report.accountNumber.substr(14, 4)
+            + " " +
+            report.accountNumber.substr(18, 4)
+            + " " +
+            report.accountNumber.substr(22, 4)
+        }}
+        </span>
+        from bank <span ng-bind="report.bank"></span></br>
+        Begins at: <span ng-bind="report.periodStart | date : 'yyyy-MM-dd'"></span></br>
+        Ends: <span ng-bind="report.periodStop | date : 'yyyy-MM-dd'"></span>
+    </p>
+    <p ba-panel>
+        Beginning balance: <span ng-bind="report.periodFirstBalance / 1000 "></span></br>
+        Ending balance: <span ng-bind="report.periodLastBalance / 1000 "></span>
+    </p>
+    <div ba-panel>
+        <div id="lineChart" class="admin-chart"/>
+    </div>
+
+</div>

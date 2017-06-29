@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12" ba-panel>
             <div class="modal-buttons clearfix">
-                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="open()">
+                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="openAddAccount()">
                     Add account
                 </button>
             </div>
@@ -11,9 +11,21 @@
     <div class="row">
         <div class="col-md-12 col-lg-4"
              ba-panel
-             ba-panel-title="{{ ::account.number }}"
+             ba-panel-title="{{ ::account.formattedNumber }}"
              ng-repeat="account in accounts">
-            <div class="panel-body">{{ ::account.currentBalance }}</div>
+            <div class="panel-body">
+                <span>Balance {{ ::account.currentBalance/1000 }} PLN</span></br></br>
+                <div>
+                    <button type="button" class="btn btn-primary" ng-click="openReport(account.number)">
+                        Last year report
+                    </button>
+                    &nbsp&nbsp&nbsp
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            ng-click="openCustomAccountReport(account.number)">
+                        Custom report
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
 </div>

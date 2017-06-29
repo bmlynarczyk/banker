@@ -10,6 +10,7 @@
 
     'BlurAdmin.pages.transfer',
     'BlurAdmin.pages.import',
+    'BlurAdmin.pages.account-report',
     'BlurAdmin.pages.account'
   ])
       .config(routeConfig);

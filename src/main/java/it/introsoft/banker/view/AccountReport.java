@@ -21,6 +21,7 @@ public class AccountReport {
     private final Long periodFirstBalance;
     private final Date periodFirstBalanceDate;
     private final Map<String, Long> amountSumByTransferType;
+    private final Map<String, Long> transferCountByTransferType;
     private final Long periodLastBalance;
     private final Date periodLastBalanceDate;
     private final Long minBalance;
@@ -53,6 +54,7 @@ public class AccountReport {
         this.periodFirstBalanceDate = firstTransfer.getDate();
 
         this.amountSumByTransferType = transferRepository.getAmountSumByTransferType(accountNumber, periodStart, periodStop);
+        this.transferCountByTransferType = transferRepository.getTransferCountByTransferType(accountNumber, periodStart, periodStop);
 
         H2Transfer lastTransfer = getLastTransfer();
         this.periodLastBalance = lastTransfer.getBalance();

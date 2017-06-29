@@ -126,6 +126,7 @@ class ImportControllerTest extends Specification {
                 .statusCode(HttpStatus.SC_OK)
                 .body("transfers.size()", CoreMatchers.is(2))
                 .body("amountSumByTransferType.CHARGES", CoreMatchers.is(-221390))
+                .body("transferCountByTransferType.CHARGES", CoreMatchers.is(2))
                 .body("accountNumber", CoreMatchers.equalTo("11 1020 3176 0000 0000 0000 0000"))
 
     }

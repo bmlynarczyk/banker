@@ -30,6 +30,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
 
     private Function<Tuple, String> transferTypeTransformer = o -> o.get(h2Transfer.transferType);
     private Function<Tuple, Long> amountTransformer = o -> o.get(h2Transfer.amount.sum());
+    private Function<Tuple, Long> idTransformer = o -> o.get(h2Transfer.id.count());
 
     @Autowired
     public TransferRepositoryImpl(JpaContext jpaContext) {
@@ -84,6 +85,21 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
                 .fetch()
                 .stream()
                 .collect(toMap(transferTypeTransformer, amountTransformer));
+    }
+
+    @Override
+    public Map<String, Long> getTransferCountByTransferType(String account, Date start, Date stop) {
+        return queryFactory
+                .select(
+                        h2Transfer.transferType,
+                        h2Transfer.id.count()
+                )
+                .from(h2Transfer)
+                .where(h2Transfer.account.eq(account).and(h2Transfer.date.between(start, stop)))
+                .groupBy(h2Transfer.transferType)
+                .fetch()
+                .stream()
+                .collect(toMap(transferTypeTransformer, idTransformer));
     }
 
 }

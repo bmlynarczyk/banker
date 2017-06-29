@@ -17,4 +17,5 @@ public interface TransferRepositoryCustom {
 
     Map<String, Long> getAmountSumByTransferType(String account, Date start, Date stop);
 
+    Map<String, Long> getTransferCountByTransferType(String account, Date start, Date stop);
 }
