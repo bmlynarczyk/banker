@@ -1,8 +1,8 @@
 package it.introsoft.banker.model.transfer.supplier;
 
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.TransferComparator;
 import it.introsoft.banker.model.transfer.raw.TransferRaw;
+import it.introsoft.banker.repository.Transfer;
 import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

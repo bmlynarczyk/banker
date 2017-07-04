@@ -2,9 +2,9 @@ package it.introsoft.banker.controller;
 
 import com.google.common.base.Stopwatch;
 import com.google.common.eventbus.EventBus;
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
+import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.service.Result;
 import it.introsoft.banker.service.TransferService;
 import it.introsoft.banker.service.TransferSupplierFactory;

@@ -1,8 +1,8 @@
 package it.introsoft.banker.service;
 
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.repository.BeneficiaryDescriptor;
 import it.introsoft.banker.repository.BeneficiaryDescriptorRepository;
+import it.introsoft.banker.repository.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -42,7 +42,6 @@ public class BeneficiaryDescriptorCollector implements Consumer<Transfer> {
                 .transferType(transfer.getTransferType())
                 .account(transfer.getBeneficiaryAccount())
                 .address(transfer.getBeneficiaryAddress())
-                .bank(transfer.getBeneficiaryBank())
                 .name(transfer.getBeneficiaryName())
                 .build()
         );

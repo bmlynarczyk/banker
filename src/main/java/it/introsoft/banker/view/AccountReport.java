@@ -3,7 +3,7 @@ package it.introsoft.banker.view;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
-import it.introsoft.banker.repository.H2Transfer;
+import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
 import lombok.Value;
 
@@ -49,14 +49,14 @@ public class AccountReport {
         Account account = getAccount();
         this.bank = account.getBank();
 
-        H2Transfer firstTransfer = getFirstTransfer();
+        Transfer firstTransfer = getFirstTransfer();
         this.periodFirstBalance = firstTransfer.getBalance();
         this.periodFirstBalanceDate = firstTransfer.getDate();
 
         this.amountSumByTransferType = transferRepository.getAmountSumByTransferType(accountNumber, periodStart, periodStop);
         this.transferCountByTransferType = transferRepository.getTransferCountByTransferType(accountNumber, periodStart, periodStop);
 
-        H2Transfer lastTransfer = getLastTransfer();
+        Transfer lastTransfer = getLastTransfer();
         this.periodLastBalance = lastTransfer.getBalance();
         this.periodLastBalanceDate = lastTransfer.getDate();
 
@@ -72,12 +72,12 @@ public class AccountReport {
                 .orElseThrow(() -> new IllegalArgumentException("account doesn't exist"));
     }
 
-    private H2Transfer getFirstTransfer() {
+    private Transfer getFirstTransfer() {
         return transferRepository.findFirstByAccountAndDateBetweenOrderByDateAscDateTransferNumberAsc(accountNumber, periodStart, periodStop)
                 .orElseThrow(() -> new IllegalStateException("account hasn't transfers in given period"));
     }
 
-    private H2Transfer getLastTransfer() {
+    private Transfer getLastTransfer() {
         return transferRepository.findFirstByAccountAndDateBetweenOrderByDateDescDateTransferNumberDesc(accountNumber, periodStart, periodStop)
                 .orElseThrow(() -> new IllegalStateException("account hasn't transfers in given period"));
     }

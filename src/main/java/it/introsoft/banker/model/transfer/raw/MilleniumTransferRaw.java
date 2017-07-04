@@ -1,11 +1,11 @@
 package it.introsoft.banker.model.transfer.raw;
 
 import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter;
 import it.introsoft.banker.model.transfer.type.MilleniumTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
+import it.introsoft.banker.repository.Transfer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -26,7 +26,6 @@ public class MilleniumTransferRaw implements TransferRaw {
     private String accountingDate;
     private String transferDate;
     private String beneficiaryAccount;
-    private String beneficiaryBank;
     private String beneficiaryName;
     private String cardName;
     private String cardNumber;
@@ -34,7 +33,6 @@ public class MilleniumTransferRaw implements TransferRaw {
     private String date;
     private String dateTransferNumber;
     private String payeeAccount;
-    private String payeeBank;
     private String payeeName;
     private String title;
     private String transferType;
@@ -56,17 +54,13 @@ public class MilleniumTransferRaw implements TransferRaw {
                 .bank(bank.getName())
                 .beneficiaryAccount(replace("Na rachunek ", beneficiaryAccount))
                 .beneficiaryName(replace("Odbiorca ", beneficiaryName))
-                .beneficiaryBank(replace("Bank odbiorcy ", beneficiaryBank))
                 .cardNumber(replace("Numer karty ", cardNumber))
-                .cardName(replace("Karta ", cardName))
-                .cardOwner(replace("Posiadacz karty ", cardOwner))
                 .currency("PLN")
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date.replaceAll("Data księgowania ", "")))
                 .dateTransferNumber(Long.parseLong(dateTransferNumber.replaceAll("Dzienny numer transakcji ", "")))
                 .description(replace("Tytuł ", title))
                 .payeeAccount(replace("Z rachunku ", payeeAccount))
                 .payeeName(replace("Zleceniodawca ", payeeName))
-                .payeeBank(payeeBank)
                 .transferType(transferType.name())
                 .build();
     }

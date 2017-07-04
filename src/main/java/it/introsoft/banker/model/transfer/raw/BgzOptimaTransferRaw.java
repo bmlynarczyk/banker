@@ -1,9 +1,9 @@
 package it.introsoft.banker.model.transfer.raw;
 
 import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.type.BgzOptimaTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
+import it.introsoft.banker.repository.Transfer;
 import lombok.*;
 
 import java.text.SimpleDateFormat;

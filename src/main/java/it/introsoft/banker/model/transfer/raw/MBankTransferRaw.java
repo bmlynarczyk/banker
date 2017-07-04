@@ -1,10 +1,10 @@
 package it.introsoft.banker.model.transfer.raw;
 
 import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.type.MBankTransferTypeRecognizer;
 import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
+import it.introsoft.banker.repository.Transfer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;

@@ -10,16 +10,16 @@ import java.util.Optional;
 
 @CrossOrigin
 @RepositoryRestResource(path = "transfers", collectionResourceRel = "transfers")
-public interface TransferRepository extends JpaRepository<H2Transfer, Long>, QueryDslPredicateExecutor<H2Transfer>, TransferRepositoryCustom {
+public interface TransferRepository extends JpaRepository<Transfer, Long>, QueryDslPredicateExecutor<Transfer>, TransferRepositoryCustom {
 
-    Optional<H2Transfer> findFirstByAccountOrderByDateDescDateTransferNumberDesc(String account);
+    Optional<Transfer> findFirstByAccountOrderByDateDescDateTransferNumberDesc(String account);
 
-    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByDateAscDateTransferNumberAsc(String account, Date start, Date stop);
+    Optional<Transfer> findFirstByAccountAndDateBetweenOrderByDateAscDateTransferNumberAsc(String account, Date start, Date stop);
 
-    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByDateDescDateTransferNumberDesc(String account, Date start, Date stop);
+    Optional<Transfer> findFirstByAccountAndDateBetweenOrderByDateDescDateTransferNumberDesc(String account, Date start, Date stop);
 
-    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByBalanceAsc(String account, Date start, Date stop);
+    Optional<Transfer> findFirstByAccountAndDateBetweenOrderByBalanceAsc(String account, Date start, Date stop);
 
-    Optional<H2Transfer> findFirstByAccountAndDateBetweenOrderByBalanceDesc(String account, Date start, Date stop);
+    Optional<Transfer> findFirstByAccountAndDateBetweenOrderByBalanceDesc(String account, Date start, Date stop);
 
 }

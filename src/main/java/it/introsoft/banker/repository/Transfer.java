@@ -16,7 +16,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class H2Transfer {
+public class Transfer {
 
     @Id
     @GeneratedValue

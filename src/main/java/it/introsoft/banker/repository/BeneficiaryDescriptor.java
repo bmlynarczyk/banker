@@ -26,6 +26,5 @@ public class BeneficiaryDescriptor {
     private String name;
     private String account;
     private String address;
-    private String bank;
 
 }

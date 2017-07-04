@@ -1,7 +1,6 @@
 package it.introsoft.banker.service;
 
 import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.model.transfer.raw.converter.BgzOptimaTransferRawConverter;
 import it.introsoft.banker.model.transfer.raw.converter.MBankTransferRawConverter;
 import it.introsoft.banker.model.transfer.raw.converter.MilleniumTransferRawConverter;
@@ -10,6 +9,7 @@ import it.introsoft.banker.model.transfer.supplier.MultiTransferOnPdfPageSupplie
 import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageSupplier;
 import it.introsoft.banker.model.transfer.supplier.TransferInHtmlTableSupplier;
 import it.introsoft.banker.repository.Account;
+import it.introsoft.banker.repository.Transfer;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;

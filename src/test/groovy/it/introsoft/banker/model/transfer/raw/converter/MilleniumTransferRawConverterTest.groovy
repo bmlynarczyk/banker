@@ -27,9 +27,7 @@ class MilleniumTransferRawConverterTest extends Specification {
 
         transferRaw.beneficiaryAccount == null
         transferRaw.beneficiaryName == null
-        transferRaw.beneficiaryBank == null
         transferRaw.payeeName == null
-        transferRaw.payeeBank == null
 
     }
 
@@ -45,12 +43,10 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.payeeName == 'Zleceniodawca JAN NOWAK LUBLIN 348 22-035'
         transferRaw.beneficiaryAccount == 'Na rachunek 59102031500000000000000000'
         transferRaw.beneficiaryName == 'Odbiorca John Doe'
-        transferRaw.beneficiaryBank == 'Bank odbiorcy PKOBP Oddział 4 w Lublinie'
         transferRaw.accountedAmount == 'Kwota zaksięgowana -1 000,00 PLN'
         transferRaw.title == 'Tytuł Przelew - John Doe'
         transferRaw.account == '98116022020000000000000000'
 
-        transferRaw.payeeBank == null
         transferRaw.cardName == null
         transferRaw.cardNumber == null
         transferRaw.cardOwner == null
@@ -67,14 +63,12 @@ class MilleniumTransferRawConverterTest extends Specification {
         transferRaw.accountingDate == 'Data waluty 2016-09-19'
         transferRaw.payeeAccount == 'Z rachunku 57114020000000000000000000'
         transferRaw.payeeName == 'Zleceniodawca JAN NOWAK LUBLIN 348 22-035'
-        transferRaw.payeeBank == 'Bank zleceniodawcy mBank Oddział Bankowości Detalicznej'
         transferRaw.beneficiaryAccount == 'Na rachunek 98116022020000000000000000'
         transferRaw.beneficiaryName == 'Odbiorca BART'
         transferRaw.accountedAmount == 'Kwota zaksięgowana 18 000,00 PLN'
         transferRaw.title == 'Tytuł PRZELEW ŚRODKÓW'
         transferRaw.account == '98116022020000000000000000'
 
-        transferRaw.beneficiaryBank == null
         transferRaw.cardName == null
         transferRaw.cardNumber == null
         transferRaw.cardOwner == null

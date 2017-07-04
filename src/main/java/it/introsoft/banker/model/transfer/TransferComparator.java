@@ -1,5 +1,7 @@
 package it.introsoft.banker.model.transfer;
 
+import it.introsoft.banker.repository.Transfer;
+
 import java.util.Comparator;
 
 public class TransferComparator implements Comparator<Transfer> {

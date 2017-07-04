@@ -3,7 +3,7 @@ package it.introsoft.banker.service;
 import com.google.common.eventbus.Subscribe;
 import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
-import it.introsoft.banker.repository.H2Transfer;
+import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class UpdateAccountEventConsumer implements Consumer<UpdateAccountEvent> 
     @Override
     public void accept(UpdateAccountEvent updateAccountEvent) {
         Account account = updateAccountEvent.getAccount();
-        H2Transfer transfer = transferRepository.findFirstByAccountOrderByDateDescDateTransferNumberDesc(account.getNumber())
+        Transfer transfer = transferRepository.findFirstByAccountOrderByDateDescDateTransferNumberDesc(account.getNumber())
                 .orElseThrow(IllegalArgumentException::new);
 
         account.setCurrentBalance(transfer.getBalance());

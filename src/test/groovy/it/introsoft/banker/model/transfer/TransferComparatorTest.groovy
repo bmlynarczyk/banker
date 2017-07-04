@@ -1,5 +1,6 @@
 package it.introsoft.banker.model.transfer
 
+import it.introsoft.banker.repository.Transfer
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat

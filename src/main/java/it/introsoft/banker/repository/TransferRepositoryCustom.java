@@ -1,6 +1,5 @@
 package it.introsoft.banker.repository;
 
-import it.introsoft.banker.model.transfer.Transfer;
 import it.introsoft.banker.view.AccountReportTransfer;
 
 import java.util.Date;

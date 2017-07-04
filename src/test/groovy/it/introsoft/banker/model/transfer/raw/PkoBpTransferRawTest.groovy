@@ -2,9 +2,9 @@ package it.introsoft.banker.model.transfer.raw
 
 import it.introsoft.banker.model.Bank
 import it.introsoft.banker.model.TestData
-import it.introsoft.banker.model.transfer.Transfer
 import it.introsoft.banker.model.transfer.raw.converter.PkoBpTransferRawConverter
 import it.introsoft.banker.model.transfer.type.TransferType
+import it.introsoft.banker.repository.Transfer
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.springframework.core.convert.converter.Converter
