@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class TransferInHtmlTableSupplier implements Supplier<Collection<Transfer>> {
 
-    private File file;
-    private Converter<Document, List<TransferRaw>> converter;
+    private final File file;
+    private final Converter<Document, List<TransferRaw>> converter;
 
     public TransferInHtmlTableSupplier(File file, Converter<Document, List<TransferRaw>> converter) {
         this.file = file;

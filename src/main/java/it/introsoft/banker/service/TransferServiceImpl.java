@@ -21,16 +21,19 @@ import static it.introsoft.banker.repository.QH2Transfer.h2Transfer;
 public class TransferServiceImpl implements TransferService {
     private final TransferRepository transferRepository;
     private final BalanceCalculator balanceCalculator;
+    private final BeneficiaryDescriptorCollector beneficiaryDescriptorCollector;
 
     @Autowired
-    public TransferServiceImpl(TransferRepository transferRepository) {
+    public TransferServiceImpl(TransferRepository transferRepository, BeneficiaryDescriptorCollector beneficiaryDescriptorCollector) {
         this.transferRepository = transferRepository;
         this.balanceCalculator = new BalanceCalculator(transferRepository);
+        this.beneficiaryDescriptorCollector = beneficiaryDescriptorCollector;
     }
 
     @Override
     public Result save(Transfer transfer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
+        beneficiaryDescriptorCollector.accept(transfer);
         Optional<H2Transfer> fromDb = findTransfer(transfer);
         if (fromDb.isPresent()) {
             log.info("transfer already exists with id: {}", fromDb.get().getId());
@@ -62,7 +65,25 @@ public class TransferServiceImpl implements TransferService {
 
     private void saveInRepo(Transfer transfer) {
         final Long number = transfer.getDateTransferNumber();
-        transferRepository.save(H2Transfer.builder().date(transfer.getDate()).dateTransferNumber(number != null ? number : getDateTransferNumber(transfer.getDate())).description(transfer.getDescription()).amount(transfer.getAmount()).balance(balanceCalculator.calculate(transfer)).currency(transfer.getCurrency()).transferType(transfer.getTransferType()).account(transfer.getAccount()).beneficiaryName(transfer.getBeneficiaryName()).beneficiaryAccount(transfer.getBeneficiaryAccount()).beneficiaryAddress(transfer.getBeneficiaryAddress()).payeeName(transfer.getPayeeName()).payeeAccount(transfer.getPayeeAccount()).payeeAddress(transfer.getPayeeAddress()).bank(transfer.getBank()).category(transfer.getCategory()).cardNumber(transfer.getCardNumber()).build());
+        transferRepository.save(H2Transfer.builder()
+                .date(transfer.getDate())
+                .dateTransferNumber(number != null ? number : getDateTransferNumber(transfer.getDate()))
+                .description(transfer.getDescription())
+                .amount(transfer.getAmount())
+                .balance(balanceCalculator.calculate(transfer))
+                .currency(transfer.getCurrency())
+                .transferType(transfer.getTransferType())
+                .account(transfer.getAccount())
+                .beneficiaryName(transfer.getBeneficiaryName())
+                .beneficiaryAccount(transfer.getBeneficiaryAccount())
+                .beneficiaryAddress(transfer.getBeneficiaryAddress())
+                .payeeName(transfer.getPayeeName())
+                .payeeAccount(transfer.getPayeeAccount())
+                .payeeAddress(transfer.getPayeeAddress())
+                .bank(transfer.getBank())
+                .category(transfer.getCategory())
+                .cardNumber(transfer.getCardNumber())
+                .build());
     }
 
     private Long getDateTransferNumber(Date date) {
@@ -72,11 +93,6 @@ public class TransferServiceImpl implements TransferService {
 
         H2Transfer transfer = Iterators.getNext(iterator, null);
         return (transfer != null ? transfer.getDateTransferNumber() : 0L) + 1;
-    }
-
-    @Override
-    public void deleteAll() {
-        transferRepository.deleteAll();
     }
 
 }

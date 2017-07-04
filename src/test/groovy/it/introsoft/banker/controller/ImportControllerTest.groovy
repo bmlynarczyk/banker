@@ -97,6 +97,20 @@ class ImportControllerTest extends Specification {
 
     }
 
+    def "should find beneficiary descriptors"() {
+        given:
+        RequestSpecification request = given()
+
+        when:
+        Response response = request.when().get('/beneficiary-descriptors')
+
+        then:
+        response.then()
+                .statusCode(HttpStatus.SC_OK)
+                .body("_embedded.beneficiaryDescriptors.size()", CoreMatchers.is(2))
+
+    }
+
     def "should update account balance"() {
         given:
         RequestSpecification request = given()
