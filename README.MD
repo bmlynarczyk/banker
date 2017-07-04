@@ -1,3 +1,15 @@
-todo
-    fix balance calculation, example of millenium transfers shows problem in calculation
-    fix date transfer number calculation
+# Banker
+
+## Build
+
+### with UI
+
+```
+./mvnw clean install -P build-with-ui
+```
+
+### without UI
+
+```
+./mvnw clean install
+```
