@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Date;
 
 @RestController
-@RequestMapping("/accounts/reports/")
+@RequestMapping("/api/accounts/reports/")
 @CrossOrigin
 public class AccountReportController {
 

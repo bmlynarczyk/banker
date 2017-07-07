@@ -6,6 +6,7 @@ import it.introsoft.banker.model.transfer.raw.converter.MBankTransferRawConverte
 import it.introsoft.banker.model.transfer.raw.converter.MilleniumTransferRawConverter;
 import it.introsoft.banker.model.transfer.raw.converter.PkoBpTransferRawConverter;
 import it.introsoft.banker.model.transfer.supplier.MultiTransferOnPdfPageSupplier;
+import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageMultipleFilesSupplier;
 import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageSupplier;
 import it.introsoft.banker.model.transfer.supplier.TransferInHtmlTableSupplier;
 import it.introsoft.banker.repository.Account;
@@ -57,11 +58,19 @@ public class TransferSupplierFactory {
     }
 
     private Supplier<Collection<Transfer>> milleniumTransfersSupplier(File file, String account) {
-        return new SingleTransferOnPdfPageSupplier(
-                file,
-                new Rectangle(10, 50, 550, 800),
-                new MilleniumTransferRawConverter(account)
-        );
+        if (file.isDirectory()) {
+            return new SingleTransferOnPdfPageMultipleFilesSupplier(
+                    file,
+                    new Rectangle(10, 50, 550, 800),
+                    new MilleniumTransferRawConverter(account)
+            );
+        } else {
+            return new SingleTransferOnPdfPageSupplier(
+                    file,
+                    new Rectangle(10, 50, 550, 800),
+                    new MilleniumTransferRawConverter(account)
+            );
+        }
     }
 
 }

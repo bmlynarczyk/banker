@@ -25,7 +25,7 @@ public class Account {
     @NotNull
     @Id
     private String number;
-    @Column(name = "CURRENT_BALANCE", nullable = false)
+    @Column(name = "CURRENT_BALANCE")
     private Long currentBalance;
     private Boolean active;
 

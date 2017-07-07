@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Slf4j
 @RestController
-@RequestMapping("/banks")
+@RequestMapping("/api/banks")
 @CrossOrigin
 public class BankController {
 

@@ -38,7 +38,7 @@ class TransferControllerTest extends Specification {
         given:
         RequestSpecification request = given().accept(JSON)
         when:
-        Response response = request.get('/transfers')
+        Response response = request.get('/api/transfers')
         then:
         response.statusCode() == HttpStatus.SC_OK
         !response.asString().isEmpty()

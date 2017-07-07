@@ -5,6 +5,8 @@ import it.introsoft.banker.repository.BeneficiaryDescriptorRepository;
 import it.introsoft.banker.repository.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Iterator;
 import java.util.function.Consumer;
@@ -27,18 +29,19 @@ public class BeneficiaryDescriptorCollector implements Consumer<Transfer> {
     }
 
     @Override
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void accept(Transfer transfer) {
         if (containsBeneficiaryName.test(transfer)) {
             if (containsBeneficiaryAccount.and(existsWithSameBeneficiaryAccount.negate()).test(transfer))
                 saveBeneficiaryTransferDescriptor(transfer);
-            else if (existsWithSameBeneficiaryName.negate().test(transfer))
+            if (containsBeneficiaryAccount.negate().and(existsWithSameBeneficiaryName.negate()).test(transfer))
                 saveBeneficiaryTransferDescriptor(transfer);
         }
     }
 
     private void saveBeneficiaryTransferDescriptor(Transfer transfer) {
         repository.save(BeneficiaryDescriptor.builder()
-                .forAccount(transfer.getAccount())
+                .fromAccount(transfer.getAccount())
                 .transferType(transfer.getTransferType())
                 .account(transfer.getBeneficiaryAccount())
                 .address(transfer.getBeneficiaryAddress())
@@ -49,7 +52,7 @@ public class BeneficiaryDescriptorCollector implements Consumer<Transfer> {
 
     private Iterator<BeneficiaryDescriptor> getByBeneficiaryNameAndBeneficiaryAccount(Transfer transfer) {
         return repository.findAll(
-                beneficiaryDescriptor.forAccount.eq(transfer.getAccount())
+                beneficiaryDescriptor.fromAccount.eq(transfer.getAccount())
                         .and(beneficiaryDescriptor.transferType.eq(transfer.getTransferType()))
                         .and(beneficiaryDescriptor.name.eq(transfer.getBeneficiaryName()))
                         .and(beneficiaryDescriptor.account.eq(transfer.getBeneficiaryAccount()))
@@ -58,7 +61,7 @@ public class BeneficiaryDescriptorCollector implements Consumer<Transfer> {
 
     private Iterator<BeneficiaryDescriptor> getByBeneficiaryNameAndNullBeneficiaryAccount(Transfer transfer) {
         return repository.findAll(
-                beneficiaryDescriptor.forAccount.eq(transfer.getAccount())
+                beneficiaryDescriptor.fromAccount.eq(transfer.getAccount())
                         .and(beneficiaryDescriptor.transferType.eq(transfer.getTransferType()))
                         .and(beneficiaryDescriptor.name.eq(transfer.getBeneficiaryName()))
                         .and(beneficiaryDescriptor.account.isNull())

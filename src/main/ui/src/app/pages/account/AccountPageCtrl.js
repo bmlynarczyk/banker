@@ -35,7 +35,14 @@
         });
     });
 
-
+    $scope.recalculateBalance = function(accountNumber) {
+        $http.post('/api/accounts/balances/recalculate?accountNumber=' + accountNumber).
+            success(function(data, status, headers, config) {
+            }).
+            error(function(data, status, headers, config) {
+              console.log(data)
+            });
+    }
 
     $scope.openReport = function(accountNumber){
         var today = new Date()
@@ -112,7 +119,7 @@
 
     $scope.banks = [];
 
-    $http.get('/banks').then(function(response) {
+    $http.get('api/banks').then(function(response) {
         $scope.banks = response.data;
     });
 

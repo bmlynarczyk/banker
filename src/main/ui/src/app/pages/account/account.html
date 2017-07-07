@@ -19,10 +19,15 @@
                     <button type="button" class="btn btn-primary" ng-click="openReport(account.number)">
                         Last year report
                     </button>
-                    &nbsp&nbsp&nbsp
+                    &nbsp&nbsp
                     <button type="button" class="btn btn-primary" data-toggle="modal"
                             ng-click="openCustomAccountReport(account.number)">
                         Custom report
+                    </button>
+                    &nbsp&nbsp
+                    <button type="button" class="btn btn-primary" data-toggle="modal"
+                            ng-click="recalculateBalance(account.number)">
+                        Recalculate balance
                     </button>
                 </div>
             </div>

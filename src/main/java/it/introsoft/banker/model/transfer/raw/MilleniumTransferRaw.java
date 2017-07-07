@@ -23,6 +23,7 @@ public class MilleniumTransferRaw implements TransferRaw {
 
     private String account;
     private String accountedAmount;
+    private String amount;
     private String accountingDate;
     private String transferDate;
     private String beneficiaryAccount;
@@ -46,7 +47,11 @@ public class MilleniumTransferRaw implements TransferRaw {
     public Transfer asTransfer() {
         Bank bank = Bank.MILLENIUM;
         this.transferType = this.transferType.replaceAll("Typ operacji ", "");
-        String amount = accountedAmount.replaceAll("Kwota zaksięgowana ", "");
+        String amount;
+        if (accountedAmount != null)
+            amount = accountedAmount.replaceAll("Kwota zaksięgowana ", "");
+        else
+            amount = this.amount.replaceAll("Kwota ", "");
         TransferType transferType = transferTypeRecognizer.recognize(this.transferType, amount);
         return Transfer.builder()
                 .account(replace("Z rachunku ", account))

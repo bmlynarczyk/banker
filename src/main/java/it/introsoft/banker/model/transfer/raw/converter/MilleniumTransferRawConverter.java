@@ -30,6 +30,7 @@ public class MilleniumTransferRawConverter extends BaseTransferRawConverter {
                 .beneficiaryName(findLineWithPrefix("Odbiorca ", strings))
                 .title(findLineWithPrefix("Tytuł ", strings))
                 .accountedAmount(findLineWithPrefix("Kwota zaksięgowana ", strings))
+                .amount(findLineWithPrefix("Kwota ", strings))
                 .account(account)
                 .build();
     }

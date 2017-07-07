@@ -1,16 +1,17 @@
 package it.introsoft.banker.model.transfer.type
 
+import it.introsoft.banker.repository.Transfer
 import spock.lang.Specification
 
 import static it.introsoft.banker.model.transfer.type.TransferType.*
 
 class PkoBpTransferTypeRecognizerTest extends Specification {
 
-    TransferTypeRecognizer transferTypeRecognizer = new PkoBpTransferTypeRecognizer()
+    PkoBpTransferTypeRecognizer transferTypeRecognizer = new PkoBpTransferTypeRecognizer()
 
     def "should recognize correct transfer type"() {
         when:
-        def recognizedType = transferTypeRecognizer.recognize(describer, '1000')
+        def recognizedType = transferTypeRecognizer.recognize(describer, Transfer.builder().amount(1000).build())
         then:
         recognizedType == expectedType
         where:
@@ -40,7 +41,7 @@ class PkoBpTransferTypeRecognizerTest extends Specification {
 
     def "should throw exception when incorrect transfer type"() {
         when:
-        transferTypeRecognizer.recognize('nieznany', '1000')
+        transferTypeRecognizer.recognize('nieznany', Transfer.builder().amount(1000).build())
         then:
         IllegalStateException ex = thrown()
         ex.message == 'unknown transfer type. describer: nieznany, amount: 1000'

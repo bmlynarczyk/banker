@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
+import static it.introsoft.banker.model.transfer.type.TransferType.STANDING_ORDER_CHARGES;
 
 @Slf4j
 public class MilleniumTransferTypeRecognizer implements TransferTypeRecognizer {
@@ -12,10 +13,12 @@ public class MilleniumTransferTypeRecognizer implements TransferTypeRecognizer {
     private final Set<String> CHARGES_DESCRIPTIONS = newHashSet("TRANSAKCJA KARTĄ PŁATNICZĄ", "WYPŁATA KARTĄ Z BANKOMATU",
             "PRZELEW DO INNEGO BANKU", "PŁATNOŚĆ INTERNETOWA WYCHODZĄCA", "PRZELEW WEWNĘTRZNY WYCHODZĄCY");
 
-    private final Set<String> DEPOSIT_DESCRIPTIONS = newHashSet("PRZELEW PRZYCHODZĄCY", "PRZELEW WEWNĘTRZNY PRZYCHODZĄCY");
+    private final Set<String> DEPOSIT_DESCRIPTIONS = newHashSet("PRZELEW PRZYCHODZĄCY", "PRZELEW WEWNĘTRZNY PRZYCHODZĄCY", "STAŁE ZLECENIE WEWNĄTRZ BANKU");
 
     @Override
     public TransferType recognize(String describer, String amount) {
+        if ("STAŁE ZLECENIE ZEWNĘTRZNE".contains(describer))
+            return STANDING_ORDER_CHARGES;
         if (CHARGES_DESCRIPTIONS.contains(describer))
             return TransferType.CHARGES;
         if (describer.equals("OPERACJE NA LOKATACH") && amount.startsWith("-"))

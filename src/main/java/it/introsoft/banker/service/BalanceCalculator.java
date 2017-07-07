@@ -1,60 +1,62 @@
 package it.introsoft.banker.service;
 
-import com.querydsl.core.types.dsl.BooleanExpression;
-import it.introsoft.banker.repository.QTransfer;
-import it.introsoft.banker.repository.Transfer;
-import it.introsoft.banker.repository.TransferRepository;
+import com.google.common.eventbus.EventBus;
+import it.introsoft.banker.repository.*;
 import lombok.extern.slf4j.Slf4j;
-
-import static com.google.common.collect.Iterables.getFirst;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 @Slf4j
+@Component
 public class BalanceCalculator {
 
+    private final AccountRepository accountRepository;
     private final TransferRepository transferRepository;
+    private final EventBus eventBus;
 
     private final QTransfer qtransfer = QTransfer.transfer;
 
-    public BalanceCalculator(TransferRepository transferRepository) {
+    private final Sort transfersSort = new Sort(
+            new Sort.Order(Sort.Direction.ASC, "date"),
+            new Sort.Order(Sort.Direction.ASC, "dateTransferNumber")
+    );
+
+    @Autowired
+    public BalanceCalculator(AccountRepository accountRepository, TransferRepository transferRepository, EventBus eventBus) {
+        this.accountRepository = accountRepository;
         this.transferRepository = transferRepository;
+        this.eventBus = eventBus;
     }
 
-    public Long calculate(Transfer transfer) {
-        log.debug(transfer.toString());
-        if (transfer.getBalance() != null)
-            return transfer.getBalance();
-        else
-            return getBalanceAndUpdateTransfers(transfer);
+    public void recalculateBalanceForAllTransfers(String accountNumber) {
+        Account account = accountRepository.getOne(accountNumber);
+
+        Long balance = 0L;
+        int pageNumber = 0;
+        Page<Transfer> transfersPage;
+
+        do {
+            transfersPage = getPage(account, pageNumber);
+
+            for (Transfer transfer : transfersPage.getContent()) {
+                balance = balance + transfer.getAmount();
+                transfer.setBalance(balance);
+                transferRepository.save(transfer);
+            }
+
+            pageNumber = transfersPage.getNumber() + 1;
+        } while (transfersPage.hasNext());
+
+        eventBus.post(UpdateAccountEvent.builder().account(account).build());
     }
 
-    private long getBalanceAndUpdateTransfers(Transfer transfer) {
-        Long balance = getBalance(transfer);
-        transferRepository.updateBalanceInTodayTransfers(transfer);
-        transferRepository.updateBalanceInLaterThanTodayTransfers(transfer);
-        return balance;
+    private Page<Transfer> getPage(Account account, int pageNumber) {
+        return transferRepository.findAll(qtransfer.account.eq(account.getNumber()),
+                new PageRequest(pageNumber, 100, transfersSort)
+        );
     }
 
-    private long getBalance(Transfer transfer) {
-        Transfer previousTodayTransfer = getPreviousTodayTransfer(transfer);
-        if (previousTodayTransfer != null)
-            return previousTodayTransfer.getBalance() + transfer.getAmount();
-        Transfer previousBeforeTodayTransfer = getPreviousBeforeTodayTransfer(transfer);
-        if (previousBeforeTodayTransfer != null)
-            return previousBeforeTodayTransfer.getBalance() + transfer.getAmount();
-        else
-            return transfer.getAmount();
-    }
-
-    private Transfer getPreviousTodayTransfer(Transfer transfer) {
-        BooleanExpression currentDatePredicate = qtransfer.account.eq(transfer.getAccount())
-                .and(qtransfer.date.eq(transfer.getDate()))
-                .and(qtransfer.dateTransferNumber.lt(transfer.getDateTransferNumber()));
-        return getFirst(transferRepository.findAll(currentDatePredicate, qtransfer.dateTransferNumber.desc()), null);
-    }
-
-    private Transfer getPreviousBeforeTodayTransfer(Transfer transfer) {
-        BooleanExpression currentDatePredicate = qtransfer.account.eq(transfer.getAccount())
-                .and(qtransfer.date.lt(transfer.getDate()));
-        return getFirst(transferRepository.findAll(currentDatePredicate, qtransfer.date.desc(), qtransfer.dateTransferNumber.desc()), null);
-    }
 }

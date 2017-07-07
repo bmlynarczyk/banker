@@ -33,7 +33,7 @@ class ImportControllerTest extends Specification {
         RequestSpecification request = given()
 
         when:
-        Response response = request.when().get('/accounts')
+        Response response = request.when().get('/api/accounts')
 
         then:
         response.then()
@@ -50,7 +50,7 @@ class ImportControllerTest extends Specification {
                 .queryParam('account', '11 1020 3176 0000 0000 0000')
 
         when:
-        Response response = request.when().post('/import')
+        Response response = request.when().post('/api/import')
 
         then:
         response.statusCode() == HttpStatus.SC_BAD_REQUEST
@@ -63,7 +63,7 @@ class ImportControllerTest extends Specification {
                 .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
 
         when:
-        Response response = request.when().post('/import')
+        Response response = request.when().post('/api/import')
 
         then:
         response.statusCode() == HttpStatus.SC_BAD_REQUEST
@@ -76,7 +76,7 @@ class ImportControllerTest extends Specification {
                 .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
 
         when:
-        Response response = request.when().post('/import')
+        Response response = request.when().post('/api/import')
 
         then:
         response.asString().isEmpty()
@@ -88,7 +88,7 @@ class ImportControllerTest extends Specification {
         RequestSpecification request = given()
 
         when:
-        Response response = request.when().get('/transfers')
+        Response response = request.when().get('/api/transfers')
 
         then:
         response.then()
@@ -102,7 +102,7 @@ class ImportControllerTest extends Specification {
         RequestSpecification request = given()
 
         when:
-        Response response = request.when().get('/beneficiary-descriptors')
+        Response response = request.when().get('/api/beneficiary-descriptors')
 
         then:
         response.then()
@@ -116,7 +116,7 @@ class ImportControllerTest extends Specification {
         RequestSpecification request = given()
 
         when:
-        Response response = request.when().get('/accounts')
+        Response response = request.when().get('/api/accounts')
 
         then:
         response.then()
@@ -133,7 +133,7 @@ class ImportControllerTest extends Specification {
                 .queryParam('periodStop', '2017-03-03')
 
         when:
-        Response response = request.when().get('/accounts/reports/{0}', '11 1020 3176 0000 0000 0000 0000')
+        Response response = request.when().get('/api/accounts/reports/{0}', '11 1020 3176 0000 0000 0000 0000')
 
         then:
         response.then()

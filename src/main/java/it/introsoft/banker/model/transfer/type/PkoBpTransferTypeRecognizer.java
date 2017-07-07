@@ -1,5 +1,6 @@
 package it.introsoft.banker.model.transfer.type;
 
+import it.introsoft.banker.repository.Transfer;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Set;
@@ -8,7 +9,7 @@ import static com.google.common.collect.Sets.newHashSet;
 import static it.introsoft.banker.model.transfer.type.TransferType.*;
 
 @Slf4j
-public class PkoBpTransferTypeRecognizer implements TransferTypeRecognizer {
+public class PkoBpTransferTypeRecognizer {
 
     private Set<String> BANK_CHARGES_DESCRIPTIONS = newHashSet("Opłata", "Opłata za użytkowanie karty", "Obciążenie");
 
@@ -21,8 +22,11 @@ public class PkoBpTransferTypeRecognizer implements TransferTypeRecognizer {
     private Set<String> DEPOSITS_DESCRIPTIONS = newHashSet("Uznanie", "Przelew na rachunek", "Zwrot płatności kartą",
             "Korekta", "Wpłata gotówkowa w kasie", "Przelew zagraniczny");
 
-    @Override
-    public TransferType recognize(String describer, String amount) {
+    public TransferType recognize(String describer, Transfer transfer) {
+        if (null != transfer.getCardNumber())
+            return CARD_PAYMENT;
+        if (null != transfer.getDescription() && transfer.getDescription().matches("000.{6} 74.{21}"))
+            return UNKNOWN_CHARGES;
         if (BANK_CHARGES_DESCRIPTIONS.contains(describer))
             return BANK_CHARGES;
         if (CHARGES_DESCRIPTIONS.contains(describer))
@@ -36,7 +40,7 @@ public class PkoBpTransferTypeRecognizer implements TransferTypeRecognizer {
         if (DEPOSITS_DESCRIPTIONS.contains(describer))
             return DEPOSIT;
         log.error("unknown transfer type. describer: $describer, amount: $amount");
-        throw new IllegalStateException("unknown transfer type. describer: " + describer + ", amount: " + amount);
+        throw new IllegalStateException("unknown transfer type. describer: " + describer + ", amount: " + transfer.getAmount().toString());
     }
 
 }

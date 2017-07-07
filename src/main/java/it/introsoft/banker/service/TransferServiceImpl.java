@@ -19,22 +19,25 @@ import java.util.Optional;
 public class TransferServiceImpl implements TransferService {
 
     private final TransferRepository transferRepository;
-    private final BalanceCalculator balanceCalculator;
     private final BeneficiaryDescriptorCollector beneficiaryDescriptorCollector;
+    private final PayeeDescriptorCollector payeeDescriptorCollector;
 
     private final QTransfer qtransfer = QTransfer.transfer;
 
     @Autowired
-    public TransferServiceImpl(TransferRepository transferRepository, BeneficiaryDescriptorCollector beneficiaryDescriptorCollector) {
+    public TransferServiceImpl(TransferRepository transferRepository,
+                               BeneficiaryDescriptorCollector beneficiaryDescriptorCollector,
+                               PayeeDescriptorCollector payeeDescriptorCollector) {
         this.transferRepository = transferRepository;
-        this.balanceCalculator = new BalanceCalculator(transferRepository);
         this.beneficiaryDescriptorCollector = beneficiaryDescriptorCollector;
+        this.payeeDescriptorCollector = payeeDescriptorCollector;
     }
 
     @Override
     public Result save(Transfer transfer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         beneficiaryDescriptorCollector.accept(transfer);
+        payeeDescriptorCollector.accept(transfer);
         Optional<Transfer> fromDb = findTransfer(transfer);
         if (fromDb.isPresent()) {
             log.info("transfer already exists with id: {}", fromDb.get().getId());
@@ -70,7 +73,6 @@ public class TransferServiceImpl implements TransferService {
     private void saveInRepo(Transfer transfer) {
         final Long number = transfer.getDateTransferNumber();
         transfer.setDateTransferNumber(number != null ? number : getDateTransferNumber(transfer.getDate()));
-        transfer.setBalance(balanceCalculator.calculate(transfer));
         transferRepository.save(transfer);
     }
 

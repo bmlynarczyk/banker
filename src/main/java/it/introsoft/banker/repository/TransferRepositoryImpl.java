@@ -40,7 +40,8 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     @Override
     public void updateBalanceInLaterThanTodayTransfers(Transfer transfer) {
         queryFactory.update(qtransfer)
-                .where(qtransfer.account.eq(transfer.getAccount()).and(qtransfer.date.gt(transfer.getDate())))
+                .where(qtransfer.account.eq(transfer.getAccount())
+                        .and(qtransfer.date.gt(transfer.getDate())))
                 .set(qtransfer.balance, qtransfer.balance.add(transfer.getAmount()));
     }
 

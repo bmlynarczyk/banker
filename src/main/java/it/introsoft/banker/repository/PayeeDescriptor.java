@@ -12,11 +12,11 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name = "beneficiary_descriptor")
+@Table(name = "payee_descriptor")
 @AllArgsConstructor
 @Builder
 @NoArgsConstructor
-public class BeneficiaryDescriptor {
+public class PayeeDescriptor {
 
     @Id
     @GeneratedValue

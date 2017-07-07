@@ -23,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 
 @Slf4j
 @RestController
-@RequestMapping("/import")
+@RequestMapping("/api/import")
 @CrossOrigin
 public class ImportController {
 

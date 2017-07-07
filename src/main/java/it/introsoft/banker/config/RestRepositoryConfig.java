@@ -15,6 +15,7 @@ public class RestRepositoryConfig extends RepositoryRestConfigurerAdapter {
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
         config.exposeIdsFor(Account.class);
+        config.setBasePath("api");
     }
 
     @Bean

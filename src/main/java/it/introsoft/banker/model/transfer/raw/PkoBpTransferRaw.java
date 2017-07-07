@@ -32,7 +32,7 @@ public class PkoBpTransferRaw implements TransferRaw {
     private static final Pattern incomingPaymentWithoutAddress = Pattern.compile("(Rachunek nadawcy : (.*))(Nazwa nadawcy : (.*))(Tytuł : (.*))");
     private static final Pattern foreignPayment = Pattern.compile("(Rachunek nadawcy : (.*))(Nazwa nadawcy : (.*))(Tytuł : (.*))(Kwota w walucie oryginalnej : (.*))(Kurs przewalutowania : (.*))(Instrukcja kosztowa : (.*))(Referencje polecenia wypłaty : (.*))");
     private static final Pattern onlyTitle = Pattern.compile("(Tytuł : (.*))");
-    private static final TransferTypeRecognizer transferTypeRecognizer = new PkoBpTransferTypeRecognizer();
+    private static final PkoBpTransferTypeRecognizer transferTypeRecognizer = new PkoBpTransferTypeRecognizer();
     private String account;
     private String description;
     private String transferType;
@@ -49,11 +49,10 @@ public class PkoBpTransferRaw implements TransferRaw {
     @SneakyThrows
     public Transfer asTransfer() {
         TransferDetails details = new TransferDetails(description);
-        return Transfer.builder()
+        Transfer transfer = Transfer.builder()
                 .account(account)
                 .bank(Bank.PKO_BP.getName())
                 .currency(currency)
-                .transferType(transferTypeRecognizer.recognize(transferType, amount).name())
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date))
                 .amount(MoneyConverter.toMoneyValue(getMoneyString(amount)))
                 .balance(MoneyConverter.toMoneyValue(getMoneyString(balance)))
@@ -66,6 +65,8 @@ public class PkoBpTransferRaw implements TransferRaw {
                 .payeeAddress(details.getPayeeAddress())
                 .cardNumber(details.getCardNumber())
                 .build();
+        transfer.setTransferType(transferTypeRecognizer.recognize(transferType, transfer).name());
+        return transfer;
     }
 
     @Getter
@@ -120,7 +121,7 @@ public class PkoBpTransferRaw implements TransferRaw {
             } else if (cardPaymentMatcher.matches()) {
                 title = cardPaymentMatcher.group(2).trim();
                 beneficiaryName = cardPaymentMatcher.group(4).trim();
-                cardNumber = cardPaymentMatcher.group(8).trim();
+                cardNumber = cardPaymentMatcher.group(10).trim();
             } else if (incomingPaymentMatcher.matches()) {
                 payeeAccount = incomingPaymentMatcher.group(2).trim();
                 payeeName = incomingPaymentMatcher.group(4).trim();
