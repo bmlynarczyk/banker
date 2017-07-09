@@ -1,11 +1,10 @@
 package it.introsoft.banker.repository;
 
+import it.introsoft.banker.model.Bank;
+import it.introsoft.banker.model.transfer.type.TransferType;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -27,12 +26,18 @@ public class Transfer {
     private Long amount;
     private Long balance;
     private String currency;
-    private String transferType;
+
+    @Enumerated(EnumType.STRING)
+    private TransferType transferType;
+
     private String account;
     private String beneficiaryName;
     private String beneficiaryAccount;
     private String beneficiaryAddress;
-    private String bank;
+
+    @Enumerated(EnumType.STRING)
+    private Bank bank;
+
     private String category;
     private String cardNumber;
     private String payeeName;

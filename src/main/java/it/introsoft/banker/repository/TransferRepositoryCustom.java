@@ -1,5 +1,6 @@
 package it.introsoft.banker.repository;
 
+import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.view.AccountReportTransfer;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public interface TransferRepositoryCustom {
 
     List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop);
 
-    Map<String, Long> getAmountSumByTransferType(String account, Date start, Date stop);
+    Map<TransferType, Long> getAmountSumByTransferType(String account, Date start, Date stop);
 
-    Map<String, Long> getTransferCountByTransferType(String account, Date start, Date stop);
+    Map<TransferType, Long> getTransferCountByTransferType(String account, Date start, Date stop);
 }

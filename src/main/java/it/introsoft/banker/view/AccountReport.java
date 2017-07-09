@@ -1,6 +1,8 @@
 package it.introsoft.banker.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.introsoft.banker.model.Bank;
+import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.repository.Transfer;
@@ -17,11 +19,11 @@ public class AccountReport {
     private final Date periodStart;
     private final Date periodStop;
     private final String accountNumber;
-    private final String bank;
+    private final Bank bank;
     private final Long periodFirstBalance;
     private final Date periodFirstBalanceDate;
-    private final Map<String, Long> amountSumByTransferType;
-    private final Map<String, Long> transferCountByTransferType;
+    private final Map<TransferType, Long> amountSumByTransferType;
+    private final Map<TransferType, Long> transferCountByTransferType;
     private final Long periodLastBalance;
     private final Date periodLastBalanceDate;
     private final Long minBalance;

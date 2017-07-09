@@ -13,9 +13,8 @@ public class PkoBpTransferTypeRecognizer {
 
     private Set<String> BANK_CHARGES_DESCRIPTIONS = newHashSet("Opłata", "Opłata za użytkowanie karty", "Obciążenie");
 
-    private Set<String> CHARGES_DESCRIPTIONS = newHashSet("Zlecenie stałe", "Wypłata gotówki w POS",
-            "Wypłata w bankomacie - kod mobilny", "Przelew z rachunku", "Płatność kartą", "Wypłata z bankomatu",
-            "Prowizja", "Wypłata gotówkowa z kasy");
+    private Set<String> CHARGES_DESCRIPTIONS = newHashSet("Wypłata gotówki w POS",
+            "Przelew z rachunku", "Prowizja", "Wypłata gotówkowa z kasy");
 
     private Set<String> TAX_CHARGES_DESCRIPTIONS = newHashSet("Przelew do US", "Przelew podatkowy");
 
@@ -23,19 +22,23 @@ public class PkoBpTransferTypeRecognizer {
             "Korekta", "Wpłata gotówkowa w kasie", "Przelew zagraniczny");
 
     public TransferType recognize(String describer, Transfer transfer) {
-        if (null != transfer.getCardNumber())
+        if (null != transfer.getCardNumber() || "Płatność kartą".equals(describer))
             return CARD_PAYMENT;
+        if ("Wypłata z bankomatu".equals(describer) || "Wypłata w bankomacie - kod mobilny".equals(describer))
+            return ATM_WITHDRAWAL;
+        if ("Zlecenie stałe".equals(describer))
+            return STANDING_ORDER_CHARGES;
         if (null != transfer.getDescription() && transfer.getDescription().matches("000.{6} 74.{21}"))
             return UNKNOWN_CHARGES;
         if (BANK_CHARGES_DESCRIPTIONS.contains(describer))
             return BANK_CHARGES;
         if (CHARGES_DESCRIPTIONS.contains(describer))
             return CHARGES;
-        if (describer.equals("Podatek od odsetek"))
+        if ("Podatek od odsetek".equals(describer))
             return INTEREST_TAX_CHARGES;
         if (TAX_CHARGES_DESCRIPTIONS.contains(describer))
             return TAX_CHARGES;
-        if (describer.equals("Naliczenie odsetek"))
+        if ("Naliczenie odsetek".equals(describer))
             return BANK_DEPOSIT;
         if (DEPOSITS_DESCRIPTIONS.contains(describer))
             return DEPOSIT;

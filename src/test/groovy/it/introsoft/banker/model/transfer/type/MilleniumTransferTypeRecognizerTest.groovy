@@ -16,8 +16,8 @@ class MilleniumTransferTypeRecognizerTest extends Specification {
         where:
         describer                         | expectedType
         'OPŁATA'                          | BANK_CHARGES
-        'TRANSAKCJA KARTĄ PŁATNICZĄ'      | CHARGES
-        'WYPŁATA KARTĄ Z BANKOMATU'       | CHARGES
+        'TRANSAKCJA KARTĄ PŁATNICZĄ'      | CARD_PAYMENT
+        'WYPŁATA KARTĄ Z BANKOMATU'       | ATM_WITHDRAWAL
         'PRZELEW DO INNEGO BANKU'         | CHARGES
         'PŁATNOŚĆ INTERNETOWA WYCHODZĄCA' | CHARGES
         'PRZELEW WEWNĘTRZNY WYCHODZĄCY'   | CHARGES

@@ -5,13 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import java.util.Set;
 
 import static com.google.common.collect.Sets.newHashSet;
-import static it.introsoft.banker.model.transfer.type.TransferType.STANDING_ORDER_CHARGES;
+import static it.introsoft.banker.model.transfer.type.TransferType.*;
 
 @Slf4j
 public class MilleniumTransferTypeRecognizer implements TransferTypeRecognizer {
 
-    private final Set<String> CHARGES_DESCRIPTIONS = newHashSet("TRANSAKCJA KARTĄ PŁATNICZĄ", "WYPŁATA KARTĄ Z BANKOMATU",
-            "PRZELEW DO INNEGO BANKU", "PŁATNOŚĆ INTERNETOWA WYCHODZĄCA", "PRZELEW WEWNĘTRZNY WYCHODZĄCY");
+    private final Set<String> CHARGES_DESCRIPTIONS = newHashSet("PRZELEW DO INNEGO BANKU", "PŁATNOŚĆ INTERNETOWA WYCHODZĄCA", "PRZELEW WEWNĘTRZNY WYCHODZĄCY");
 
     private final Set<String> DEPOSIT_DESCRIPTIONS = newHashSet("PRZELEW PRZYCHODZĄCY", "PRZELEW WEWNĘTRZNY PRZYCHODZĄCY", "STAŁE ZLECENIE WEWNĄTRZ BANKU");
 
@@ -21,6 +20,10 @@ public class MilleniumTransferTypeRecognizer implements TransferTypeRecognizer {
             return STANDING_ORDER_CHARGES;
         if (CHARGES_DESCRIPTIONS.contains(describer))
             return TransferType.CHARGES;
+        if ("TRANSAKCJA KARTĄ PŁATNICZĄ".equals(describer))
+            return CARD_PAYMENT;
+        if ("WYPŁATA KARTĄ Z BANKOMATU".equals(describer))
+            return ATM_WITHDRAWAL;
         if (describer.equals("OPERACJE NA LOKATACH") && amount.startsWith("-"))
             return TransferType.CHARGES;
         if (DEPOSIT_DESCRIPTIONS.contains(describer))

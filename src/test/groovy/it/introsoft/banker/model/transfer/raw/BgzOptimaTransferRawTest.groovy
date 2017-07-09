@@ -17,8 +17,8 @@ class BgzOptimaTransferRawTest extends Specification {
         Transfer transfer = converter.convert(TestData.BGZ_OPTIMA_MULTI_TRANSFER_PAGE).first().asTransfer()
         then:
         transfer.account == '1234'
-        transfer.bank == Bank.BGZ_OPTIMA.name
-        transfer.transferType == TransferType.BANK_DEPOSIT.name()
+        transfer.bank == Bank.BGZ_OPTIMA
+        transfer.transferType == TransferType.BANK_DEPOSIT
         transfer.date == new Date().parse('dd-MM-yyyy', '30-04-2013')
         transfer.amount == 15200L
         transfer.balance == 5016980L

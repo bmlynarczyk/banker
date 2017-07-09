@@ -3,7 +3,6 @@ package it.introsoft.banker.model.transfer.raw;
 import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter;
 import it.introsoft.banker.model.transfer.type.PkoBpTransferTypeRecognizer;
-import it.introsoft.banker.model.transfer.type.TransferTypeRecognizer;
 import it.introsoft.banker.repository.Transfer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,7 +50,7 @@ public class PkoBpTransferRaw implements TransferRaw {
         TransferDetails details = new TransferDetails(description);
         Transfer transfer = Transfer.builder()
                 .account(account)
-                .bank(Bank.PKO_BP.getName())
+                .bank(Bank.PKO_BP)
                 .currency(currency)
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date))
                 .amount(MoneyConverter.toMoneyValue(getMoneyString(amount)))
@@ -65,7 +64,7 @@ public class PkoBpTransferRaw implements TransferRaw {
                 .payeeAddress(details.getPayeeAddress())
                 .cardNumber(details.getCardNumber())
                 .build();
-        transfer.setTransferType(transferTypeRecognizer.recognize(transferType, transfer).name());
+        transfer.setTransferType(transferTypeRecognizer.recognize(transferType, transfer));
         return transfer;
     }
 

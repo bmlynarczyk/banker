@@ -31,11 +31,11 @@ public class BgzOptimaTransferRaw implements TransferRaw {
     public Transfer asTransfer() {
         return Transfer.builder()
                 .account(account)
-                .transferType(transferTypeRecognizer.recognize(transferType, amount).name())
+                .transferType(transferTypeRecognizer.recognize(transferType, amount))
                 .date(new SimpleDateFormat("dd.MM.yyyy").parse(date))
                 .amount(bgzOptimaStringToMoneyValue(amount))
                 .balance(bgzOptimaStringToMoneyValue(balance))
-                .bank(Bank.BGZ_OPTIMA.getName())
+                .bank(Bank.BGZ_OPTIMA)
                 .description(title)
                 .build();
     }

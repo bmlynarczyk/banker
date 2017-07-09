@@ -6,6 +6,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 @CrossOrigin
-@RepositoryRestResource(path = "beneficiary-descriptors", collectionResourceRel = "beneficiaryDescriptors")
-public interface BeneficiaryDescriptorRepository extends JpaRepository<BeneficiaryDescriptor, Long>, QueryDslPredicateExecutor<BeneficiaryDescriptor> {
+@RepositoryRestResource(path = "categories-descriptors", collectionResourceRel = "categoriesDescriptors")
+public interface CategoryDescriptorRepository extends JpaRepository<CategoryDescriptor, Long>, QueryDslPredicateExecutor<CategoryDescriptor> {
 }

@@ -48,7 +48,6 @@ public class MBankTransferRaw implements TransferRaw {
         boolean isZus = sender != null && sender.contains("ZUS");
         boolean isTax = symbol != null;
         String description = getDescription(isZus, isTax);
-        Bank bank = Bank.M_BANK;
         amount = amount.replaceAll("Kwota przelewu: ", EMPTY);
         amount = amount.replaceAll("Kwota w PLN: ", EMPTY);
         TransferType transferType = transferTypeRecognizer.recognize(getDescriber(isZus, isTax), amount);
@@ -60,9 +59,9 @@ public class MBankTransferRaw implements TransferRaw {
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date.replaceAll("Data księgowania: ", EMPTY)))
                 .amount(mBankStringToMoneyValue(amount))
                 .description(description)
-                .transferType(transferType.name())
+                .transferType(transferType)
                 .currency("PLN")
-                .bank(bank.getName())
+                .bank(Bank.M_BANK)
                 .dateTransferNumber(getDateTransferNumber())
                 .build();
     }

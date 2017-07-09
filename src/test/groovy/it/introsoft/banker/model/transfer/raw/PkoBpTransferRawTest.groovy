@@ -25,9 +25,9 @@ class PkoBpTransferRawTest extends Specification {
         transfer.beneficiaryName == 'JAN NOWAK'
         transfer.beneficiaryAddress == 'XXX XXX'
         transfer.description == 'XXX'
-        transfer.transferType == TransferType.DEPOSIT.name()
+        transfer.transferType == TransferType.DEPOSIT
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-16')
-        transfer.bank == Bank.PKO_BP.name
+        transfer.bank == Bank.PKO_BP
         transfer.amount == 2500000L
         transfer.balance == 3082010L
         transfer.currency == 'PLN'

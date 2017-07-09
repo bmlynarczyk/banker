@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Set;
 
+import static com.google.common.collect.Sets.newHashSet;
+import static java.util.stream.Collectors.toSet;
+
 @Slf4j
 @RestController
 @RequestMapping("/api/banks")
@@ -17,7 +20,7 @@ public class BankController {
 
     @GetMapping
     public Set<String> banks() {
-        return Bank.getNames();
+        return newHashSet(Bank.values()).stream().map(Enum::toString).collect(toSet());
     }
 
 }

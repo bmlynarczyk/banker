@@ -17,13 +17,13 @@ class MilleniumTransferRawTest extends Specification {
         Transfer transfer = converter.convert(TestData.MILLENIUM_CARD_PAYMENTS).asTransfer()
         then:
         transfer.account == '1234'
-        transfer.transferType == TransferType.CHARGES.name()
+        transfer.transferType == TransferType.CARD_PAYMENT
         transfer.dateTransferNumber == 3L
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-09')
         transfer.payeeAccount == '98116022020000000000000000'
         transfer.cardNumber == 'XXXXXXXXXXXXXXXX'
         transfer.description == 'Stolowka Lublin 16/12/07'
-        transfer.bank == Bank.MILLENIUM.name
+        transfer.bank == Bank.MILLENIUM
         transfer.amount == new Long('-15100')
         transfer.currency == 'PLN'
 
@@ -40,7 +40,7 @@ class MilleniumTransferRawTest extends Specification {
         when:
         Transfer transfer = converter.convert(TestData.MILLENIUM_TRANSFER_TO_ANOTHER_BANK).asTransfer()
         then:
-        transfer.transferType == TransferType.CHARGES.name()
+        transfer.transferType == TransferType.CHARGES
         transfer.dateTransferNumber == 1L
         transfer.date == new Date().parse('yyyy-MM-dd', '2016-09-21')
         transfer.payeeAccount == '98116022020000000000000000'

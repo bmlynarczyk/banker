@@ -2,6 +2,7 @@ package it.introsoft.banker.repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.view.AccountReportTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaContext;
@@ -28,7 +29,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
             .dateTransferNumber(tuple.get(qtransfer.dateTransferNumber))
             .build();
 
-    private Function<Tuple, String> transferTypeTransformer = o -> o.get(qtransfer.transferType);
+    private Function<Tuple, TransferType> transferTypeTransformer = o -> o.get(qtransfer.transferType);
     private Function<Tuple, Long> amountTransformer = o -> o.get(qtransfer.amount.sum());
     private Function<Tuple, Long> idTransformer = o -> o.get(qtransfer.id.count());
 
@@ -74,7 +75,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public Map<String, Long> getAmountSumByTransferType(String account, Date start, Date stop) {
+    public Map<TransferType, Long> getAmountSumByTransferType(String account, Date start, Date stop) {
         return queryFactory
                 .select(
                         qtransfer.transferType,
@@ -89,7 +90,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public Map<String, Long> getTransferCountByTransferType(String account, Date start, Date stop) {
+    public Map<TransferType, Long> getTransferCountByTransferType(String account, Date start, Date stop) {
         return queryFactory
                 .select(
                         qtransfer.transferType,

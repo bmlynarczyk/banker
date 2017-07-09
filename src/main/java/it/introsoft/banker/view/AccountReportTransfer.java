@@ -1,5 +1,6 @@
 package it.introsoft.banker.view;
 
+import it.introsoft.banker.model.transfer.type.TransferType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;
@@ -11,7 +12,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class AccountReportTransfer {
 
-    private String transferType;
+    private TransferType transferType;
     private Long amount;
     private Long balance;
     private Date date;

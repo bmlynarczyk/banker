@@ -19,13 +19,13 @@ class PkoBpTransferTypeRecognizerTest extends Specification {
         'Opłata'                             | BANK_CHARGES
         'Opłata za użytkowanie karty'        | BANK_CHARGES
         'Obciążenie'                         | BANK_CHARGES
-        'Zlecenie stałe'                     | CHARGES
+        'Zlecenie stałe'                     | STANDING_ORDER_CHARGES
         'Wypłata gotówkowa z kasy'           | CHARGES
         'Wypłata gotówki w POS'              | CHARGES
-        'Wypłata w bankomacie - kod mobilny' | CHARGES
+        'Wypłata w bankomacie - kod mobilny' | ATM_WITHDRAWAL
         'Przelew z rachunku'                 | CHARGES
-        'Płatność kartą'                     | CHARGES
-        'Wypłata z bankomatu'                | CHARGES
+        'Płatność kartą'                     | CARD_PAYMENT
+        'Wypłata z bankomatu'                | ATM_WITHDRAWAL
         'Prowizja'                           | CHARGES
         'Podatek od odsetek'                 | INTEREST_TAX_CHARGES
         'Przelew do US'                      | TAX_CHARGES

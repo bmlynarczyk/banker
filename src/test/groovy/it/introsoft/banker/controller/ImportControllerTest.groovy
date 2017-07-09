@@ -73,7 +73,7 @@ class ImportControllerTest extends Specification {
         given:
         RequestSpecification request = given()
                 .queryParam('filePath', 'src/test/resources/history.html')
-                .queryParam('account', '11 1020 3176 0000 0000 0000 0000')
+                .queryParam('account', '11102031760000000000000000')
 
         when:
         Response response = request.when().post('/api/import')
@@ -102,12 +102,12 @@ class ImportControllerTest extends Specification {
         RequestSpecification request = given()
 
         when:
-        Response response = request.when().get('/api/beneficiary-descriptors')
+        Response response = request.when().get('/api/categories-descriptors')
 
         then:
         response.then()
                 .statusCode(HttpStatus.SC_OK)
-                .body("_embedded.beneficiaryDescriptors.size()", CoreMatchers.is(2))
+                .body("_embedded.categoriesDescriptors.size()", CoreMatchers.is(2))
 
     }
 
@@ -133,7 +133,7 @@ class ImportControllerTest extends Specification {
                 .queryParam('periodStop', '2017-03-03')
 
         when:
-        Response response = request.when().get('/api/accounts/reports/{0}', '11 1020 3176 0000 0000 0000 0000')
+        Response response = request.when().get('/api/accounts/reports/{0}', '11102031760000000000000000')
 
         then:
         response.then()
@@ -141,7 +141,7 @@ class ImportControllerTest extends Specification {
                 .body("transfers.size()", CoreMatchers.is(2))
                 .body("amountSumByTransferType.CHARGES", CoreMatchers.is(-221390))
                 .body("transferCountByTransferType.CHARGES", CoreMatchers.is(2))
-                .body("accountNumber", CoreMatchers.equalTo("11 1020 3176 0000 0000 0000 0000"))
+                .body("accountNumber", CoreMatchers.equalTo("11102031760000000000000000"))
 
     }
 

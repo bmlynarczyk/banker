@@ -19,25 +19,25 @@ import java.util.Optional;
 public class TransferServiceImpl implements TransferService {
 
     private final TransferRepository transferRepository;
-    private final BeneficiaryDescriptorCollector beneficiaryDescriptorCollector;
-    private final PayeeDescriptorCollector payeeDescriptorCollector;
+    private final BeneficiaryCollector beneficiaryCollector;
+    private final PayeeCollector payeeCollector;
 
     private final QTransfer qtransfer = QTransfer.transfer;
 
     @Autowired
     public TransferServiceImpl(TransferRepository transferRepository,
-                               BeneficiaryDescriptorCollector beneficiaryDescriptorCollector,
-                               PayeeDescriptorCollector payeeDescriptorCollector) {
+                               BeneficiaryCollector beneficiaryCollector,
+                               PayeeCollector payeeCollector) {
         this.transferRepository = transferRepository;
-        this.beneficiaryDescriptorCollector = beneficiaryDescriptorCollector;
-        this.payeeDescriptorCollector = payeeDescriptorCollector;
+        this.beneficiaryCollector = beneficiaryCollector;
+        this.payeeCollector = payeeCollector;
     }
 
     @Override
     public Result save(Transfer transfer) {
         Stopwatch stopwatch = Stopwatch.createStarted();
-        beneficiaryDescriptorCollector.accept(transfer);
-        payeeDescriptorCollector.accept(transfer);
+        beneficiaryCollector.accept(transfer);
+        payeeCollector.accept(transfer);
         Optional<Transfer> fromDb = findTransfer(transfer);
         if (fromDb.isPresent()) {
             log.info("transfer already exists with id: {}", fromDb.get().getId());

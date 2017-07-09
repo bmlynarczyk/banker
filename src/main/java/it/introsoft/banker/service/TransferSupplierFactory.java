@@ -1,6 +1,5 @@
 package it.introsoft.banker.service;
 
-import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.raw.converter.BgzOptimaTransferRawConverter;
 import it.introsoft.banker.model.transfer.raw.converter.MBankTransferRawConverter;
 import it.introsoft.banker.model.transfer.raw.converter.MilleniumTransferRawConverter;
@@ -22,7 +21,7 @@ import java.util.function.Supplier;
 public class TransferSupplierFactory {
 
     public Supplier<Collection<Transfer>> getTransferSupplier(File file, Account account) {
-        switch (Bank.of(account.getBank())) {
+        switch (account.getBank()) {
             case BGZ_OPTIMA:
                 return bgzOptimaTransfersSupplier(file, account.getNumber());
             case PKO_BP:

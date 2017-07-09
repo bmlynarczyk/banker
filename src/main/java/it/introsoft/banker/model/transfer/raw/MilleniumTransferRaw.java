@@ -45,7 +45,6 @@ public class MilleniumTransferRaw implements TransferRaw {
     @Override
     @SneakyThrows
     public Transfer asTransfer() {
-        Bank bank = Bank.MILLENIUM;
         this.transferType = this.transferType.replaceAll("Typ operacji ", "");
         String amount;
         if (accountedAmount != null)
@@ -56,7 +55,7 @@ public class MilleniumTransferRaw implements TransferRaw {
         return Transfer.builder()
                 .account(replace("Z rachunku ", account))
                 .amount(MoneyConverter.milleniumStringToMoneyValue(amount))
-                .bank(bank.getName())
+                .bank(Bank.MILLENIUM)
                 .beneficiaryAccount(replace("Na rachunek ", beneficiaryAccount))
                 .beneficiaryName(replace("Odbiorca ", beneficiaryName))
                 .cardNumber(replace("Numer karty ", cardNumber))
@@ -66,7 +65,7 @@ public class MilleniumTransferRaw implements TransferRaw {
                 .description(replace("Tytuł ", title))
                 .payeeAccount(replace("Z rachunku ", payeeAccount))
                 .payeeName(replace("Zleceniodawca ", payeeName))
-                .transferType(transferType.name())
+                .transferType(transferType)
                 .build();
     }
 
