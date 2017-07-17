@@ -1,7 +1,6 @@
 package it.introsoft.banker.service;
 
 import com.google.common.base.Stopwatch;
-import com.google.common.collect.Iterators;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import it.introsoft.banker.repository.QTransfer;
 import it.introsoft.banker.repository.Transfer;
@@ -21,16 +20,18 @@ public class TransferServiceImpl implements TransferService {
     private final TransferRepository transferRepository;
     private final BeneficiaryCollector beneficiaryCollector;
     private final PayeeCollector payeeCollector;
+    private final DescriptorCollector descriptorCollector;
 
     private final QTransfer qtransfer = QTransfer.transfer;
 
     @Autowired
     public TransferServiceImpl(TransferRepository transferRepository,
                                BeneficiaryCollector beneficiaryCollector,
-                               PayeeCollector payeeCollector) {
+                               PayeeCollector payeeCollector, DescriptorCollector descriptorCollector) {
         this.transferRepository = transferRepository;
         this.beneficiaryCollector = beneficiaryCollector;
         this.payeeCollector = payeeCollector;
+        this.descriptorCollector = descriptorCollector;
     }
 
     @Override
@@ -38,6 +39,7 @@ public class TransferServiceImpl implements TransferService {
         Stopwatch stopwatch = Stopwatch.createStarted();
         beneficiaryCollector.accept(transfer);
         payeeCollector.accept(transfer);
+        descriptorCollector.accept(transfer);
         Optional<Transfer> fromDb = findTransfer(transfer);
         if (fromDb.isPresent()) {
             log.info("transfer already exists with id: {}", fromDb.get().getId());
@@ -81,8 +83,7 @@ public class TransferServiceImpl implements TransferService {
                 .findAll(qtransfer.date.eq(date), qtransfer.dateTransferNumber.desc())
                 .iterator();
 
-        Transfer transfer = Iterators.getNext(iterator, null);
-        return (transfer != null ? transfer.getDateTransferNumber() : 0L) + 1;
+        return (iterator.hasNext() ? iterator.next().getDateTransferNumber() : 0L) + 1;
     }
 
 }

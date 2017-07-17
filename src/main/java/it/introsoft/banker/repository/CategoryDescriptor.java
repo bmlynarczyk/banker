@@ -1,5 +1,6 @@
 package it.introsoft.banker.repository;
 
+import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.type.TransferType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,6 +30,9 @@ public class CategoryDescriptor {
 
     @Column(nullable = false)
     private TransferType transferType;
+
+    @Enumerated(EnumType.STRING)
+    private Bank bank;
 
     @Column(nullable = false)
     private String name;
