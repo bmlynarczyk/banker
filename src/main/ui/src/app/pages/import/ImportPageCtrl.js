@@ -18,8 +18,17 @@
 
     $scope.importFilePath;
 
+    $scope.categoriesMappingFilePath;
+
     $scope.import = function(){
-        $http.post("/api/import?filePath=" + $scope.importFilePath + "&account=" + $scope.selectedAccount.selected).
+
+        var url = "/api/import?filePath=" + $scope.importFilePath +
+              "&account=" + $scope.selectedAccount.selected;
+
+        if($scope.categoriesMappingFilePath)
+            url = url + "&categoriesMappingPath=" + $scope.categoriesMappingFilePath;
+
+        $http.post(url).
         success(function(data, status, headers, config) {
             $scope.modalInstance.close();
         }).

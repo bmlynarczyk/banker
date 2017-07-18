@@ -28,6 +28,7 @@ public class CategoryDescriptor {
     @Column(nullable = false)
     private DescriptorOrigin origin;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TransferType transferType;
 

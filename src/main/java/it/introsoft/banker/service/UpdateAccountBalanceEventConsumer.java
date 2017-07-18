@@ -13,28 +13,29 @@ import java.util.function.Consumer;
 
 @Slf4j
 @Service
-public class UpdateAccountEventConsumer implements Consumer<UpdateAccountEvent> {
+public class UpdateAccountBalanceEventConsumer implements Consumer<UpdateAccountBalanceEvent> {
 
     private final AccountRepository accountRepository;
 
     private final TransferRepository transferRepository;
 
     @Autowired
-    public UpdateAccountEventConsumer(AccountRepository accountRepository, TransferRepository transferRepository) {
+    public UpdateAccountBalanceEventConsumer(AccountRepository accountRepository, TransferRepository transferRepository) {
         this.accountRepository = accountRepository;
         this.transferRepository = transferRepository;
     }
 
     @Subscribe
     @Override
-    public void accept(UpdateAccountEvent updateAccountEvent) {
-        Account account = updateAccountEvent.getAccount();
+    public void accept(UpdateAccountBalanceEvent updateAccountBalanceEvent) {
+        Account account = updateAccountBalanceEvent.getAccount();
         Transfer transfer = transferRepository.findFirstByAccountOrderByDateDescDateTransferNumberDesc(account.getNumber())
                 .orElseThrow(IllegalArgumentException::new);
 
         account.setCurrentBalance(transfer.getBalance());
         accountRepository.save(account);
 
-        log.info("account {} updated", account.getNumber());
+        log.info("balance of account {} updated", account.getNumber());
     }
+
 }

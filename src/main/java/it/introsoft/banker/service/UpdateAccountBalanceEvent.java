@@ -10,7 +10,7 @@ import lombok.Value;
 @AllArgsConstructor
 @Builder
 @ToString
-public class UpdateAccountEvent {
+public class UpdateAccountBalanceEvent {
 
     private final Account account;
 

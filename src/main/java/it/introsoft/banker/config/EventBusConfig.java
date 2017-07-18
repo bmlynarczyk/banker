@@ -2,7 +2,8 @@ package it.introsoft.banker.config;
 
 import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.EventBus;
-import it.introsoft.banker.service.UpdateAccountEventConsumer;
+import it.introsoft.banker.service.UpdateAccountBalanceEventConsumer;
+import it.introsoft.banker.service.UpdateCategoryDescriptorsEventConsumer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
@@ -16,9 +17,12 @@ public class EventBusConfig {
     }
 
     @Bean
-    public EventBus eventBus(ThreadPoolTaskExecutor eventBusExecutor, UpdateAccountEventConsumer updateAccountEventConsumer) {
+    public EventBus eventBus(ThreadPoolTaskExecutor eventBusExecutor,
+                             UpdateAccountBalanceEventConsumer accountEventConsumer,
+                             UpdateCategoryDescriptorsEventConsumer descriptorCategoryEventConsumer) {
         EventBus eventBus = new AsyncEventBus(eventBusExecutor);
-        eventBus.register(updateAccountEventConsumer);
+        eventBus.register(accountEventConsumer);
+        eventBus.register(descriptorCategoryEventConsumer);
         return eventBus;
     }
 

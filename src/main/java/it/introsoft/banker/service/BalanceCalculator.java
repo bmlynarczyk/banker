@@ -50,7 +50,7 @@ public class BalanceCalculator {
             pageNumber = transfersPage.getNumber() + 1;
         } while (transfersPage.hasNext());
 
-        eventBus.post(UpdateAccountEvent.builder().account(account).build());
+        eventBus.post(UpdateAccountBalanceEvent.builder().account(account).build());
     }
 
     private Page<Transfer> getPage(Account account, int pageNumber) {
