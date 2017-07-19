@@ -1,6 +1,6 @@
 package it.introsoft.banker.view;
 
-import it.introsoft.banker.model.transfer.type.TransferType;
+import it.introsoft.banker.model.raw.TransferType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Value;

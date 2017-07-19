@@ -1,11 +1,11 @@
 package it.introsoft.banker.service.collector;
 
-import it.introsoft.banker.repository.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
-import it.introsoft.banker.repository.Transfer;
 
-import static it.introsoft.banker.repository.DescriptorOrigin.CARD_PAYMENT_DESCRPTION;
-import static it.introsoft.banker.repository.QCategoryDescriptor.categoryDescriptor;
+import static it.introsoft.banker.model.jpa.DescriptorOrigin.CARD_PAYMENT_DESCRPTION;
+import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
 
 abstract class BaseCardPaymentDescriptorCollector implements CardPaymentDescriptorCollector {
 

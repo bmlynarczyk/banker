@@ -1,14 +1,14 @@
 package it.introsoft.banker.service.collector;
 
+import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
-import it.introsoft.banker.repository.Transfer;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static it.introsoft.banker.model.transfer.type.TransferType.CARD_PAYMENT;
+import static it.introsoft.banker.model.raw.TransferType.CARD_PAYMENT;
 
 public class MilleniumCardPaymentDescriptorCollector extends BaseCardPaymentDescriptorCollector {
 

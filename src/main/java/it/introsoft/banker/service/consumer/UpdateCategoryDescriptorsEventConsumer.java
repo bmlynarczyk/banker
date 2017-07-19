@@ -3,7 +3,7 @@ package it.introsoft.banker.service.consumer;
 import com.google.common.collect.Maps;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
-import it.introsoft.banker.repository.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.CategoryDescriptor;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import it.introsoft.banker.service.event.UpdateCategoryDescriptorsEvent;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.function.Consumer;
 
-import static it.introsoft.banker.repository.QCategoryDescriptor.categoryDescriptor;
+import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
 
 @Slf4j
 @Component

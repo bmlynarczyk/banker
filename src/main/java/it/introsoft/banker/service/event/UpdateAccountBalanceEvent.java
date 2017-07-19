@@ -1,6 +1,6 @@
 package it.introsoft.banker.service.event;
 
-import it.introsoft.banker.repository.Account;
+import it.introsoft.banker.model.jpa.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.ToString;

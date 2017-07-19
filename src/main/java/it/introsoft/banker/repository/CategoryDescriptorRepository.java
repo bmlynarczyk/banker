@@ -1,5 +1,6 @@
 package it.introsoft.banker.repository;
 
+import it.introsoft.banker.model.jpa.CategoryDescriptor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;

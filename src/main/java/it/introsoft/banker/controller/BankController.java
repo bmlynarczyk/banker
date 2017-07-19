@@ -1,6 +1,6 @@
 package it.introsoft.banker.controller;
 
-import it.introsoft.banker.model.Bank;
+import it.introsoft.banker.model.raw.Bank;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

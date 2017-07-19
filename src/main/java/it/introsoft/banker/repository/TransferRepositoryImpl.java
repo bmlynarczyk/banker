@@ -2,7 +2,9 @@ package it.introsoft.banker.repository;
 
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import it.introsoft.banker.model.transfer.type.TransferType;
+import it.introsoft.banker.model.jpa.QTransfer;
+import it.introsoft.banker.model.jpa.Transfer;
+import it.introsoft.banker.model.raw.TransferType;
 import it.introsoft.banker.view.AccountReportTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaContext;

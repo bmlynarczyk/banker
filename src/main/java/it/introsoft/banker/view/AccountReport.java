@@ -1,11 +1,11 @@
 package it.introsoft.banker.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.model.transfer.type.TransferType;
-import it.introsoft.banker.repository.Account;
+import it.introsoft.banker.model.jpa.Account;
+import it.introsoft.banker.model.jpa.Transfer;
+import it.introsoft.banker.model.raw.Bank;
+import it.introsoft.banker.model.raw.TransferType;
 import it.introsoft.banker.repository.AccountRepository;
-import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
 import lombok.Value;
 

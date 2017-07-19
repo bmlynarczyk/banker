@@ -1,17 +1,17 @@
 package it.introsoft.banker.service
 
 import groovy.util.logging.Slf4j
+import it.introsoft.banker.model.jpa.Transfer
 import it.introsoft.banker.repository.CategoryDescriptorRepository
-import it.introsoft.banker.repository.Transfer
 import it.introsoft.banker.service.collector.CardPaymentDescriptorCollectorFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
-import static it.introsoft.banker.model.Bank.MILLENIUM
-import static it.introsoft.banker.model.transfer.type.TransferType.CARD_PAYMENT
-import static it.introsoft.banker.repository.QCategoryDescriptor.categoryDescriptor
+import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor
+import static it.introsoft.banker.model.raw.Bank.MILLENIUM
+import static it.introsoft.banker.model.raw.TransferType.CARD_PAYMENT
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.NONE
 
 @SpringBootTest(webEnvironment = NONE)

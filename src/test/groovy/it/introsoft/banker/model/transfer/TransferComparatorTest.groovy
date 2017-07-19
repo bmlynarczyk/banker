@@ -1,6 +1,7 @@
 package it.introsoft.banker.model.transfer
 
-import it.introsoft.banker.repository.Transfer
+import it.introsoft.banker.model.jpa.Transfer
+import it.introsoft.banker.service.supplier.TransferComparator
 import spock.lang.Specification
 
 import java.text.SimpleDateFormat

@@ -1,9 +1,9 @@
 package it.introsoft.banker.service.consumer;
 
 import com.google.common.eventbus.Subscribe;
-import it.introsoft.banker.repository.Account;
+import it.introsoft.banker.model.jpa.Account;
+import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.AccountRepository;
-import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.service.event.UpdateAccountBalanceEvent;
 import lombok.extern.slf4j.Slf4j;

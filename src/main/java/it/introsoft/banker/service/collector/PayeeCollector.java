@@ -1,8 +1,8 @@
 package it.introsoft.banker.service.collector;
 
-import it.introsoft.banker.repository.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
-import it.introsoft.banker.repository.Transfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,8 +12,8 @@ import java.util.Iterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
-import static it.introsoft.banker.repository.DescriptorOrigin.PAYEE;
-import static it.introsoft.banker.repository.QCategoryDescriptor.categoryDescriptor;
+import static it.introsoft.banker.model.jpa.DescriptorOrigin.PAYEE;
+import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
 
 @Component
 public class PayeeCollector implements Consumer<Transfer> {

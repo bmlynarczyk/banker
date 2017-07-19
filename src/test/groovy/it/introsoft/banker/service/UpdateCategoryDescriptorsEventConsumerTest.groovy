@@ -1,8 +1,8 @@
 package it.introsoft.banker.service
 
 import com.google.common.eventbus.EventBus
-import it.introsoft.banker.model.Bank
-import it.introsoft.banker.repository.CategoryDescriptor
+import it.introsoft.banker.model.jpa.CategoryDescriptor
+import it.introsoft.banker.model.raw.Bank
 import it.introsoft.banker.repository.CategoryDescriptorRepository
 import it.introsoft.banker.service.consumer.UpdateCategoryDescriptorsEventConsumer
 import it.introsoft.banker.service.event.UpdateCategoryDescriptorsEvent

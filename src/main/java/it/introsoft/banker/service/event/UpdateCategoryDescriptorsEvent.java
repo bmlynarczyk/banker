@@ -1,6 +1,6 @@
 package it.introsoft.banker.service.event;
 
-import it.introsoft.banker.model.Bank;
+import it.introsoft.banker.model.raw.Bank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

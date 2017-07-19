@@ -1,6 +1,6 @@
 package it.introsoft.banker.service.collector;
 
-import it.introsoft.banker.model.Bank;
+import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

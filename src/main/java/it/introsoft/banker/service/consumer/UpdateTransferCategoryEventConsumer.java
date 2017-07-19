@@ -1,8 +1,8 @@
 package it.introsoft.banker.service.consumer;
 
 import com.google.common.eventbus.Subscribe;
-import it.introsoft.banker.model.Bank;
-import it.introsoft.banker.repository.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.CategoryDescriptor;
+import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.service.event.MilleniumUpdateTransferCategoryEvent;
@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import static it.introsoft.banker.repository.QCategoryDescriptor.categoryDescriptor;
+import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
 
 @Slf4j
 @Component

@@ -2,8 +2,8 @@ package it.introsoft.banker.service;
 
 import com.google.common.base.Stopwatch;
 import com.querydsl.core.types.dsl.BooleanExpression;
-import it.introsoft.banker.repository.QTransfer;
-import it.introsoft.banker.repository.Transfer;
+import it.introsoft.banker.model.jpa.QTransfer;
+import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.service.collector.BeneficiaryCollector;
 import it.introsoft.banker.service.collector.CardPaymentDescriptorCollector;

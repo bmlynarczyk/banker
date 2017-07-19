@@ -1,15 +1,15 @@
 package it.introsoft.banker.service;
 
-import it.introsoft.banker.model.transfer.raw.converter.BgzOptimaTransferRawConverter;
-import it.introsoft.banker.model.transfer.raw.converter.MBankTransferRawConverter;
-import it.introsoft.banker.model.transfer.raw.converter.MilleniumTransferRawConverter;
-import it.introsoft.banker.model.transfer.raw.converter.PkoBpTransferRawConverter;
-import it.introsoft.banker.model.transfer.supplier.MultiTransferOnPdfPageSupplier;
-import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageMultipleFilesSupplier;
-import it.introsoft.banker.model.transfer.supplier.SingleTransferOnPdfPageSupplier;
-import it.introsoft.banker.model.transfer.supplier.TransferInHtmlTableSupplier;
-import it.introsoft.banker.repository.Account;
-import it.introsoft.banker.repository.Transfer;
+import it.introsoft.banker.model.jpa.Account;
+import it.introsoft.banker.model.jpa.Transfer;
+import it.introsoft.banker.service.converter.BgzOptimaTransferRawConverter;
+import it.introsoft.banker.service.converter.MBankTransferRawConverter;
+import it.introsoft.banker.service.converter.MilleniumTransferRawConverter;
+import it.introsoft.banker.service.converter.PkoBpTransferRawConverter;
+import it.introsoft.banker.service.supplier.MultiTransferOnPdfPageSupplier;
+import it.introsoft.banker.service.supplier.SingleTransferOnPdfPageMultipleFilesSupplier;
+import it.introsoft.banker.service.supplier.SingleTransferOnPdfPageSupplier;
+import it.introsoft.banker.service.supplier.TransferInHtmlTableSupplier;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;

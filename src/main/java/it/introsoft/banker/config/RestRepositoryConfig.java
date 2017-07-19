@@ -1,6 +1,6 @@
 package it.introsoft.banker.config;
 
-import it.introsoft.banker.repository.Account;
+import it.introsoft.banker.model.jpa.Account;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
