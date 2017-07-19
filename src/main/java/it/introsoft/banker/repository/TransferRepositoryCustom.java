@@ -9,9 +9,9 @@ import java.util.Map;
 
 public interface TransferRepositoryCustom {
 
-    void updateBalanceInLaterThanTodayTransfers(Transfer transfer);
+    void setCategoryByDescriptionStartingWith(String category, String descriptor);
 
-    void updateBalanceInTodayTransfers(Transfer transfer);
+    void setCategoryByDescriptionEndingWith(String category, String descriptor);
 
     List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop);
 

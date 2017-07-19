@@ -3,6 +3,7 @@ package it.introsoft.banker.service
 import groovy.util.logging.Slf4j
 import it.introsoft.banker.repository.CategoryDescriptorRepository
 import it.introsoft.banker.repository.Transfer
+import it.introsoft.banker.service.collector.CardPaymentDescriptorCollectorFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ContextConfiguration
@@ -16,10 +17,10 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = NONE)
 @Slf4j
 @ContextConfiguration
-class DescriptorCollectorTest extends Specification {
+class MilleniumCardPaymentDescriptorCollectorTest extends Specification {
 
     @Autowired
-    DescriptorCollector descriptorCollector
+    CardPaymentDescriptorCollectorFactory descriptorCollectorFactory
 
     @Autowired
     CategoryDescriptorRepository repository
@@ -33,7 +34,7 @@ class DescriptorCollectorTest extends Specification {
                 .description(given)
                 .build()
         when:
-        descriptorCollector.accept(transfer)
+        descriptorCollectorFactory.get(MILLENIUM).accept(transfer)
         then:
         repository.exists(categoryDescriptor.name.eq(expected))
         where:
@@ -52,8 +53,8 @@ class DescriptorCollectorTest extends Specification {
                 .description("LPP RESERVED 1912070 LUBLIN 17/06/28")
                 .build()
         when:
-        descriptorCollector.accept(transfer)
-        descriptorCollector.accept(transfer)
+        descriptorCollectorFactory.get(MILLENIUM).accept(transfer)
+        descriptorCollectorFactory.get(MILLENIUM).accept(transfer)
         then:
         repository.findAll(categoryDescriptor.name.eq("LPP RESERVED 1912070 LUBLIN")).size() == 1
     }

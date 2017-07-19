@@ -1,11 +1,14 @@
-package it.introsoft.banker.service;
+package it.introsoft.banker.service.consumer;
 
 import com.google.common.collect.Maps;
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import it.introsoft.banker.repository.CategoryDescriptor;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
+import it.introsoft.banker.service.event.UpdateCategoryDescriptorsEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
@@ -20,9 +23,12 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
 
     private final CategoryDescriptorRepository descriptorRepository;
 
+    private final EventBus eventBus;
+
     @Autowired
-    public UpdateCategoryDescriptorsEventConsumer(CategoryDescriptorRepository descriptorRepository) {
+    public UpdateCategoryDescriptorsEventConsumer(CategoryDescriptorRepository descriptorRepository, @Lazy EventBus eventBus) {
         this.descriptorRepository = descriptorRepository;
+        this.eventBus = eventBus;
     }
 
     private String[] parseDescriptors(String descriptors) {
@@ -34,13 +40,13 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
     @Override
     public void accept(UpdateCategoryDescriptorsEvent event) {
 
-        Map<String, String> categoryMappings = getCategoryMappings(event);
+        Map<String, String> categoryMappings = getCategoryMappings(event.getProperties());
 
         int updatedDescriptorsCount = 0;
 
         for (CategoryDescriptor categoryDescriptor : getCategoryDescriptors()) {
             String descriptor = categoryDescriptor.getName();
-            String category = categoryMappings.get(descriptor.toUpperCase());
+            String category = categoryMappings.get(descriptor);
             if (category != null) {
                 updatedDescriptorsCount = updatedDescriptorsCount + 1;
                 categoryDescriptor.setCategory(category);
@@ -49,17 +55,17 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
         }
 
         log.info("count of updated category descriptors {}", updatedDescriptorsCount);
+        eventBus.post(event.getBank().getUpdateTransferCategoryEvent());
     }
 
-    private Map<String, String> getCategoryMappings(UpdateCategoryDescriptorsEvent event) {
+    private Map<String, String> getCategoryMappings(Properties properties) {
         Map<String, String> categoryMapping = Maps.newHashMap();
-        Properties properties = event.getProperties();
         properties.stringPropertyNames().forEach(category -> {
             String descriptors = properties.getProperty(category);
             if (descriptors.length() < 3 || !descriptors.startsWith("\"") || !descriptors.endsWith("\""))
                 throw new IllegalArgumentException("value of property " + category + "is invalid");
             for (String descriptor : parseDescriptors(descriptors)) {
-                categoryMapping.put(descriptor.toUpperCase(), category);
+                categoryMapping.put(descriptor, category);
             }
         });
         log.info("category mapping size {}", categoryMapping.size());

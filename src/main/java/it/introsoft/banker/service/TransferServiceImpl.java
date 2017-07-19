@@ -5,6 +5,9 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import it.introsoft.banker.repository.QTransfer;
 import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
+import it.introsoft.banker.service.collector.BeneficiaryCollector;
+import it.introsoft.banker.service.collector.CardPaymentDescriptorCollector;
+import it.introsoft.banker.service.collector.PayeeCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,26 +23,24 @@ public class TransferServiceImpl implements TransferService {
     private final TransferRepository transferRepository;
     private final BeneficiaryCollector beneficiaryCollector;
     private final PayeeCollector payeeCollector;
-    private final DescriptorCollector descriptorCollector;
 
     private final QTransfer qtransfer = QTransfer.transfer;
 
     @Autowired
     public TransferServiceImpl(TransferRepository transferRepository,
                                BeneficiaryCollector beneficiaryCollector,
-                               PayeeCollector payeeCollector, DescriptorCollector descriptorCollector) {
+                               PayeeCollector payeeCollector) {
         this.transferRepository = transferRepository;
         this.beneficiaryCollector = beneficiaryCollector;
         this.payeeCollector = payeeCollector;
-        this.descriptorCollector = descriptorCollector;
     }
 
     @Override
-    public Result save(Transfer transfer) {
+    public Result save(Transfer transfer, CardPaymentDescriptorCollector cardPaymentDescriptorCollector) {
         Stopwatch stopwatch = Stopwatch.createStarted();
         beneficiaryCollector.accept(transfer);
         payeeCollector.accept(transfer);
-        descriptorCollector.accept(transfer);
+        cardPaymentDescriptorCollector.accept(transfer);
         Optional<Transfer> fromDb = findTransfer(transfer);
         if (fromDb.isPresent()) {
             log.info("transfer already exists with id: {}", fromDb.get().getId());

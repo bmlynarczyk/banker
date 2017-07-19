@@ -1,6 +1,5 @@
 package it.introsoft.banker.model.transfer.raw;
 
-import it.introsoft.banker.model.Bank;
 import it.introsoft.banker.model.transfer.supplier.MoneyConverter;
 import it.introsoft.banker.model.transfer.type.PkoBpTransferTypeRecognizer;
 import it.introsoft.banker.repository.Transfer;
@@ -12,6 +11,8 @@ import lombok.SneakyThrows;
 import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static it.introsoft.banker.model.Bank.PKO_BP;
 
 @AllArgsConstructor
 @Builder
@@ -50,7 +51,7 @@ public class PkoBpTransferRaw implements TransferRaw {
         TransferDetails details = new TransferDetails(description);
         Transfer transfer = Transfer.builder()
                 .account(account)
-                .bank(Bank.PKO_BP)
+                .bank(PKO_BP)
                 .currency(currency)
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date))
                 .amount(MoneyConverter.toMoneyValue(getMoneyString(amount)))
@@ -118,8 +119,7 @@ public class PkoBpTransferRaw implements TransferRaw {
                 beneficiaryAddress = outgoingPaymentWithoutAccountMatcher.group(4).trim();
                 title = outgoingPaymentWithoutAccountMatcher.group(6).trim();
             } else if (cardPaymentMatcher.matches()) {
-                title = cardPaymentMatcher.group(2).trim();
-                beneficiaryName = cardPaymentMatcher.group(4).trim();
+                title = cardPaymentMatcher.group(1).trim() + " " + cardPaymentMatcher.group(3).trim();
                 cardNumber = cardPaymentMatcher.group(10).trim();
             } else if (incomingPaymentMatcher.matches()) {
                 payeeAccount = incomingPaymentMatcher.group(2).trim();

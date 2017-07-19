@@ -1,10 +1,11 @@
-package it.introsoft.banker.service;
+package it.introsoft.banker.service.consumer;
 
 import com.google.common.eventbus.Subscribe;
 import it.introsoft.banker.repository.Account;
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.repository.Transfer;
 import it.introsoft.banker.repository.TransferRepository;
+import it.introsoft.banker.service.event.UpdateAccountBalanceEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,10 +33,14 @@ public class UpdateAccountBalanceEventConsumer implements Consumer<UpdateAccount
         Transfer transfer = transferRepository.findFirstByAccountOrderByDateDescDateTransferNumberDesc(account.getNumber())
                 .orElseThrow(IllegalArgumentException::new);
 
-        account.setCurrentBalance(transfer.getBalance());
-        accountRepository.save(account);
+        Long balance = transfer.getBalance();
 
-        log.info("balance of account {} updated", account.getNumber());
+        if (balance != null) {
+            account.setCurrentBalance(balance);
+            accountRepository.save(account);
+            log.info("balance of account {} updated", account.getNumber());
+        }
+
     }
 
 }

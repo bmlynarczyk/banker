@@ -2,6 +2,7 @@ package it.introsoft.banker.service;
 
 import com.google.common.eventbus.EventBus;
 import it.introsoft.banker.repository.*;
+import it.introsoft.banker.service.event.UpdateAccountBalanceEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

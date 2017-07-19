@@ -6,6 +6,7 @@ import it.introsoft.banker.model.transfer.type.TransferType;
 import it.introsoft.banker.view.AccountReportTransfer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
@@ -39,20 +40,21 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public void updateBalanceInLaterThanTodayTransfers(Transfer transfer) {
+    @Transactional
+    public void setCategoryByDescriptionStartingWith(String category, String descriptor) {
         queryFactory.update(qtransfer)
-                .where(qtransfer.account.eq(transfer.getAccount())
-                        .and(qtransfer.date.gt(transfer.getDate())))
-                .set(qtransfer.balance, qtransfer.balance.add(transfer.getAmount()));
+                .where(qtransfer.category.isNull()
+                        .and(qtransfer.description.startsWith(descriptor)))
+                .set(qtransfer.category, category).execute();
     }
 
     @Override
-    public void updateBalanceInTodayTransfers(Transfer transfer) {
-        queryFactory.update(qtransfer).
-                where(qtransfer.account.eq(transfer.getAccount())
-                        .and(qtransfer.date.eq(transfer.getDate()))
-                        .and(qtransfer.dateTransferNumber.gt(transfer.getDateTransferNumber()))).
-                set(qtransfer.balance, qtransfer.balance.add(transfer.getAmount()));
+    @Transactional
+    public void setCategoryByDescriptionEndingWith(String category, String descriptor) {
+        queryFactory.update(qtransfer)
+                .where(qtransfer.category.isNull()
+                        .and(qtransfer.description.startsWith(descriptor)))
+                .set(qtransfer.category, category).execute();
     }
 
     @Override

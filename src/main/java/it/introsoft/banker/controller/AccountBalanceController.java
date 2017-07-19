@@ -1,7 +1,5 @@
 package it.introsoft.banker.controller;
 
-import it.introsoft.banker.repository.Account;
-import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.service.BalanceCalculator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

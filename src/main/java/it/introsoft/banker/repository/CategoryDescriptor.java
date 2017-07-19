@@ -33,6 +33,7 @@ public class CategoryDescriptor {
     private TransferType transferType;
 
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Bank bank;
 
     @Column(nullable = false)

@@ -1,4 +1,4 @@
-package it.introsoft.banker.service;
+package it.introsoft.banker.service.event;
 
 import it.introsoft.banker.repository.Account;
 import lombok.AllArgsConstructor;
