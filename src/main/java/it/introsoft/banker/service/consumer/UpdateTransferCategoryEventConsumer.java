@@ -30,6 +30,7 @@ public class UpdateTransferCategoryEventConsumer {
 
     @Subscribe
     public void accept(MilleniumUpdateTransferCategoryEvent event) {
+        long updatedTransfers = 0;
         for (CategoryDescriptor categoryDescriptor : getCategoryDescriptors(Bank.MILLENIUM)) {
             String descriptor = categoryDescriptor.getName();
             String category = categoryDescriptor.getCategory();
@@ -39,14 +40,16 @@ public class UpdateTransferCategoryEventConsumer {
                 case PAYEE:
                     break;
                 case CARD_PAYMENT_DESCRPTION:
-                    transferRepository.setCategoryByDescriptionStartingWith(category, descriptor);
+                    updatedTransfers = updatedTransfers + transferRepository.setCategoryByDescriptionStartingWith(category, descriptor);
                     break;
             }
         }
+        log.info("category updated in {} transfers", updatedTransfers);
     }
 
     @Subscribe
     public void accept(PkoBpUpdateTransferCategoryEvent event) {
+        long updatedTransfers = 0;
         for (CategoryDescriptor categoryDescriptor : getCategoryDescriptors(Bank.PKO_BP)) {
             String descriptor = categoryDescriptor.getName();
             String category = categoryDescriptor.getCategory();
@@ -56,10 +59,11 @@ public class UpdateTransferCategoryEventConsumer {
                 case PAYEE:
                     break;
                 case CARD_PAYMENT_DESCRPTION:
-                    transferRepository.setCategoryByDescriptionEndingWith(category, descriptor);
+                    updatedTransfers = updatedTransfers + transferRepository.setCategoryByDescriptionEndingWith(category, descriptor);
                     break;
             }
         }
+        log.info("category updated in {} transfers", updatedTransfers);
     }
 
     @Subscribe

@@ -43,8 +43,8 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
 
     @Override
     @Transactional
-    public void setCategoryByDescriptionStartingWith(String category, String descriptor) {
-        queryFactory.update(qtransfer)
+    public long setCategoryByDescriptionStartingWith(String category, String descriptor) {
+        return queryFactory.update(qtransfer)
                 .where(qtransfer.category.isNull()
                         .and(qtransfer.description.startsWith(descriptor)))
                 .set(qtransfer.category, category).execute();
@@ -52,10 +52,10 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
 
     @Override
     @Transactional
-    public void setCategoryByDescriptionEndingWith(String category, String descriptor) {
-        queryFactory.update(qtransfer)
+    public long setCategoryByDescriptionEndingWith(String category, String descriptor) {
+        return queryFactory.update(qtransfer)
                 .where(qtransfer.category.isNull()
-                        .and(qtransfer.description.startsWith(descriptor)))
+                        .and(qtransfer.description.endsWith(descriptor)))
                 .set(qtransfer.category, category).execute();
     }
 

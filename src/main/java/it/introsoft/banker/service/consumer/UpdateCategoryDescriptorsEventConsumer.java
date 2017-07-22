@@ -7,12 +7,12 @@ import it.introsoft.banker.model.jpa.CategoryDescriptor;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import it.introsoft.banker.service.event.UpdateCategoryDescriptorsEvent;
 import lombok.extern.slf4j.Slf4j;
+import org.jopendocument.dom.spreadsheet.Sheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import java.util.Map;
-import java.util.Properties;
 import java.util.function.Consumer;
 
 import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
@@ -40,7 +40,7 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
     @Override
     public void accept(UpdateCategoryDescriptorsEvent event) {
 
-        Map<String, String> categoryMappings = getCategoryMappings(event.getProperties());
+        Map<String, String> categoryMappings = getCategoryMappings(event.getSheet());
 
         int updatedDescriptorsCount = 0;
 
@@ -58,17 +58,14 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
         eventBus.post(event.getBank().getUpdateTransferCategoryEvent());
     }
 
-    private Map<String, String> getCategoryMappings(Properties properties) {
+    private Map<String, String> getCategoryMappings(Sheet sheet) {
         Map<String, String> categoryMapping = Maps.newHashMap();
-        properties.stringPropertyNames().forEach(category -> {
-            String descriptors = properties.getProperty(category);
-            if (descriptors.length() < 3 || !descriptors.startsWith("\"") || !descriptors.endsWith("\""))
-                throw new IllegalArgumentException("value of property " + category + "is invalid");
-            for (String descriptor : parseDescriptors(descriptors)) {
+        for (int i = 0; i < sheet.getRowCount(); i++) {
+            String descriptor = sheet.getValueAt(0, i).toString();
+            String category = sheet.getValueAt(1, i).toString();
+            if (!descriptor.isEmpty())
                 categoryMapping.put(descriptor, category);
-            }
-        });
-        log.info("category mapping size {}", categoryMapping.size());
+        }
         return categoryMapping;
     }
 

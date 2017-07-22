@@ -14,6 +14,8 @@ import it.introsoft.banker.service.event.UpdateAccountBalanceEvent;
 import it.introsoft.banker.service.event.UpdateCategoryDescriptorsEvent;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
+import org.jopendocument.dom.spreadsheet.Sheet;
+import org.jopendocument.dom.spreadsheet.SpreadSheet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,6 +54,7 @@ public class ImportController {
     private AccountRepository accountRepository;
 
     @PostMapping
+    @SneakyThrows
     public void importTransfers(@RequestParam String filePath,
                                 @RequestParam String account,
                                 @RequestParam(required = false) String categoriesMappingPath) {
@@ -63,8 +66,8 @@ public class ImportController {
         save(accountFromDb, transferSupplier.get());
         eventBus.post(UpdateAccountBalanceEvent.builder().account(accountFromDb).build());
         if (nonNull(categoriesMappingPath) && !categoriesMappingPath.isEmpty()) {
-            Properties properties = getProperties(categoriesMappingPath);
-            eventBus.post(UpdateCategoryDescriptorsEvent.builder().bank(accountFromDb.getBank()).properties(properties).build());
+            Sheet sheet = SpreadSheet.createFromFile(new File(categoriesMappingPath)).getSheet(0);
+            eventBus.post(UpdateCategoryDescriptorsEvent.builder().bank(accountFromDb.getBank()).sheet(sheet).build());
         }
     }
 
@@ -78,15 +81,6 @@ public class ImportController {
         log.info("{} transfers saved", results.stream().filter(it -> (it == Result.SAVED)).count());
         log.info("{} transfers existing", results.stream().filter(it -> (it == Result.EXISTING)).count());
         log.info("operation executed for {} transfers in: {}", transfers.size(), stopwatch);
-    }
-
-    @SneakyThrows
-    private Properties getProperties(String categoriesMappingPath) {
-        Properties properties = new Properties();
-        FileInputStream fileInputStream = new FileInputStream(categoriesMappingPath);
-        InputStreamReader reader = new InputStreamReader(fileInputStream, Charset.forName("UTF-8"));
-        properties.load(reader);
-        return properties;
     }
 
 }

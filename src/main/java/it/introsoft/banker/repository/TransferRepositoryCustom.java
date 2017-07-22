@@ -9,9 +9,9 @@ import java.util.Map;
 
 public interface TransferRepositoryCustom {
 
-    void setCategoryByDescriptionStartingWith(String category, String descriptor);
+    long setCategoryByDescriptionStartingWith(String category, String descriptor);
 
-    void setCategoryByDescriptionEndingWith(String category, String descriptor);
+    long setCategoryByDescriptionEndingWith(String category, String descriptor);
 
     List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop);
 

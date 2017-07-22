@@ -4,6 +4,7 @@ import it.introsoft.banker.model.raw.Bank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import org.jopendocument.dom.spreadsheet.Sheet;
 
 import java.util.Properties;
 
@@ -14,6 +15,6 @@ public class UpdateCategoryDescriptorsEvent {
 
     private final Bank bank;
 
-    private final Properties properties;
+    private final Sheet sheet;
 
 }
