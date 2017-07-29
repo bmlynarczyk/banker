@@ -1,16 +1,14 @@
 angular.module('BlurAdmin.pages.account-report')
-    .service('accountReportChartFactory', AccountReportChartFactory);
+    .service('accountTransferTypeChartFactory', AccountTransferTypeChartFactory);
 
-function AccountReportChartFactory(baConfig, layoutPaths, dayBalanceExtractor){
+function AccountTransferTypeChartFactory(baConfig, layoutPaths, dayBalanceExtractor){
 
     this.create = function(report){
         var layoutColors = baConfig.colors;
-        var lineChart = AmCharts.makeChart('lineChart', {
+        var lineChart = AmCharts.makeChart('transferTypeChart', {
           type: 'serial',
           theme: 'light',
           color: layoutColors.defaultText,
-          marginTop: 10,
-          marginRight: 15,
           dataProvider: dayBalanceExtractor.extract(report.transfers),
           valueAxes: [
             {

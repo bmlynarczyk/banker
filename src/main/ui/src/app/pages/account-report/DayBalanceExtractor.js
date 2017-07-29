@@ -8,11 +8,11 @@ function DayBalanceExtractor() {
     }
 
     this.extract = function(transfers) {
-        var myMap = new Map();
+        var balancePerDay = new Map();
         transfers.forEach(function(transfer){
-            myMap.set(transfer.date, transfer.balance / 1000)
+            balancePerDay.set(transfer.date, transfer.balance / 1000)
         });
-        return Array.from(myMap).map(toChartData)
+        return Array.from(balancePerDay).map(toChartData)
     }
 
 }

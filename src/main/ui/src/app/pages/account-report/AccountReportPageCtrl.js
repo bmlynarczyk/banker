@@ -4,11 +4,12 @@
   angular.module('BlurAdmin.pages.account-report')
     .controller('AccountReportPageCtrl', AccountReportPageCtrl);
 
-  function AccountReportPageCtrl($scope, $http, $stateParams, accountReportChartFactory) {
+  function AccountReportPageCtrl($scope, $http, $stateParams, accountTransferTypeChartFactory, categoryChartFactory) {
     var params = { params: {periodStart: $stateParams.periodStart, periodStop: $stateParams.periodStop }}
     $http.get('/api/accounts/reports/' + $stateParams.account, params).then(function(response) {
         $scope.report = response.data;
-        accountReportChartFactory.create($scope.report)
+        accountTransferTypeChartFactory.create($scope.report)
+        categoryChartFactory.create($scope.report.categoriesReport, 'categoryChart')
     });
   }
 

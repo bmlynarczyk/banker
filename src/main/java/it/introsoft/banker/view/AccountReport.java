@@ -29,6 +29,7 @@ public class AccountReport {
     private final Long minBalance;
     private final Long maxBalance;
     private final List<AccountReportTransfer> transfers;
+    private final CategoriesReport categoriesReport;
 
     @JsonIgnore
     private final AccountRepository accountRepository;
@@ -66,7 +67,7 @@ public class AccountReport {
         this.maxBalance = getMaxBalance();
 
         this.transfers = getTransfersByPeriod();
-
+        this.categoriesReport = new CategoriesReportSupplier(periodStart, periodStop, accountNumber, transferRepository).get();
     }
 
     private Account getAccount() {

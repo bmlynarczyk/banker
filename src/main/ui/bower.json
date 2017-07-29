@@ -68,6 +68,7 @@
         "./dist/amcharts/serial.js",
         "./dist/amcharts/funnel.js",
         "./dist/amcharts/pie.js",
+        "./dist/amcharts/xy.js",
         "./dist/amcharts/gantt.js"
       ]
     },

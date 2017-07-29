@@ -35,10 +35,7 @@ function browserSyncInit(baseDir, browser) {
    */
   server.middleware = proxyMiddleware('/api', {
         target: 'http://localhost:8080',
-        changeOrigin: true,
-        pathRewrite: {
-            '^/api' : '/'
-        }
+        changeOrigin: true
     }
   );
 

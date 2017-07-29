@@ -2,6 +2,7 @@ package it.introsoft.banker.service.consumer;
 
 import com.google.common.eventbus.Subscribe;
 import it.introsoft.banker.model.jpa.CategoryDescriptor;
+import it.introsoft.banker.model.jpa.DescriptorOrigin;
 import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import it.introsoft.banker.repository.TransferRepository;
@@ -12,7 +13,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import static com.google.common.collect.Streams.stream;
+import static it.introsoft.banker.model.jpa.DescriptorOrigin.*;
 import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
+import static it.introsoft.banker.model.raw.Bank.MILLENIUM;
+import static it.introsoft.banker.model.raw.Bank.PKO_BP;
 
 @Slf4j
 @Component
@@ -31,38 +36,22 @@ public class UpdateTransferCategoryEventConsumer {
     @Subscribe
     public void accept(MilleniumUpdateTransferCategoryEvent event) {
         long updatedTransfers = 0;
-        for (CategoryDescriptor categoryDescriptor : getCategoryDescriptors(Bank.MILLENIUM)) {
-            String descriptor = categoryDescriptor.getName();
-            String category = categoryDescriptor.getCategory();
-            switch (categoryDescriptor.getOrigin()) {
-                case BENEFICIARY:
-                    break;
-                case PAYEE:
-                    break;
-                case CARD_PAYMENT_DESCRPTION:
-                    updatedTransfers = updatedTransfers + transferRepository.setCategoryByDescriptionStartingWith(category, descriptor);
-                    break;
-            }
-        }
+
+        updatedTransfers += updateMilleniumCardPaymentCategories();
+        updatedTransfers += updateTransferCategoriesByBeneficiary(MILLENIUM);
+        updatedTransfers += updateTransferCategoriesByPayee(MILLENIUM);
+
         log.info("category updated in {} transfers", updatedTransfers);
     }
 
     @Subscribe
     public void accept(PkoBpUpdateTransferCategoryEvent event) {
         long updatedTransfers = 0;
-        for (CategoryDescriptor categoryDescriptor : getCategoryDescriptors(Bank.PKO_BP)) {
-            String descriptor = categoryDescriptor.getName();
-            String category = categoryDescriptor.getCategory();
-            switch (categoryDescriptor.getOrigin()) {
-                case BENEFICIARY:
-                    break;
-                case PAYEE:
-                    break;
-                case CARD_PAYMENT_DESCRPTION:
-                    updatedTransfers = updatedTransfers + transferRepository.setCategoryByDescriptionEndingWith(category, descriptor);
-                    break;
-            }
-        }
+
+        updatedTransfers += updatePkoBpCardPaymentCategories();
+        updatedTransfers += updateTransferCategoriesByBeneficiary(PKO_BP);
+        updatedTransfers += updateTransferCategoriesByPayee(PKO_BP);
+
         log.info("category updated in {} transfers", updatedTransfers);
     }
 
@@ -70,8 +59,39 @@ public class UpdateTransferCategoryEventConsumer {
     public void accept(UnknownUpdateTransferCategoryEvent event) {
     }
 
-    private Iterable<CategoryDescriptor> getCategoryDescriptors(Bank bank) {
-        return categoryDescriptorRepository.findAll(categoryDescriptor.category.isNotNull().and(categoryDescriptor.bank.eq(bank)));
+    private long updateMilleniumCardPaymentCategories() {
+        return stream(getCategoryDescriptors(MILLENIUM, CARD_PAYMENT_DESCRPTION))
+                .mapToLong(cd -> transferRepository.setCategoryByDescriptionStartingWith(
+                        cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
+                )).sum();
+    }
+
+    private long updatePkoBpCardPaymentCategories() {
+        return stream(getCategoryDescriptors(PKO_BP, CARD_PAYMENT_DESCRPTION))
+                .mapToLong(cd -> transferRepository.setCategoryByDescriptionEndingWith(
+                        cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
+                )).sum();
+    }
+
+    private long updateTransferCategoriesByBeneficiary(Bank bank) {
+        return stream(getCategoryDescriptors(bank, BENEFICIARY))
+                .mapToLong(cd -> transferRepository.setCategoryByBeneficiary(
+                        cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
+                )).sum();
+    }
+
+    private long updateTransferCategoriesByPayee(Bank bank) {
+        return stream(getCategoryDescriptors(bank, PAYEE))
+                .mapToLong(cd -> transferRepository.setCategoryByPayee(
+                        cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
+                )).sum();
+    }
+
+    private Iterable<CategoryDescriptor> getCategoryDescriptors(Bank bank, DescriptorOrigin descriptorOrigin) {
+        return categoryDescriptorRepository.findAll(categoryDescriptor.category.isNotNull()
+                .and(categoryDescriptor.bank.eq(bank))
+                .and(categoryDescriptor.origin.eq(descriptorOrigin))
+        );
     }
 
 }
