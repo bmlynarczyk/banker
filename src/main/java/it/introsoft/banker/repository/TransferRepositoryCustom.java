@@ -21,6 +21,8 @@ public interface TransferRepositoryCustom {
 
     List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop);
 
+    List<CategorySum> getSumByCategories(Date start, Date stop);
+
     List<CategorySum> getSumByCategories(String account, Date start, Date stop);
 
     Map<TransferType, Long> getAmountSumByTransferType(String account, Date start, Date stop);

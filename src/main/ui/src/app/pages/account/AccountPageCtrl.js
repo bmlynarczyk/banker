@@ -44,10 +44,18 @@
             });
     }
 
-    $scope.openReport = function(accountNumber){
+    $scope.openAccountReport = function(accountNumber){
         var today = new Date()
         $state.go("account-report", {
             account: accountNumber,
+            periodStart: today.getFullYear() + "-01-01",
+            periodStop: today.getFullYear() + "-12-31"
+        });
+    }
+
+    $scope.openCategoryReport = function(){
+        var today = new Date()
+        $state.go("category-report", {
             periodStart: today.getFullYear() + "-01-01",
             periodStop: today.getFullYear() + "-12-31"
         });
@@ -83,6 +91,19 @@
         }, function () {
         });
     };
+    $scope.openCustomCategoryReport = function() {
+        modalScope.state = $state;
+        modalScope.modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'app/pages/account/customCategoryReportDialog.html',
+                size: 'md',
+                controller: CustomCategoryReportCtrl,
+                scope: modalScope
+        });
+        modalScope.modalInstance.result.then(function () {
+        }, function () {
+        });
+    };
   }
 
   function CustomAccountReportCtrl($scope) {
@@ -105,6 +126,32 @@
         $scope.modalInstance.close();
         $scope.state.go("account-report", {
             account: $scope.selectedAccountNumber,
+            periodStart: $scope.periodStart,
+            periodStop: $scope.periodStop
+        });
+    }
+
+  }
+
+  function CustomCategoryReportCtrl($scope) {
+
+    $scope.periodStart;
+    $scope.periodStop;
+
+    $scope.openedPeriodStart = false;
+    $scope.openedPeriodStop = false;
+
+    $scope.openPeriodStart = function() {
+        $scope.openedPeriodStart = true;
+    }
+
+    $scope.openPeriodStop = function() {
+        $scope.openedPeriodStop = true;
+    }
+
+    $scope.openCustomCategoryReport = function() {
+        $scope.modalInstance.close();
+        $scope.state.go("category-report", {
             periodStart: $scope.periodStart,
             periodStop: $scope.periodStop
         });

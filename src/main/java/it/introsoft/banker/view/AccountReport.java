@@ -7,6 +7,7 @@ import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.model.raw.TransferType;
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.repository.TransferRepository;
+import it.introsoft.banker.service.converter.CategoriesReportFactory;
 import lombok.Value;
 
 import java.util.Date;
@@ -38,7 +39,8 @@ public class AccountReport {
     private final TransferRepository transferRepository;
 
     public AccountReport(String accountNumber, Date periodStart, Date periodStop,
-                         AccountRepository accountRepository, TransferRepository transferRepository) {
+                         AccountRepository accountRepository, TransferRepository transferRepository,
+                         CategoriesReportFactory categoriesReportFactory) {
         if (periodStart.after(periodStop))
             throw new IllegalArgumentException("period start is after stop");
 
@@ -67,7 +69,7 @@ public class AccountReport {
         this.maxBalance = getMaxBalance();
 
         this.transfers = getTransfersByPeriod();
-        this.categoriesReport = new CategoriesReportSupplier(periodStart, periodStop, accountNumber, transferRepository).get();
+        this.categoriesReport = categoriesReportFactory.convert(transferRepository.getSumByCategories(accountNumber, periodStart, periodStop));
     }
 
     private Account getAccount() {

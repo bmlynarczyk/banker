@@ -1,0 +1,46 @@
+<div class="panel-heading clearfix"><h3 class="panel-title">Custom Report</h3></div>
+<div style="padding:15px;">
+    <form>
+        <div class="datepicker">
+            <div>
+                <label>Period start</label>
+            </div>
+            <p class="input-group">
+                <input type="text"
+                       class="form-control"
+                       uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="periodStart"
+                       is-open="openedPeriodStart"
+                       ng-required="true"
+                       close-text="Close"
+                       alt-input-formats="altInputFormats"
+                       show-button-bar="true"/>
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPeriodStart()"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            </p>
+            <div>
+                <label>Period stop</label>
+            </div>
+            <p class="input-group">
+                <input type="text"
+                       class="form-control"
+                       uib-datepicker-popup="yyyy-MM-dd"
+                       ng-model="periodStop"
+                       is-open="openedPeriodStop"
+                       ng-required="true"
+                       close-text="Close"
+                       alt-input-formats="altInputFormats"
+                       show-button-bar="false"/>
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default" ng-click="openPeriodStop()"><i
+                        class="glyphicon glyphicon-calendar"></i></button>
+            </span>
+            </p>
+            <button type="submit" class="btn btn-primary" ng-click="openCustomCategoryReport()">
+                Show report for selected period
+            </button>
+        </div>
+    </form>
+</div>

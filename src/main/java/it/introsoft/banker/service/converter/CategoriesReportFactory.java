@@ -1,28 +1,24 @@
-package it.introsoft.banker.view;
+package it.introsoft.banker.service.converter;
 
-import com.google.common.base.Supplier;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.introsoft.banker.repository.TransferRepository;
-import lombok.AllArgsConstructor;
+import it.introsoft.banker.view.CategoriesReport;
+import it.introsoft.banker.view.CategorySum;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-@AllArgsConstructor
-public class CategoriesReportSupplier implements Supplier<CategoriesReport> {
-
-    private final Date periodStart;
-    private final Date periodStop;
-    private final String accountNumber;
-    private final TransferRepository transferRepository;
+@Component
+public class CategoriesReportFactory implements Converter<List<CategorySum>, CategoriesReport> {
 
     @Override
-    public CategoriesReport get() {
+    public CategoriesReport convert(List<CategorySum> categorySums) {
         Set<String> categories = Sets.newHashSet();
         Map<String, Map<String, Object>> byMonth = Maps.newHashMap();
-        transferRepository.getSumByCategories(accountNumber, periodStart, periodStop).forEach(categorySum -> {
+        categorySums.forEach(categorySum -> {
             String month = categorySum.getYear() + "-" + (categorySum.getMonth() < 10 ? "0" : "") + categorySum.getMonth();
             byMonth.computeIfAbsent(month, s -> Maps.newHashMap());
             byMonth.get(month).put("month", month);
@@ -31,4 +27,5 @@ public class CategoriesReportSupplier implements Supplier<CategoriesReport> {
         });
         return CategoriesReport.builder().categories(categories).amountsByMonth(byMonth.values()).build();
     }
+
 }

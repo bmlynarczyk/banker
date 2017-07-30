@@ -5,6 +5,12 @@
                 <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="openAddAccount()">
                     Add account
                 </button>
+                <button type="button" class="btn btn-primary" ng-click="openCategoryReport()">
+                    Last year categories report
+                </button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" ng-click="openCustomCategoryReport()">
+                    Custom categories report
+                </button>
             </div>
         </div>
     </div>
@@ -18,7 +24,7 @@
                     Actions<span class="caret"></span>
                 </button>
                 <ul uib-dropdown-menu>
-                    <li><a href ng-click="openReport(account.number)">Last year report</a></li>
+                    <li><a href ng-click="openAccountReport(account.number)">Last year report</a></li>
                     <li><a href ng-click="openCustomAccountReport(account.number)" data-toggle="modal">Custom report</a></li>
                     <li><a href ng-click="recalculateBalance(account.number)" data-toggle="modal">Recalculate balance</a></li>
                 </ul>
