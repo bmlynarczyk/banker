@@ -2,7 +2,7 @@ package it.introsoft.banker.controller;
 
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.repository.TransferRepository;
-import it.introsoft.banker.view.AccountReport;
+import it.introsoft.banker.model.view.AccountReport;
 import it.introsoft.banker.service.converter.CategoriesReportFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,16 +13,16 @@ import java.util.Date;
 @RestController
 @RequestMapping("/api/accounts/reports/")
 @CrossOrigin
-public class AccountReportController {
+public class AccountsReportsController {
 
     private final AccountRepository accountRepository;
     private final TransferRepository transferRepository;
     private final CategoriesReportFactory categoriesReportFactory;
 
     @Autowired
-    public AccountReportController(AccountRepository accountRepository,
-                                   TransferRepository transferRepository,
-                                   CategoriesReportFactory categoriesReportFactory) {
+    public AccountsReportsController(AccountRepository accountRepository,
+                                     TransferRepository transferRepository,
+                                     CategoriesReportFactory categoriesReportFactory) {
         this.accountRepository = accountRepository;
         this.transferRepository = transferRepository;
         this.categoriesReportFactory = categoriesReportFactory;

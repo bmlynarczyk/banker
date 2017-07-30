@@ -1,4 +1,4 @@
-package it.introsoft.banker.view;
+package it.introsoft.banker.model.view;
 
 import lombok.Builder;
 import lombok.Value;

@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toSet;
 @RestController
 @RequestMapping("/api/banks")
 @CrossOrigin
-public class BankController {
+public class BanksController {
 
     @GetMapping
     public Set<String> banks() {

@@ -2,8 +2,8 @@ package it.introsoft.banker.service.converter;
 
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
-import it.introsoft.banker.view.CategoriesReport;
-import it.introsoft.banker.view.CategorySum;
+import it.introsoft.banker.model.view.CategoriesReport;
+import it.introsoft.banker.model.view.CategorySum;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 

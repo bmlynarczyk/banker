@@ -2,8 +2,8 @@ package it.introsoft.banker.repository;
 
 import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.model.raw.TransferType;
-import it.introsoft.banker.view.AccountReportTransfer;
-import it.introsoft.banker.view.CategorySum;
+import it.introsoft.banker.model.view.AccountReportTransfer;
+import it.introsoft.banker.model.view.CategorySum;
 
 import java.util.Date;
 import java.util.List;

@@ -1,4 +1,4 @@
-package it.introsoft.banker.view;
+package it.introsoft.banker.model.view;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.introsoft.banker.model.jpa.Account;

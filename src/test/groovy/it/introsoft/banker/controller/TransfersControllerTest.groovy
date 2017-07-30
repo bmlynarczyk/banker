@@ -21,7 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @Slf4j
 @ContextConfiguration
-class TransferControllerTest extends Specification {
+class TransfersControllerTest extends Specification {
 
     @LocalServerPort
     private int port
