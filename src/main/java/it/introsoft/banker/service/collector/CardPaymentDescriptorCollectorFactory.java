@@ -27,6 +27,8 @@ public class CardPaymentDescriptorCollectorFactory {
                 return emptyCollector;
             case MILLENIUM:
                 return new MilleniumCardPaymentDescriptorCollector(repository);
+            case BZ_WBK:
+                return new BzWbkCardPaymentDescriptorCollector(repository);
             default:
                 throw new IllegalArgumentException("Unknown bank");
         }

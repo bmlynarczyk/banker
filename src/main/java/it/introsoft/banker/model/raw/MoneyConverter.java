@@ -30,4 +30,8 @@ public class MoneyConverter {
         return bgzOptimaStringToMoneyValue(value);
     }
 
+    public static Long bzWbkStringToMoneyValue(String value) {
+        return bgzOptimaStringToMoneyValue(value);
+    }
+
 }

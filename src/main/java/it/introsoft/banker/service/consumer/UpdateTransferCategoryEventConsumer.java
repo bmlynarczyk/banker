@@ -6,6 +6,7 @@ import it.introsoft.banker.model.jpa.DescriptorOrigin;
 import it.introsoft.banker.model.raw.Bank;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 import it.introsoft.banker.repository.TransferRepository;
+import it.introsoft.banker.service.event.BzWbkUpdateTransferCategoryEvent;
 import it.introsoft.banker.service.event.MilleniumUpdateTransferCategoryEvent;
 import it.introsoft.banker.service.event.PkoBpUpdateTransferCategoryEvent;
 import it.introsoft.banker.service.event.UnknownUpdateTransferCategoryEvent;
@@ -16,8 +17,7 @@ import org.springframework.stereotype.Component;
 import static com.google.common.collect.Streams.stream;
 import static it.introsoft.banker.model.jpa.DescriptorOrigin.*;
 import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
-import static it.introsoft.banker.model.raw.Bank.MILLENIUM;
-import static it.introsoft.banker.model.raw.Bank.PKO_BP;
+import static it.introsoft.banker.model.raw.Bank.*;
 
 @Slf4j
 @Component
@@ -56,6 +56,17 @@ public class UpdateTransferCategoryEventConsumer {
     }
 
     @Subscribe
+    public void accept(BzWbkUpdateTransferCategoryEvent event) {
+        long updatedTransfers = 0;
+
+        updatedTransfers += updateBzWbkCardPaymentCategories();
+        updatedTransfers += updateTransferCategoriesByBeneficiary(BZ_WBK);
+        updatedTransfers += updateTransferCategoriesByPayee(BZ_WBK);
+
+        log.info("category updated in {} transfers", updatedTransfers);
+    }
+
+    @Subscribe
     public void accept(UnknownUpdateTransferCategoryEvent event) {
     }
 
@@ -68,6 +79,13 @@ public class UpdateTransferCategoryEventConsumer {
 
     private long updatePkoBpCardPaymentCategories() {
         return stream(getCategoryDescriptors(PKO_BP, CARD_PAYMENT_DESCRPTION))
+                .mapToLong(cd -> transferRepository.setCategoryByDescriptionEndingWith(
+                        cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
+                )).sum();
+    }
+
+    private long updateBzWbkCardPaymentCategories() {
+        return stream(getCategoryDescriptors(BZ_WBK, CARD_PAYMENT_DESCRPTION))
                 .mapToLong(cd -> transferRepository.setCategoryByDescriptionEndingWith(
                         cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
                 )).sum();

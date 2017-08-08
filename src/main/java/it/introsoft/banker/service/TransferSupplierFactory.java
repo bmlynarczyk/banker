@@ -2,14 +2,8 @@ package it.introsoft.banker.service;
 
 import it.introsoft.banker.model.jpa.Account;
 import it.introsoft.banker.model.jpa.Transfer;
-import it.introsoft.banker.service.converter.BgzOptimaTransferRawConverter;
-import it.introsoft.banker.service.converter.MBankTransferRawConverter;
-import it.introsoft.banker.service.converter.MilleniumTransferRawConverter;
-import it.introsoft.banker.service.converter.PkoBpTransferRawConverter;
-import it.introsoft.banker.service.supplier.MultiTransferOnPdfPageSupplier;
-import it.introsoft.banker.service.supplier.SingleTransferOnPdfPageMultipleFilesSupplier;
-import it.introsoft.banker.service.supplier.SingleTransferOnPdfPageSupplier;
-import it.introsoft.banker.service.supplier.TransferInHtmlTableSupplier;
+import it.introsoft.banker.service.converter.*;
+import it.introsoft.banker.service.supplier.*;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -30,6 +24,8 @@ public class TransferSupplierFactory {
                 return mbankTransfersSupplier(file, account.getNumber());
             case MILLENIUM:
                 return milleniumTransfersSupplier(file, account.getNumber());
+            case BZ_WBK:
+                return bzWbkTransfersSupplier(file, account.getNumber());
             default:
                 throw new IllegalArgumentException("Unknown bank");
         }
@@ -70,6 +66,13 @@ public class TransferSupplierFactory {
                     new MilleniumTransferRawConverter(account)
             );
         }
+    }
+
+    private Supplier<Collection<Transfer>> bzWbkTransfersSupplier(File file, String account) {
+        return new TransferInStringLineSupplier(
+                file,
+                new BzWbkTransferRawConverter(account)
+        );
     }
 
 }

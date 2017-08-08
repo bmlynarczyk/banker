@@ -1,9 +1,6 @@
 package it.introsoft.banker.model.raw;
 
-import it.introsoft.banker.service.event.MilleniumUpdateTransferCategoryEvent;
-import it.introsoft.banker.service.event.PkoBpUpdateTransferCategoryEvent;
-import it.introsoft.banker.service.event.UnknownUpdateTransferCategoryEvent;
-import it.introsoft.banker.service.event.UpdateTransferCategoryEvent;
+import it.introsoft.banker.service.event.*;
 
 public enum Bank {
 
@@ -29,6 +26,12 @@ public enum Bank {
         @Override
         public UpdateTransferCategoryEvent getUpdateTransferCategoryEvent() {
             return new MilleniumUpdateTransferCategoryEvent();
+        }
+    },
+    BZ_WBK {
+        @Override
+        public UpdateTransferCategoryEvent getUpdateTransferCategoryEvent() {
+            return new BzWbkUpdateTransferCategoryEvent();
         }
     };
 
