@@ -31,11 +31,6 @@ public class UpdateCategoryDescriptorsEventConsumer implements Consumer<UpdateCa
         this.eventBus = eventBus;
     }
 
-    private String[] parseDescriptors(String descriptors) {
-        return descriptors.substring(1, descriptors.length() - 1).split("\",\"");
-    }
-
-
     @Subscribe
     @Override
     public void accept(UpdateCategoryDescriptorsEvent event) {

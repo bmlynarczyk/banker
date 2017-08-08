@@ -33,6 +33,7 @@ public class MilleniumTransferRaw implements TransferRaw {
     private String payeeAccount;
     private String payeeName;
     private String title;
+    private String additionalDescription;
     private String transferType;
 
     private static String replace(String replacement, String text) {
@@ -48,6 +49,10 @@ public class MilleniumTransferRaw implements TransferRaw {
             amount = accountedAmount.replaceAll("Kwota zaksięgowana ", "");
         else
             amount = this.amount.replaceAll("Kwota ", "");
+        if (title != null)
+            title = replace("Tytuł ", title);
+        else
+            title = replace("Dodatkowy opis ", additionalDescription);
         TransferType transferType = transferTypeRecognizer.recognize(this.transferType, amount);
         return Transfer.builder()
                 .account(replace("Z rachunku ", account))
@@ -59,7 +64,7 @@ public class MilleniumTransferRaw implements TransferRaw {
                 .currency("PLN")
                 .date(new SimpleDateFormat("yyyy-MM-dd").parse(date.replaceAll("Data księgowania ", "")))
                 .dateTransferNumber(Long.parseLong(dateTransferNumber.replaceAll("Dzienny numer transakcji ", "")))
-                .description(replace("Tytuł ", title))
+                .description(title)
                 .payeeAccount(replace("Z rachunku ", payeeAccount))
                 .payeeName(replace("Zleceniodawca ", payeeName))
                 .transferType(transferType)

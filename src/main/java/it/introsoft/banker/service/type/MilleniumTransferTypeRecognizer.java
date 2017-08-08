@@ -31,6 +31,8 @@ public class MilleniumTransferTypeRecognizer implements TransferTypeRecognizer {
             return TransferType.DEPOSIT;
         if (describer.equals("OPŁATA"))
             return TransferType.BANK_CHARGES;
+        if (describer.equals("PRZELEW DO URZEDU SKARBOWEGO"))
+            return TransferType.TAX_CHARGES;
         log.error("unknown transfer type. describer: " + describer + ", amount: " + amount);
         throw new IllegalStateException("unknown transfer type. describer: " + describer + ", amount: " + amount);
     }
