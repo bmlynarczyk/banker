@@ -1,8 +1,8 @@
 package it.introsoft.banker.controller;
 
+import it.introsoft.banker.model.view.AccountReport;
 import it.introsoft.banker.repository.AccountRepository;
 import it.introsoft.banker.repository.TransferRepository;
-import it.introsoft.banker.model.view.AccountReport;
 import it.introsoft.banker.service.converter.CategoriesReportFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

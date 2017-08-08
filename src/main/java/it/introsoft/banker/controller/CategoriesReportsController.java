@@ -1,7 +1,7 @@
 package it.introsoft.banker.controller;
 
-import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.model.view.CategoriesReport;
+import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.service.converter.CategoriesReportFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,7 +27,7 @@ public class CategoriesReportsController {
 
     @GetMapping
     public CategoriesReport getCategoriesReport(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStart,
-                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStop) {
+                                                @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStop) {
         return categoriesReportFactory.convert(transferRepository.getSumByCategories(periodStart, periodStop));
     }
 

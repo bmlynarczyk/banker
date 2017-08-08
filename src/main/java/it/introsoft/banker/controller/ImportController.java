@@ -21,12 +21,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.ValidationException;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-import java.nio.charset.Charset;
 import java.util.Collection;
 import java.util.List;
-import java.util.Properties;
 import java.util.function.Supplier;
 
 import static java.util.Objects.nonNull;

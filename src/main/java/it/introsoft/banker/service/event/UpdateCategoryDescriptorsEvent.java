@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import org.jopendocument.dom.spreadsheet.Sheet;
 
-import java.util.Properties;
-
 @AllArgsConstructor
 @Builder
 @Getter
