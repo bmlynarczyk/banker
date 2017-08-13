@@ -5,7 +5,7 @@ import it.introsoft.banker.model.raw.TransferType;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "transfer")
@@ -20,7 +20,7 @@ public class Transfer {
     @Id
     @GeneratedValue
     private Long id;
-    private Date date;
+    private LocalDate date;
     private Long dateTransferNumber;
     private String description;
     private Long amount;

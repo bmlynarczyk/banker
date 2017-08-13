@@ -6,6 +6,8 @@ import it.introsoft.banker.service.converter.BgzOptimaTransferRawConverter
 import org.springframework.core.convert.converter.Converter
 import spock.lang.Specification
 
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate
+
 class BgzOptimaTransferRawTest extends Specification {
 
     Converter<List<String>, List<BgzOptimaTransferRaw>> converter = new BgzOptimaTransferRawConverter('1234')
@@ -17,7 +19,7 @@ class BgzOptimaTransferRawTest extends Specification {
         transfer.account == '1234'
         transfer.bank == Bank.BGZ_OPTIMA
         transfer.transferType == TransferType.BANK_DEPOSIT
-        transfer.date == new Date().parse('dd-MM-yyyy', '30-04-2013')
+        transfer.date == toLocalDate('30-04-2013', 'dd-MM-yyyy')
         transfer.amount == 15200L
         transfer.balance == 5016980L
     }

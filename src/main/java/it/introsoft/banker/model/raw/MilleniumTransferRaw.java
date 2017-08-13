@@ -8,7 +8,8 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 
-import java.text.SimpleDateFormat;
+import static it.introsoft.banker.model.raw.TransferRawUtils.milleniumStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate;
 
 
 @Builder
@@ -56,13 +57,13 @@ public class MilleniumTransferRaw implements TransferRaw {
         TransferType transferType = transferTypeRecognizer.recognize(this.transferType, amount);
         return Transfer.builder()
                 .account(replace("Z rachunku ", account))
-                .amount(MoneyConverter.milleniumStringToMoneyValue(amount))
+                .amount(milleniumStringToMoneyValue(amount))
                 .bank(Bank.MILLENIUM)
                 .beneficiaryAccount(replace("Na rachunek ", beneficiaryAccount))
                 .beneficiaryName(replace("Odbiorca ", beneficiaryName))
                 .cardNumber(replace("Numer karty ", cardNumber))
                 .currency("PLN")
-                .date(new SimpleDateFormat("yyyy-MM-dd").parse(date.replaceAll("Data księgowania ", "")))
+                .date(toLocalDate(date, "yyyy-MM-dd"))
                 .dateTransferNumber(Long.parseLong(dateTransferNumber.replaceAll("Dzienny numer transakcji ", "")))
                 .description(title)
                 .payeeAccount(replace("Z rachunku ", payeeAccount))

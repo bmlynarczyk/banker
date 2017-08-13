@@ -5,7 +5,7 @@ import it.introsoft.banker.model.raw.TransferType;
 import it.introsoft.banker.model.view.AccountReportTransfer;
 import it.introsoft.banker.model.view.CategorySum;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -19,13 +19,13 @@ public interface TransferRepositoryCustom {
 
     long setCategoryByPayee(String category, String payee, TransferType transferType, Bank bank);
 
-    List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop);
+    List<AccountReportTransfer> getByPeriod(String account, LocalDate start, LocalDate stop);
 
-    List<CategorySum> getSumByCategories(Date start, Date stop);
+    List<CategorySum> getSumByCategoriesExcludingCategories(LocalDate start, LocalDate stop, List<String> excludedCategories);
 
-    List<CategorySum> getSumByCategories(String account, Date start, Date stop);
+    List<CategorySum> getSumByCategories(String account, LocalDate start, LocalDate stop);
 
-    Map<TransferType, Long> getAmountSumByTransferType(String account, Date start, Date stop);
+    Map<TransferType, Long> getAmountSumByTransferType(String account, LocalDate start, LocalDate stop);
 
-    Map<TransferType, Long> getTransferCountByTransferType(String account, Date start, Date stop);
+    Map<TransferType, Long> getTransferCountByTransferType(String account, LocalDate start, LocalDate stop);
 }

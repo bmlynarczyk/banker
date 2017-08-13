@@ -6,10 +6,9 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 
-import java.text.SimpleDateFormat;
-
 import static it.introsoft.banker.model.raw.Bank.BZ_WBK;
-import static it.introsoft.banker.model.raw.MoneyConverter.bzWbkStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.bzWbkStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate;
 
 
 @Builder
@@ -38,7 +37,7 @@ public class BzWbkTransferRaw implements TransferRaw {
                 .beneficiaryAccount(beneficiaryAccount)
                 .beneficiaryName(beneficiaryName)
                 .currency("PLN")
-                .date(new SimpleDateFormat("dd-MM-yyyy").parse(operationDate))
+                .date(toLocalDate(operationDate, "dd-MM-yyyy"))
                 .description(title)
                 .transferType(transferType)
                 .build();

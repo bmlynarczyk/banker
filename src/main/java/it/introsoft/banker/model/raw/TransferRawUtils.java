@@ -4,9 +4,11 @@ import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParsePosition;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
-public class MoneyConverter {
+public class TransferRawUtils {
 
     private static final String PLN_TO_REPLACE_SUFFIX = " PLN";
     private static final String SPACE = " ";
@@ -32,6 +34,11 @@ public class MoneyConverter {
 
     public static Long bzWbkStringToMoneyValue(String value) {
         return bgzOptimaStringToMoneyValue(value);
+    }
+
+    public static LocalDate toLocalDate(String date, String format) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(format).withLocale(Locale.getDefault());
+        return LocalDate.parse(date.replaceAll("Data księgowania ", ""), dateTimeFormatter);
     }
 
 }

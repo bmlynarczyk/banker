@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/api/accounts/reports/")
@@ -31,8 +31,8 @@ public class AccountsReportsController {
 
     @GetMapping(value = "/{accountNumber}")
     public AccountReport getAccountReport(@PathVariable String accountNumber,
-                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStart,
-                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date periodStop) {
+                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStart,
+                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStop) {
         return new AccountReport(accountNumber, periodStart, periodStop, accountRepository, transferRepository, categoriesReportFactory);
     }
 

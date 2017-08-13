@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document
 import org.springframework.core.convert.converter.Converter
 import spock.lang.Specification
 
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate
+
 class PkoBpTransferRawTest extends Specification {
 
     Converter<Document, List<TransferRaw>> converter = new PkoBpTransferRawConverter('1234')
@@ -24,7 +26,7 @@ class PkoBpTransferRawTest extends Specification {
         transfer.beneficiaryAddress == 'XXX XXX'
         transfer.description == 'XXX'
         transfer.transferType == TransferType.DEPOSIT
-        transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-16')
+        transfer.date == toLocalDate('2016-12-16', 'yyyy-MM-dd')
         transfer.bank == Bank.PKO_BP
         transfer.amount == 2500000L
         transfer.balance == 3082010L

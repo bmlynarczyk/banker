@@ -7,11 +7,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.SneakyThrows;
 
-import java.text.SimpleDateFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static it.introsoft.banker.model.raw.Bank.PKO_BP;
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate;
 
 @AllArgsConstructor
 @Builder
@@ -52,9 +52,9 @@ public class PkoBpTransferRaw implements TransferRaw {
                 .account(account)
                 .bank(PKO_BP)
                 .currency(currency)
-                .date(new SimpleDateFormat("yyyy-MM-dd").parse(date))
-                .amount(MoneyConverter.toMoneyValue(getMoneyString(amount)))
-                .balance(MoneyConverter.toMoneyValue(getMoneyString(balance)))
+                .date(toLocalDate(date, "yyyy-MM-dd"))
+                .amount(TransferRawUtils.toMoneyValue(getMoneyString(amount)))
+                .balance(TransferRawUtils.toMoneyValue(getMoneyString(balance)))
                 .description(details.getTitle())
                 .beneficiaryName(details.getBeneficiaryName())
                 .beneficiaryAccount(details.getBeneficiaryAccount())

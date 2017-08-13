@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaContext;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -88,7 +88,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public List<AccountReportTransfer> getByPeriod(String account, Date start, Date stop) {
+    public List<AccountReportTransfer> getByPeriod(String account, LocalDate start, LocalDate stop) {
         return queryFactory
                 .select(
                         qtransfer.transferType,
@@ -107,7 +107,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public List<CategorySum> getSumByCategories(Date start, Date stop) {
+    public List<CategorySum> getSumByCategoriesExcludingCategories(LocalDate start, LocalDate stop, List<String> excludedCategories) {
         return queryFactory
                 .select(
                         qtransfer.date.year(),
@@ -120,6 +120,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
                 .where(
                         qtransfer.date.between(start, stop)
                                 .and(qtransfer.category.isNotNull())
+                                .and(qtransfer.category.notIn(excludedCategories))
                 )
                 .groupBy(
                         qtransfer.date.year(),
@@ -140,7 +141,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public List<CategorySum> getSumByCategories(String account, Date start, Date stop) {
+    public List<CategorySum> getSumByCategories(String account, LocalDate start, LocalDate stop) {
         return queryFactory
                 .select(
                         qtransfer.date.year(),
@@ -174,7 +175,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public Map<TransferType, Long> getAmountSumByTransferType(String account, Date start, Date stop) {
+    public Map<TransferType, Long> getAmountSumByTransferType(String account, LocalDate start, LocalDate stop) {
         return queryFactory
                 .select(
                         qtransfer.transferType,
@@ -189,7 +190,7 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
-    public Map<TransferType, Long> getTransferCountByTransferType(String account, Date start, Date stop) {
+    public Map<TransferType, Long> getTransferCountByTransferType(String account, LocalDate start, LocalDate stop) {
         return queryFactory
                 .select(
                         qtransfer.transferType,

@@ -5,9 +5,8 @@ import it.introsoft.banker.service.type.BgzOptimaTransferTypeRecognizer;
 import it.introsoft.banker.service.type.TransferTypeRecognizer;
 import lombok.*;
 
-import java.text.SimpleDateFormat;
-
-import static it.introsoft.banker.model.raw.MoneyConverter.bgzOptimaStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.bgzOptimaStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate;
 
 @AllArgsConstructor
 @Builder
@@ -31,7 +30,7 @@ public class BgzOptimaTransferRaw implements TransferRaw {
         return Transfer.builder()
                 .account(account)
                 .transferType(transferTypeRecognizer.recognize(transferType, amount))
-                .date(new SimpleDateFormat("dd.MM.yyyy").parse(date))
+                .date(toLocalDate(date, "dd.MM.yyyy"))
                 .amount(bgzOptimaStringToMoneyValue(amount))
                 .balance(bgzOptimaStringToMoneyValue(balance))
                 .bank(Bank.BGZ_OPTIMA)

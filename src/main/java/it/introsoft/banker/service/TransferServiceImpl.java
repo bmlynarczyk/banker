@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -79,7 +79,7 @@ public class TransferServiceImpl implements TransferService {
         transferRepository.save(transfer);
     }
 
-    private Long getDateTransferNumber(Date date) {
+    private Long getDateTransferNumber(LocalDate date) {
         Iterator<Transfer> iterator = transferRepository
                 .findAll(qtransfer.date.eq(date), qtransfer.dateTransferNumber.desc())
                 .iterator();

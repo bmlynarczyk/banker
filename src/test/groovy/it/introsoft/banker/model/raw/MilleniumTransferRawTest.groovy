@@ -6,6 +6,8 @@ import it.introsoft.banker.service.converter.MilleniumTransferRawConverter
 import org.springframework.core.convert.converter.Converter
 import spock.lang.Specification
 
+import static java.time.LocalDate.parse
+
 class MilleniumTransferRawTest extends Specification {
 
     Converter<List<String>, TransferRaw> converter = new MilleniumTransferRawConverter('1234')
@@ -17,7 +19,7 @@ class MilleniumTransferRawTest extends Specification {
         transfer.account == '1234'
         transfer.transferType == TransferType.CARD_PAYMENT
         transfer.dateTransferNumber == 3L
-        transfer.date == new Date().parse('yyyy-MM-dd', '2016-12-09')
+        transfer.date == parse('2016-12-09')
         transfer.payeeAccount == '98116022020000000000000000'
         transfer.cardNumber == 'XXXXXXXXXXXXXXXX'
         transfer.description == 'Stolowka Lublin 16/12/07'
@@ -40,7 +42,7 @@ class MilleniumTransferRawTest extends Specification {
         then:
         transfer.transferType == TransferType.CHARGES
         transfer.dateTransferNumber == 1L
-        transfer.date == new Date().parse('yyyy-MM-dd', '2016-09-21')
+        transfer.date == parse('2016-09-21')
         transfer.payeeAccount == '98116022020000000000000000'
         transfer.payeeName == 'JAN NOWAK LUBLIN 348 22-035'
         transfer.beneficiaryAccount == '59102031500000000000000000'

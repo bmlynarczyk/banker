@@ -9,11 +9,11 @@ import lombok.EqualsAndHashCode;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static it.introsoft.banker.model.raw.MoneyConverter.mBankStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.mBankStringToMoneyValue;
+import static it.introsoft.banker.model.raw.TransferRawUtils.toLocalDate;
 
 @Slf4j
 @AllArgsConstructor
@@ -54,7 +54,7 @@ public class MBankTransferRaw implements TransferRaw {
         return Transfer.builder()
                 .account(account)
                 .beneficiaryAccount(accounts.substring(accounts.lastIndexOf("Nr Rachunku: ")).replaceAll("Nr Rachunku: ", EMPTY))
-                .date(new SimpleDateFormat("yyyy-MM-dd").parse(date.replaceAll("Data księgowania: ", EMPTY)))
+                .date(toLocalDate(date.replaceAll("Data księgowania: ", EMPTY), "yyyy-MM-dd"))
                 .amount(mBankStringToMoneyValue(amount))
                 .description(description)
                 .transferType(transferType)

@@ -10,23 +10,23 @@ import it.introsoft.banker.repository.TransferRepository;
 import it.introsoft.banker.service.converter.CategoriesReportFactory;
 import lombok.Value;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 @Value
 public class AccountReport {
 
-    private final Date periodStart;
-    private final Date periodStop;
+    private final LocalDate periodStart;
+    private final LocalDate periodStop;
     private final String accountNumber;
     private final Bank bank;
     private final Long periodFirstBalance;
-    private final Date periodFirstBalanceDate;
+    private final LocalDate periodFirstBalanceDate;
     private final Map<TransferType, Long> amountSumByTransferType;
     private final Map<TransferType, Long> transferCountByTransferType;
     private final Long periodLastBalance;
-    private final Date periodLastBalanceDate;
+    private final LocalDate periodLastBalanceDate;
     private final Long minBalance;
     private final Long maxBalance;
     private final List<AccountReportTransfer> transfers;
@@ -38,10 +38,10 @@ public class AccountReport {
     @JsonIgnore
     private final TransferRepository transferRepository;
 
-    public AccountReport(String accountNumber, Date periodStart, Date periodStop,
+    public AccountReport(String accountNumber, LocalDate periodStart, LocalDate periodStop,
                          AccountRepository accountRepository, TransferRepository transferRepository,
                          CategoriesReportFactory categoriesReportFactory) {
-        if (periodStart.after(periodStop))
+        if (periodStart.isAfter(periodStop))
             throw new IllegalArgumentException("period start is after stop");
 
         this.periodStart = periodStart;
