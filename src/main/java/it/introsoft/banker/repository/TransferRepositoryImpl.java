@@ -141,6 +141,39 @@ public class TransferRepositoryImpl implements TransferRepositoryCustom {
     }
 
     @Override
+    public List<CategorySum> getSumByCategory(LocalDate start, LocalDate stop, String category) {
+        return queryFactory
+                .select(
+                        qtransfer.date.year(),
+                        qtransfer.date.month(),
+                        qtransfer.category,
+                        qtransfer.id.count(),
+                        qtransfer.amount.sum()
+                )
+                .from(qtransfer)
+                .where(
+                        qtransfer.date.between(start, stop)
+                                .and(qtransfer.category.eq(category))
+                )
+                .groupBy(
+                        qtransfer.date.year(),
+                        qtransfer.date.month(),
+                        qtransfer.category
+                )
+                .orderBy(qtransfer.date.year().asc(), qtransfer.date.month().asc())
+                .fetch()
+                .stream()
+                .map(tuple -> CategorySum.builder()
+                        .year(tuple.get(qtransfer.date.year()))
+                        .month(tuple.get(qtransfer.date.month()))
+                        .category(tuple.get(qtransfer.category))
+                        .transferCount(tuple.get(qtransfer.id.count()))
+                        .transferAmountSum(tuple.get(qtransfer.amount.sum()))
+                        .build())
+                .collect(toList());
+    }
+
+    @Override
     public List<CategorySum> getSumByCategories(String account, LocalDate start, LocalDate stop) {
         return queryFactory
                 .select(

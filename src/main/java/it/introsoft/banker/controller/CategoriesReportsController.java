@@ -28,11 +28,18 @@ public class CategoriesReportsController {
         this.categoriesReportFactory = categoriesReportFactory;
     }
 
-
     @GetMapping
     public CategoriesReport getCategoriesReport(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStart,
                                                 @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStop) {
         List<CategorySum> categorySums = transferRepository.getSumByCategoriesExcludingCategories(periodStart, periodStop, newArrayList("wynagrodzenie"));
+        return categoriesReportFactory.convert(categorySums);
+    }
+
+    @GetMapping("{category}")
+    public CategoriesReport getCategoryReport(@PathVariable String category,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStart,
+                                              @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate periodStop) {
+        List<CategorySum> categorySums = transferRepository.getSumByCategory(periodStart, periodStop, category);
         return categoriesReportFactory.convert(categorySums);
     }
 

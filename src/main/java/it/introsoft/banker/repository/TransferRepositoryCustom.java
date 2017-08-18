@@ -23,6 +23,8 @@ public interface TransferRepositoryCustom {
 
     List<CategorySum> getSumByCategoriesExcludingCategories(LocalDate start, LocalDate stop, List<String> excludedCategories);
 
+    List<CategorySum> getSumByCategory(LocalDate start, LocalDate stop, String category);
+
     List<CategorySum> getSumByCategories(String account, LocalDate start, LocalDate stop);
 
     Map<TransferType, Long> getAmountSumByTransferType(String account, LocalDate start, LocalDate stop);

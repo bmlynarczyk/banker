@@ -150,10 +150,19 @@
     }
 
     $scope.openCustomCategoryReport = function() {
+        Date.prototype.yyyymmdd = function () {
+            var mm = this.getMonth() + 1; // getMonth() is zero-based
+            var dd = this.getDate();
+
+            return [this.getFullYear(),
+                (mm > 9 ? '' : '0') + mm,
+                (dd > 9 ? '' : '0') + dd
+            ].join('-');
+        };
         $scope.modalInstance.close();
         $scope.state.go("category-report", {
-            periodStart: $scope.periodStart,
-            periodStop: $scope.periodStop
+            periodStart: $scope.periodStart.yyyymmdd(),
+            periodStop: $scope.periodStop.yyyymmdd()
         });
     }
 
