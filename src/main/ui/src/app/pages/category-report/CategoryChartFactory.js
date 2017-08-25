@@ -44,7 +44,7 @@ function CategoryChartFactory($rootScope, $uibModal, layoutPaths, CategoryColorF
             modalScope.category = clickLegendEvent.valueField;
             modalScope.start = periodStart;
             modalScope.stop = periodStop;
-            modalScope.modalInstance = $uibModal.open({
+            $uibModal.open({
                 animation: true,
                 templateUrl: 'app/pages/category-report/transfers-preview.html',
                 size: 'lg',
@@ -60,7 +60,7 @@ function CategoryChartFactory($rootScope, $uibModal, layoutPaths, CategoryColorF
             modalScope.category = clickGraphItemEvent.target.valueField;
             modalScope.start = clickGraphItemEvent.item.dataContext.month + "-01";
             modalScope.stop = yyyymmdd(new Date(month[0], month[1], 0));
-            modalScope.modalInstance = $uibModal.open({
+            $uibModal.open({
                 animation: true,
                 templateUrl: 'app/pages/category-report/transfers-preview.html',
                 size: 'lg',
@@ -73,7 +73,7 @@ function CategoryChartFactory($rootScope, $uibModal, layoutPaths, CategoryColorF
             console.log(clickAxisLabelEvent);
             var modalScope = $rootScope.$new();
             modalScope.month = clickAxisLabelEvent.value;
-            modalScope.modalInstance = $uibModal.open({
+            $uibModal.open({
                 animation: true,
                 templateUrl: 'app/pages/category-report/category-month-report.html',
                 size: 'lg',
@@ -123,33 +123,74 @@ function CategoryChartFactory($rootScope, $uibModal, layoutPaths, CategoryColorF
     }
 }
 
-function CategoryTransfersReportCtrl($scope, $http, CategoryColorFactory) {
+function CategoryTransfersReportCtrl($scope, $http, $timeout, CategoryColorFactory) {
+
+    function sumTransfersAmount(transfers) {
+        return transfers.map(function (transfer) {
+            return transfer.amount;
+        }).reduce(function (a, b) {
+            return a + b;
+        }, 0) / 1000;
+    }
 
     $http.get("/api/transfers/search/findByCategoryAndDateBetweenOrderByDateDescDateTransferNumberDesc?category="
         + $scope.category + "&start=" + $scope.start + "&stop=" + $scope.stop).success(function (data) {
-        $scope.transfers = data._embedded.transfers;
-        var chartData = data._embedded.transfers.map(function (transfer) {
-            return {value: -(transfer.amount / 1000), date: transfer.date};
-        }).sort(function (a, b) {
+        var map = new Map();
+        data._embedded.transfers.forEach(function (transfer) {
+            if (map.has(transfer.date)) {
+                map.get(transfer.date).push(transfer);
+            } else {
+                map.set(transfer.date, [transfer]);
+            }
+        });
+        var sumData = [];
+        map.forEach(function (value, key) {
+            sumData.push({
+                date: key, value: sumTransfersAmount(value)
+            });
+        });
+        sumData.sort(function (a, b) {
             var dataPartA = a.date.split('-');
             var dataPartB = b.date.split('-');
             var dateA = new Date(dataPartB[0], dataPartB[1] - 1, dataPartB[2]);
             var dateB = new Date(dataPartA[0], dataPartA[1] - 1, dataPartA[2]);
             return dateB - dateA;
         });
-        AmCharts.makeChart('transfersAmountChart', {
+        var balloonFunction = function (item) {
+            var transfers = map.get(item.serialDataItem.dataContext.date);
+            var text = "<p>" + item.serialDataItem.dataContext.date + " <b>daily sum: ";
+            if (transfers.length > 1) {
+                text = text + sumTransfersAmount(transfers) + "</b>";
+                transfers.sort(function (a, b) {
+                    return a.amount - b.amount;
+                }).forEach(function (element) {
+                    text = text + "</br>" + element.amount / 1000;
+                });
+                return text;
+            } else if (transfers.length === 1) {
+                return text + transfers[0].amount / 1000 + "</b>"
+            }
+            return text + "0</b>";
+        };
+
+        function showDailyCategoryTransfers(clickGraphItemEvent) {
+            $timeout(function () {
+                $scope.transfers = map.get(clickGraphItemEvent.item.dataContext.date);
+            }, 300);
+        }
+
+        var chart = AmCharts.makeChart('transfersAmountChart', {
             "type": "serial",
             "theme": "light",
-            "dataProvider": chartData,
-            valueAxes: [{
-                stackType: "regular",
-                axisAlpha: 0.3,
-                gridAlpha: 0
+            "dataProvider": sumData,
+            "valueAxes": [{
+                "reversed": true,
+                "axisAlpha": 0.3,
+                "gridAlpha": 0
             }],
             "startDuration": 1,
             "graphs": [{
-                "balloonText": "<b>[[category]]: [[value]]</b>",
-                // "fillColorsField": "color",
+                "balloonFunction": balloonFunction,
                 "fillColors": CategoryColorFactory.getColorForCategory($scope.category),
                 "fillAlphas": 0.9,
                 "fixedColumnWidth": 5,
@@ -164,11 +205,12 @@ function CategoryTransfersReportCtrl($scope, $http, CategoryColorFactory) {
             },
             "categoryField": "date",
             "categoryAxis": {
-                minPeriod: 'DD',
-                parseDates: true,
-                position: "left"
+                "minPeriod": 'DD',
+                "parseDates": true,
+                "position": "left"
             }
         });
+        chart.addListener("clickGraphItem", showDailyCategoryTransfers);
     }).error(function (data, status) {
         console.log(status)
         console.log(data)
