@@ -27,6 +27,7 @@ nbdist/
 
 src/main/resources/application.properties
 */src/main/generated
+src/main/java/it/introsoft/banker/MyTermDepositHistory.java
 
 node
 node_modules

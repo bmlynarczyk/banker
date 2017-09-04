@@ -4,7 +4,7 @@ import it.introsoft.banker.model.jpa.CategoryDescriptor;
 import it.introsoft.banker.model.jpa.Transfer;
 import it.introsoft.banker.repository.CategoryDescriptorRepository;
 
-import static it.introsoft.banker.model.jpa.DescriptorOrigin.CARD_PAYMENT_DESCRPTION;
+import static it.introsoft.banker.model.jpa.DescriptorOrigin.CARD_PAYMENT_DESCRIPTION;
 import static it.introsoft.banker.model.jpa.QCategoryDescriptor.categoryDescriptor;
 
 abstract class BaseCardPaymentDescriptorCollector implements CardPaymentDescriptorCollector {
@@ -19,7 +19,7 @@ abstract class BaseCardPaymentDescriptorCollector implements CardPaymentDescript
         repository.save(CategoryDescriptor.builder()
                 .fromAccount(transfer.getAccount())
                 .bank(transfer.getBank())
-                .origin(CARD_PAYMENT_DESCRPTION)
+                .origin(CARD_PAYMENT_DESCRIPTION)
                 .transferType(transfer.getTransferType())
                 .name(description)
                 .category(null)
@@ -31,7 +31,7 @@ abstract class BaseCardPaymentDescriptorCollector implements CardPaymentDescript
         return repository.findAll(
                 categoryDescriptor.fromAccount.eq(transfer.getAccount())
                         .and(categoryDescriptor.bank.eq(transfer.getBank()))
-                        .and(categoryDescriptor.origin.eq(CARD_PAYMENT_DESCRPTION))
+                        .and(categoryDescriptor.origin.eq(CARD_PAYMENT_DESCRIPTION))
                         .and(categoryDescriptor.transferType.eq(transfer.getTransferType()))
                         .and(categoryDescriptor.name.eq(description))
         ).iterator().hasNext();

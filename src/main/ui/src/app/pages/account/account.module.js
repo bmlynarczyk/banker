@@ -14,7 +14,7 @@
           controller: 'AccountPageCtrl',
           sidebarMeta: {
             icon: 'ion-compose',
-            order: 200,
+              order: 200
           }
         });
   }

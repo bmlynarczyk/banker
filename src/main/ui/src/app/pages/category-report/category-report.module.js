@@ -1,7 +1,7 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.account-report', [])
+    angular.module('BlurAdmin.pages.category-report', [])
       .config(routeConfig)
       .factory('CategoryColorFactory', CategoryColorFactory);
 
@@ -22,15 +22,15 @@
 
     function CategoryColorFactory() {
         var categoryColors = new Map();
-        categoryColors.set("bar", "#CC323A");
         categoryColors.set("biżuteria", "#EEC359");
         categoryColors.set("czynsz", "#956a3c");
         categoryColors.set("edukacja-kursy", "#FFFFFF");
         categoryColors.set("edukacja-studia", "#FFFFFF");
         categoryColors.set("elektronika", "#C7053D");
         categoryColors.set("gaz", "#F46B16");
+        categoryColors.set("inne", "#d4ff4f");
         categoryColors.set("internet", "#2983a6");
-        categoryColors.set("kawa", "#820015");
+        categoryColors.set("Kawa/Bar", "#820015");
         categoryColors.set("kino", "#F5821E");
         categoryColors.set("komputer", "#9F76B4");
         categoryColors.set("kosmetyki", "#fe97ae");
@@ -43,14 +43,14 @@
         categoryColors.set("pkp", "#013765");
         categoryColors.set("playstation", "#00AA9E");
         categoryColors.set("podatki", "#FFFFFF");
-        categoryColors.set("podróże-bilety-galerie", "#FFFFFF");
+        categoryColors.set("podróże-bilety-galerie", "#247cff");
         categoryColors.set("podróże-hotel", "#FFFFFF");
         categoryColors.set("pranie", "#5D5D55");
         categoryColors.set("prasa", "#FFFFFF");
         categoryColors.set("prąd", "#a7fffd");
         categoryColors.set("restauracja", "#93bbb7");
         categoryColors.set("rtv", "#DF0100");
-        categoryColors.set("samochód", "#FFFFFF");
+        categoryColors.set("samochód", "#575757");
         categoryColors.set("samochód-remont", "#FFFFFF");
         categoryColors.set("sport", "#b78a56");
         categoryColors.set("spożywcze", "#82B437");
@@ -62,6 +62,7 @@
         categoryColors.set("uroda", "#ff22fd");
         categoryColors.set("wesele", "#FFFFFF");
         categoryColors.set("wynagrodzenie", "#FFFFFF");
+        categoryColors.set("wypłata z bankomatu", "#31ff93");
         categoryColors.set("zakupy-multimedia", "#FFFFFF");
         categoryColors.set("zdrowie", "#9BD8EA");
         categoryColors.set("zus", "#026F58");

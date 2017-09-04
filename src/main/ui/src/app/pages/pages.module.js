@@ -8,16 +8,16 @@
   angular.module('BlurAdmin.pages', [
     'ui.router',
 
-    'BlurAdmin.pages.transfer',
-    'BlurAdmin.pages.import',
-    'BlurAdmin.pages.account-report',
-    'BlurAdmin.pages.account'
+      'BlurAdmin.pages.account',
+      'BlurAdmin.pages.import',
+      'BlurAdmin.pages.account-report',
+      'BlurAdmin.pages.category-report'
   ])
       .config(routeConfig);
 
   /** @ngInject */
-  function routeConfig($urlRouterProvider, baSidebarServiceProvider) {
-    $urlRouterProvider.otherwise('/transfer');
+  function routeConfig($urlRouterProvider) {
+      $urlRouterProvider.otherwise('/account');
   }
 
 })();

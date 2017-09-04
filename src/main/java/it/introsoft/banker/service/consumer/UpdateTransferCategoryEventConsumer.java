@@ -71,21 +71,21 @@ public class UpdateTransferCategoryEventConsumer {
     }
 
     private long updateMilleniumCardPaymentCategories() {
-        return stream(getCategoryDescriptors(MILLENIUM, CARD_PAYMENT_DESCRPTION))
+        return stream(getCategoryDescriptors(MILLENIUM, CARD_PAYMENT_DESCRIPTION))
                 .mapToLong(cd -> transferRepository.setCategoryByDescriptionStartingWith(
                         cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
                 )).sum();
     }
 
     private long updatePkoBpCardPaymentCategories() {
-        return stream(getCategoryDescriptors(PKO_BP, CARD_PAYMENT_DESCRPTION))
+        return stream(getCategoryDescriptors(PKO_BP, CARD_PAYMENT_DESCRIPTION))
                 .mapToLong(cd -> transferRepository.setCategoryByDescriptionEndingWith(
                         cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
                 )).sum();
     }
 
     private long updateBzWbkCardPaymentCategories() {
-        return stream(getCategoryDescriptors(BZ_WBK, CARD_PAYMENT_DESCRPTION))
+        return stream(getCategoryDescriptors(BZ_WBK, CARD_PAYMENT_DESCRIPTION))
                 .mapToLong(cd -> transferRepository.setCategoryByDescriptionEndingWith(
                         cd.getCategory(), cd.getName(), cd.getTransferType(), cd.getBank()
                 )).sum();
